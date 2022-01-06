@@ -458,7 +458,7 @@ nnoremap <silent> <A-l> :TmuxResizeRight<cr>
 
 nnoremap <Leader><CR> :Dashboard<CR>
 let g:dashboard_default_executive = 'telescope'
-let g:dashboard_session_directory = '~/.cache/nvim/session'
+let g:dashboard_session_directory = '~/.local/share/nvim/session'
 
 let g:dashboard_custom_section={
 \ 'a': { 'description': ['  Bookmarks          '], 'command': 'Telescope marks'},
