@@ -79,16 +79,28 @@ set wildignorecase                        " Ignore Case in wildmenu
 set wildmode=longest:full,full            " Bash like completion in command model
 set wildoptions+=pum                      " Wildmenu completion happens in a popup
 
-augroup AUTO_COMMANDS
+augroup CURSORLINE
     autocmd!
     autocmd BufWinEnter,FocusGained,VimEnter,WinEnter, * setlocal cursorline
     autocmd FocusLost,WinLeave * setlocal nocursorline
-    autocmd BufEnter * set fo-=c fo-=r fo-=o
-    autocmd BufWritePre * %s/\s\+$//e
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 350})
-    autocmd VimResized * :wincmd =
+augroup END
+
+augroup FILE_SPECIFICS
+    autocmd!
     autocmd FileType go setlocal shiftwidth=4 softtabstop=4 tabstop=4
     autocmd FileType python setlocal shiftwidth=4 softtabstop 4 tabstop=4
+augroup END
+
+augroup FORMAT_OPTIONS
+    autocmd!
+    autocmd BufEnter * set fo-=c fo-=r fo-=o
+    autocmd BufWritePre * %s/\s\+$//e
+    autocmd VimResized * :wincmd =
+augroup END
+
+augroup HIGHLIGHT_YANK
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 350})
 augroup END
 
 colorscheme nvcode
@@ -100,7 +112,7 @@ colorscheme nvcode
 let g:mapleader = " "
 inoremap <C-c> <Esc>
 nnoremap <C-c> :nohl<CR>
-nnoremap <leader>` :source $MYVIMRC<CR> :PlugInstall<CR>
+nnoremap <leader>` :source $MYVIMRC<CR> :PlugUpdate<CR>
 
 " unmapping a few keys that annoy me
 nnoremap K <nop>
@@ -360,22 +372,22 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
+fun! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+endfun
 
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Show documentation
 nnoremap <silent>H :call <SID>show_documentation()<CR>
-function! s:show_documentation()
+fun! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
   endif
-endfunction
+endfun
 
 " Lsp code navigation.
 nmap <silent> gd <cmd>Telescope coc definitions<cr>
