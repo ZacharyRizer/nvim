@@ -16,10 +16,6 @@
     "typescript"
   ],
   "diagnostic.floatConfig": { "border": true },
-  "git.addedSign.hlGroup": "CocGitAdd",
-  "git.changedSign.hlGroup": "CocGitChange",
-  "git.removedSign.hlGroup": "CocGitRemove",
-  "git.topRemovedSign.hlGroup": "CocGitRemove",
   "go.goplsOptions": {
     "completeUnimported": true
   },
@@ -40,6 +36,7 @@
   "prettier.disableLanguages": ["haskell"],
   "prettier.printWidth": 100,
   "prettier.tabWidth": 2,
+  "python.jediEnabled": false,
   "signature.floatConfig": { "border": true },
   "suggest.floatConfig": { "border": true }
 }

@@ -11,8 +11,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim', {'do': 'make'}
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'ahmedkhalf/project.nvim'
-Plug 'AckslD/nvim-neoclip.lua'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'lewis6991/gitsigns.nvim'
 
 " ==> Theme and Formatting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -27,7 +27,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'mbbill/undotree'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'ggandor/lightspeed.nvim'
-Plug 'karb94/neoscroll.nvim'
+Plug 'ZacharyRizer/vim-yankstack'
 
 " ==> Tpope Plugins
 Plug 'tpope/vim-commentary'
@@ -41,6 +41,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'RyanMillerC/better-vim-tmux-resizer'
 
 call plug#end()
+call yankstack#setup()
 
 " --------------------------------------------------------------------------- ==>
 " -------------------------- General Settings ------------------------------- ==>
@@ -148,15 +149,35 @@ nnoremap <C-q> :call ToggleQFList()<CR>
 fun! ToggleQFList()
   let l:nr =  winnr("$")
   if l:nr == 1
-      copen
+    copen
   else
-      cclose
+    cclose
   endif
 endfun
 
 " --------------------------------------------------------------------------- ==>
 " ----------------------------  Plugin Settings ----------------------------- ==>
 " --------------------------------------------------------------------------- ==>
+
+" Gitsigns
+lua << EOF
+require('gitsigns').setup {
+  signs = {
+    add          = {hl = 'GitSignsAdd'   , text = '+', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+    change       = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+  },
+  keymaps = {
+    noremap = true,
+    ['n ]g'] = { expr = true, "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'"},
+    ['n [g'] = { expr = true, "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'"},
+    ['n gs'] = '<cmd>Gitsigns preview_hunk<CR>',
+    ['n gb'] = '<cmd>Gitsigns blame_line<CR>',
+  },
+}
+EOF
 
 " IndentLine
 lua << EOF
@@ -183,44 +204,8 @@ require'lualine'.setup {
     lualine_y = {'progress'},
     lualine_z = {'location'}
   },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
   extensions = {'quickfix'}
 }
-EOF
-
-" Neoclip
-lua << EOF
-require('neoclip').setup({
-  default_register = {'"', '+', '*'},
-  keys = {
-    telescope = {
-      i = {
-        select = '<cr>',
-        paste = 'p',
-        paste_behind = 'P',
-      },
-    },
-  },
-})
-EOF
-nnoremap <leader>p :Telescope neoclip<CR>
-
-" NeoScroll
-lua << EOF
-require('neoscroll').setup()
-local t = {}
-t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '100'}}
-t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '100'}}
-t['<C-b>'] = {'scroll', {'-vim.api.nvim_win_get_height(0)', 'true', '200'}}
-t['<C-f>'] = {'scroll', { 'vim.api.nvim_win_get_height(0)', 'true', '200'}}
-require('neoscroll.config').set_mappings(t)
 EOF
 
 " NvimTree setup
@@ -283,19 +268,17 @@ EOF
 nnoremap <leader>u :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 0
 let g:undotree_SetFocusWhenToggle = 1
-let g:undotree_SplitWidth = 40
 let g:undotree_WindowLayout = 3
 
 " Vim-Commentary
 nnoremap <space>/ :Commentary<cr>
 vnoremap <space>/ :Commentary<cr>
 
-" Vim-Fugitive
-nmap gb :Git blame<CR>
-nmap gs :Gvdiffsplit<CR>
-
 " Vim-RSI ==> disable meta-key bindings
 let g:rsi_no_meta = 1
+
+" Yankstack
+nnoremap <leader>p :Yanks<CR>
 
 " --------------------------------------------------------------------------- ==>
 " ------------------------ Telescope Config --------------------------------- ==>
@@ -332,7 +315,6 @@ require('telescope').setup{
 }
 require('telescope').load_extension('coc')
 require('telescope').load_extension('fzy_native')
-require("telescope").load_extension('neoclip')
 require('telescope').load_extension('projects')
 EOF
 
@@ -355,7 +337,6 @@ let g:coc_global_extensions = [
   \ 'coc-angular',
   \ 'coc-css',
   \ 'coc-emmet',
-  \ 'coc-git',
   \ 'coc-go',
   \ 'coc-highlight',
   \ 'coc-html',
@@ -412,12 +393,15 @@ nmap <silent> ]d <Plug>(coc-diagnostic-next)
 " CocSearch
 nnoremap <C-s> :CocSearch<space>
 
-" coc-git
-nmap [g <Plug>(coc-git-prevchunk)
-nmap ]g <Plug>(coc-git-nextchunk)
-highlight CocGitAdd ctermfg=65 ctermbg=234 guifg=#608b4e guibg=#1e1e1e
-highlight CocGitChange ctermfg=187 ctermbg=234 guifg=#dcdcaa guibg=#1e1e1e
-highlight CocGitRemove ctermfg=167 ctermbg=234 guifg=#d16969 guibg=#1e1e1e
+" coc-angular
+nnoremap <Leader>a :call ToggleAngular()<CR>
+fun! ToggleAngular()
+  if &ft == "typescript"
+    CocCommand angular.goToTemplateForComponent
+  else
+    CocCommand angular.goToComponentWithTemplateFile
+  endif
+endfun
 
 " coc-pairs
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
