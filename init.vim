@@ -9,6 +9,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim', {'do': 'make'}
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'ahmedkhalf/project.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -19,6 +20,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
 
 " ==> UI Elements
 Plug 'glepnir/dashboard-nvim'
@@ -28,6 +30,7 @@ Plug 'mbbill/undotree'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'ggandor/lightspeed.nvim'
 Plug 'ZacharyRizer/vim-yankstack'
+" Plug 'yamatsum/nvim-cursorline'
 
 " ==> Tpope Plugins
 Plug 'tpope/vim-commentary'
@@ -61,7 +64,7 @@ set nobackup noswapfile nowritebackup     " This is recommended by coc
 set noerrorbells                          " Stop those annoying bells
 set noshowmode                            " Airline takes care of showing modes
 set nowrap                                " Display long lines as just one line
-set number relativenumber                 " Line numbers
+set number                                " Line numbers
 set pumblend=15                           " Transparency for floating windows
 set scrolloff=10                          " 10 lines are above and below cursor
 set shortmess+=c                          " Don't pass messages to |ins-completion-menu|.
@@ -79,11 +82,11 @@ set wildignorecase                        " Ignore Case in wildmenu
 set wildmode=longest:full,full            " Bash like completion in command model
 set wildoptions+=pum                      " Wildmenu completion happens in a popup
 
-augroup CURSORLINE
-    autocmd!
-    autocmd BufWinEnter,FocusGained,VimEnter,WinEnter, * setlocal cursorline
-    autocmd FocusLost,WinLeave * setlocal nocursorline
-augroup END
+" augroup CURSORLINE
+"     autocmd!
+"     autocmd BufWinEnter,FocusGained,VimEnter,WinEnter, * setlocal cursorline
+"     autocmd FocusLost,WinLeave * setlocal nocursorline
+" augroup END
 
 augroup FILE_SPECIFICS
     autocmd!
@@ -103,11 +106,6 @@ augroup HIGHLIGHT_YANK
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 350})
 augroup END
 
-augroup RELOAD_CONFIG
-  autocmd!
-  autocmd BufWritePost ~/.config/nvim/init.vim source % | redraw! | echo "Reloaded Config"
-augroup END
-
 colorscheme nvcode
 
 " --------------------------------------------------------------------------- ==>
@@ -117,7 +115,7 @@ colorscheme nvcode
 let g:mapleader = " "
 inoremap <C-c> <Esc>
 nnoremap <C-c> :nohl<CR>
-nnoremap <leader>` :PlugUpdate --sync <bar> split <bar> :PlugClean<CR>
+nnoremap <leader>` :source $MYVIMRC <bar> :PlugUpdate --sync <bar> split <bar> :PlugClean<CR>
 
 " unmapping a few keys that annoy me
 nnoremap K <nop>
@@ -175,6 +173,9 @@ endfun
 " --------------------------------------------------------------------------- ==>
 " ----------------------------  Plugin Settings ----------------------------- ==>
 " --------------------------------------------------------------------------- ==>
+
+" Colorizer
+lua require'colorizer'.setup()
 
 " Gitsigns
 lua << EOF
@@ -309,6 +310,9 @@ require('telescope').setup{
     prompt_prefix = " ",
     selection_caret = " ",
     entry_prefix = "  ",
+    extensions = {
+      file_browser = { path = "%:p:h" }
+    },
     layout_config = {
       horizontal = {
         preview_cutoff = 150,
@@ -331,6 +335,7 @@ require('telescope').setup{
   }
 }
 require('telescope').load_extension('coc')
+require("telescope").load_extension('file_browser')
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('projects')
 EOF
@@ -338,6 +343,7 @@ EOF
 nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>c <cmd>lua require('telescope.builtin').commands()<cr>
 nnoremap <leader>C <cmd>lua require('telescope.builtin').command_history()<cr>
+nnoremap <leader>e <cmd>lua require('telescope').extensions.file_browser.file_browser()<cr>
 nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>F <cmd>lua require('telescope.builtin').find_files({ cwd = vim.fn.input("Find In Dir: ", "~/")})<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ")})<cr>
@@ -355,7 +361,6 @@ let g:coc_global_extensions = [
   \ 'coc-css',
   \ 'coc-emmet',
   \ 'coc-go',
-  \ 'coc-highlight',
   \ 'coc-html',
   \ 'coc-json',
   \ 'coc-lua',
@@ -409,16 +414,6 @@ nmap <silent> ]d <Plug>(coc-diagnostic-next)
 
 " CocSearch
 nnoremap <C-s> :CocSearch<space>
-
-" coc-angular
-nnoremap <Leader>a :call ToggleAngular()<CR>
-fun! ToggleAngular()
-  if &ft == "typescript"
-    CocCommand angular.goToTemplateForComponent
-  else
-    CocCommand angular.goToComponentWithTemplateFile
-  endif
-endfun
 
 " coc-pairs
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
