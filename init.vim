@@ -20,6 +20,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'windwp/nvim-autopairs'
 Plug 'norcalli/nvim-colorizer.lua'
 
 " ==> UI Elements
@@ -30,7 +31,6 @@ Plug 'mbbill/undotree'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'ggandor/lightspeed.nvim'
 Plug 'ZacharyRizer/vim-yankstack'
-" Plug 'yamatsum/nvim-cursorline'
 
 " ==> Tpope Plugins
 Plug 'tpope/vim-commentary'
@@ -81,12 +81,6 @@ set updatetime=100                        " Faster completion
 set wildignorecase                        " Ignore Case in wildmenu
 set wildmode=longest:full,full            " Bash like completion in command model
 set wildoptions+=pum                      " Wildmenu completion happens in a popup
-
-" augroup CURSORLINE
-"     autocmd!
-"     autocmd BufWinEnter,FocusGained,VimEnter,WinEnter, * setlocal cursorline
-"     autocmd FocusLost,WinLeave * setlocal nocursorline
-" augroup END
 
 augroup FILE_SPECIFICS
     autocmd!
@@ -144,9 +138,7 @@ nmap oo o<Esc>k
 nnoremap J mzJ`z
 nnoremap K f r<CR>
 
-" move text easily
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
+" tab text easily
 vnoremap < <gv
 vnoremap > >gv
 nnoremap < <<
@@ -173,6 +165,9 @@ endfun
 " --------------------------------------------------------------------------- ==>
 " ----------------------------  Plugin Settings ----------------------------- ==>
 " --------------------------------------------------------------------------- ==>
+
+" Autopairs
+lua require('nvim-autopairs').setup({ fast_wrap = {} })
 
 " Colorizer
 lua require'colorizer'.setup()
@@ -306,13 +301,8 @@ lua << EOF
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
-    file_ignore_patterns = {"main.js", "*.spec.ts"},
-    prompt_prefix = " ",
-    selection_caret = " ",
     entry_prefix = "  ",
-    extensions = {
-      file_browser = { path = "%:p:h" }
-    },
+    file_ignore_patterns = {"main.js", "%.spec.ts", "%-spec.ts"},
     layout_config = {
       horizontal = {
         preview_cutoff = 150,
@@ -331,8 +321,14 @@ require('telescope').setup{
       },
     },
     path_display = { shorten = 5 },
+    prompt_prefix = " ",
+    selection_caret = " ",
     sorting_strategy = "ascending",
-  }
+  },
+  extensions = {
+    file_browser = { path = "%:p:h" }
+  },
+
 }
 require('telescope').load_extension('coc')
 require("telescope").load_extension('file_browser')
@@ -365,7 +361,6 @@ let g:coc_global_extensions = [
   \ 'coc-json',
   \ 'coc-lua',
   \ 'coc-marketplace',
-  \ 'coc-pairs',
   \ 'coc-prettier',
   \ 'coc-pyright',
   \ 'coc-tsserver',
@@ -393,7 +388,7 @@ inoremap <silent><expr> <c-space> coc#refresh()
 nnoremap <silent>H :call <SID>show_documentation()<CR>
 fun! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
+    execute 'vert h '.expand('<cword>')
   else
     call CocAction('doHover')
   endif
@@ -411,12 +406,6 @@ nnoremap <Leader>ls <cmd>Telescope coc document_symbols<cr>
 " Use `[d` and `]d` to navigate diagnostics
 nmap <silent> [d <Plug>(coc-diagnostic-prev)
 nmap <silent> ]d <Plug>(coc-diagnostic-next)
-
-" CocSearch
-nnoremap <C-s> :CocSearch<space>
-
-" coc-pairs
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " --------------------------------------------------------------------------- ==>
 " -------------------------- Tmux Vim Integration---------------------------- ==>
