@@ -103,6 +103,11 @@ augroup HIGHLIGHT_YANK
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 350})
 augroup END
 
+augroup RELOAD_CONFIG
+  autocmd!
+  autocmd BufWritePost ~/.config/nvim/init.vim source % | redraw! | echo "Reloaded Config"
+augroup END
+
 colorscheme nvcode
 
 " --------------------------------------------------------------------------- ==>
@@ -112,7 +117,7 @@ colorscheme nvcode
 let g:mapleader = " "
 inoremap <C-c> <Esc>
 nnoremap <C-c> :nohl<CR>
-nnoremap <leader>` :source $MYVIMRC<CR> :PlugUpdate<CR>
+nnoremap <leader>` :PlugUpdate --sync <bar> split <bar> :PlugClean<CR>
 
 " unmapping a few keys that annoy me
 nnoremap K <nop>
