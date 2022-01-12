@@ -37,7 +37,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rsi'
-Plug 'tpope/vim-surround'
+Plug 'ZacharyRizer/vim-surround'
 
 " ==> Tmux-Vim integration
 Plug 'christoomey/vim-tmux-navigator'
@@ -313,11 +313,12 @@ require('telescope').setup{
     },
     mappings = {
       i = {
-        ["<esc>"] = actions.close,
-        ["<c-t>"] = actions.toggle_selection,
-        ["<c-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        ["<c-j>"] = actions.move_selection_next,
-        ["<c-k>"] = actions.move_selection_previous,
+        ["<ESC>"] = actions.close,
+        ["<C-t>"] = actions.toggle_selection,
+        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-r>"] = actions.delete_buffer,
       },
     },
     path_display = { shorten = 5 },
@@ -336,7 +337,9 @@ require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('projects')
 EOF
 
-nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
+command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>
+command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>
+
 nnoremap <leader>c <cmd>lua require('telescope.builtin').commands()<cr>
 nnoremap <leader>C <cmd>lua require('telescope.builtin').command_history()<cr>
 nnoremap <leader>e <cmd>lua require('telescope').extensions.file_browser.file_browser()<cr>
@@ -344,10 +347,9 @@ nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>F <cmd>lua require('telescope.builtin').find_files({ cwd = vim.fn.input("Find In Dir: ", "~/")})<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ")})<cr>
 nnoremap <leader>G <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>h <cmd>lua require('telescope.builtin').oldfiles()<cr>
-nnoremap <leader>H <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>h <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>H <cmd>lua require('telescope.builtin').oldfiles()<cr>
 nnoremap <leader>m <cmd>lua require('telescope.builtin').marks()<cr>
-nnoremap <leader>M <cmd>lua require('telescope.builtin').keymaps()<cr>
 
 " --------------------------------------------------------------------------- ==>
 " ------------------------------ COC Config --------------------------------- ==>
