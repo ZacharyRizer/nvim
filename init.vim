@@ -75,7 +75,6 @@ set splitbelow splitright                 " Splits will automatically be below a
 set syntax=off                            " Treesitter takes care of this
 set termguicolors                         " Enable gui colors
 set timeoutlen=250                        " By default timeoutlen is 1000 ms
-set undodir=~/.vim/undodir                " Creates directory to store undos
 set undofile                              " Returns name of undo file
 set updatetime=100                        " Faster completion
 set wildignorecase                        " Ignore Case in wildmenu
@@ -187,6 +186,7 @@ EOF
 " Tokyonight
 let g:tokyonight_style = "night"
 let g:tokyonight_sidebars = ["NvimTree", "undotree"]
+let g:tokyonight_lualine_bold = 1
 colorscheme tokyonight
 
 " --------------------------------------------------------------------------- ==>
