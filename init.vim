@@ -22,6 +22,7 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
 " ==> UI Elements
 Plug 'glepnir/dashboard-nvim'
@@ -106,7 +107,8 @@ augroup END
 let g:mapleader = " "
 inoremap <C-c> <Esc>
 nnoremap <C-c> :nohl<CR>
-nnoremap <leader>` :source $MYVIMRC <bar> :PlugUpdate --sync <bar> split <bar> :PlugClean<CR>
+nnoremap <leader>` :source $MYVIMRC <bar> :redraw <bar> :echo "Config Reloaded!"<CR>
+nnoremap <leader>~ :source $MYVIMRC <bar> :PlugUpdate --sync <bar> split <bar> :PlugClean<CR>
 
 " unmapping a few keys that annoy me
 nnoremap K <nop>
@@ -179,14 +181,13 @@ require'lualine'.setup {
     lualine_y = {'progress'},
     lualine_z = {'location'}
   },
-  theme = 'tokyonight'
 }
 EOF
 
 " Tokyonight
-let g:tokyonight_style = "night"
 let g:tokyonight_sidebars = ["NvimTree", "undotree"]
 let g:tokyonight_lualine_bold = 1
+let g:tokyonight_dark_float = 0
 colorscheme tokyonight
 
 " --------------------------------------------------------------------------- ==>
