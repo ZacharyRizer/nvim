@@ -22,7 +22,6 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
 " ==> UI Elements
 Plug 'glepnir/dashboard-nvim'
