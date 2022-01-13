@@ -18,10 +18,10 @@ Plug 'lewis6991/gitsigns.nvim'
 " ==> Theme and Formatting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'norcalli/nvim-colorizer.lua'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 " ==> UI Elements
 Plug 'glepnir/dashboard-nvim'
@@ -100,8 +100,6 @@ augroup HIGHLIGHT_YANK
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 350})
 augroup END
 
-colorscheme nvcode
-
 " --------------------------------------------------------------------------- ==>
 " -------------------------- Basic Key Mappings ----------------------------- ==>
 " --------------------------------------------------------------------------- ==>
@@ -162,6 +160,35 @@ fun! ToggleQFList()
   endif
 endfun
 
+
+" --------------------------------------------------------------------------- ==>
+" -------------------------- Theme & Statusline ----------------------------- ==>
+" --------------------------------------------------------------------------- ==>
+
+" Lualine
+lua << EOF
+require'lualine'.setup {
+  extensions = {'quickfix'},
+  options = {
+    disabled_filetypes = {'dashboard', 'NvimTree', 'undotree'},
+  },
+  sections = {
+    lualine_a = {{'mode', fmt = function(str) return str:sub(1,1) end}},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'g:coc_status'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  theme = 'tokyonight'
+}
+EOF
+
+" Tokyonight
+let g:tokyonight_style = "night"
+let g:tokyonight_sidebars = ["NvimTree", "undotree"]
+colorscheme tokyonight
+
 " --------------------------------------------------------------------------- ==>
 " ----------------------------  Plugin Settings ----------------------------- ==>
 " --------------------------------------------------------------------------- ==>
@@ -198,26 +225,8 @@ require("indent_blankline").setup{
   char = '▏',
   use_treesitter = true,
   show_first_indent_level = false,
-  filetype_exclude = {'dashboard', 'help', 'startify', 'undotree'},
+  filetype_exclude = {'dashboard', 'help', 'undotree'},
   buftype_exclude = {'nofile', 'terminal'}
-}
-EOF
-
-" Lualine setup
-lua << EOF
-require'lualine'.setup {
-  options = {
-    disabled_filetypes = {'dashboard', 'NvimTree', 'startify', 'undotree'},
-  },
-  sections = {
-    lualine_a = {{'mode', fmt = function(str) return str:sub(1,1) end}},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'g:coc_status'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  extensions = {'quickfix'}
 }
 EOF
 
@@ -281,6 +290,7 @@ EOF
 nnoremap <leader>u :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 0
 let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_SplitWidth = 35
 let g:undotree_WindowLayout = 3
 
 " Vim-Commentary
