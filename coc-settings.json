@@ -36,7 +36,7 @@
   "prettier.disableLanguages": ["haskell"],
   "prettier.printWidth": 100,
   "prettier.tabWidth": 2,
-  "python.jediEnabled": false,
   "signature.floatConfig": { "border": true },
-  "suggest.floatConfig": { "border": true }
+  "suggest.floatConfig": { "border": true },
+  "sumneko-lua.enableNvimLuaDev": true
 }

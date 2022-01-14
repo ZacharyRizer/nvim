@@ -50,53 +50,55 @@ call yankstack#setup()
 " -------------------------- General Settings ------------------------------- ==>
 " --------------------------------------------------------------------------- ==>
 
-set clipboard+=unnamedplus                " Copy/Yank work with system clipboard
-set cmdheight=2                           " More space for displaying messages
-set colorcolumn=1000
-set completeopt=menuone,noinsert,noselect " Hanldes how the completion menus function
-set expandtab                             " Converts tabs to spaces
-set hidden                                " Required to keep multiple buffers open
-set ignorecase smartcase                  " Smart searching in regards to case
-set inccommand=nosplit                    " Interactive substitution
-set lazyredraw                            " Help with screen redraw lag
-set mouse=a                               " Enable your mouse
-set nobackup noswapfile nowritebackup     " This is recommended by coc
-set noerrorbells                          " Stop those annoying bells
-set noshowmode                            " Airline takes care of showing modes
-set nowrap                                " Display long lines as just one line
-set number                                " Line numbers
-set pumblend=15                           " Transparency for floating windows
-set scrolloff=10                          " 10 lines are above and below cursor
-set shortmess+=c                          " Don't pass messages to |ins-completion-menu|.
-set sidescrolloff=10                      " Keep 5 columns on either side of the cursor
-set signcolumn=yes                        " So error/git diagnostics don't cause a column shift
-set shiftwidth=2 softtabstop=2 tabstop=2  " Insert 2 spaces for a tab
-set splitbelow splitright                 " Splits will automatically be below and to the right
-set syntax=off                            " Treesitter takes care of this
-set termguicolors                         " Enable gui colors
-set timeoutlen=250                        " By default timeoutlen is 1000 ms
-set undofile                              " Returns name of undo file
-set updatetime=100                        " Faster completion
-set wildignorecase                        " Ignore Case in wildmenu
-set wildmode=longest:full,full            " Bash like completion in command model
-set wildoptions+=pum                      " Wildmenu completion happens in a popup
+set clipboard+=unnamedplus
+set cmdheight=2
+set completeopt=menuone,noinsert,noselect
+set expandtab
+set hidden
+set ignorecase
+set inccommand=nosplit
+set lazyredraw
+set mouse=a
+set nobackup
+set noswapfile
+set nowritebackup
+set noerrorbells
+set noshowmode
+set nowrap
+set number
+set pumblend=15
+set scrolloff=10
+set sidescrolloff=10
+set signcolumn=yes
+set shiftwidth=2
+set smartcase
+set softtabstop=2
+set splitbelow
+set splitright
+set tabstop=2
+set termguicolors
+set timeoutlen=250
+set undofile
+set updatetime=100
+set wildignorecase
+set wildmode=longest:full,full
 
 augroup FILE_SPECIFICS
-    autocmd!
-    autocmd FileType go setlocal shiftwidth=4 softtabstop=4 tabstop=4
-    autocmd FileType python setlocal shiftwidth=4 softtabstop 4 tabstop=4
+  autocmd!
+  autocmd FileType go setlocal shiftwidth=4 softtabstop=4 tabstop=4
+  autocmd FileType python setlocal shiftwidth=4 softtabstop 4 tabstop=4
 augroup END
 
 augroup FORMAT_OPTIONS
-    autocmd!
-    autocmd BufEnter * set fo-=c fo-=r fo-=o
-    autocmd BufWritePre * %s/\s\+$//e
-    autocmd VimResized * :wincmd =
+  autocmd!
+  autocmd BufEnter * set fo-=c fo-=r fo-=o
+  autocmd BufWritePre * %s/\s\+$//e
+  autocmd VimResized * :wincmd =
 augroup END
 
 augroup HIGHLIGHT_YANK
-    autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 350})
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 350})
 augroup END
 
 " --------------------------------------------------------------------------- ==>
@@ -160,7 +162,6 @@ fun! ToggleQFList()
   endif
 endfun
 
-
 " --------------------------------------------------------------------------- ==>
 " -------------------------- Theme & Statusline ----------------------------- ==>
 " --------------------------------------------------------------------------- ==>
@@ -168,15 +169,15 @@ endfun
 " Lualine
 lua << EOF
 require'lualine'.setup {
-  extensions = {'quickfix'},
+  extensions = {'nvim-tree', 'quickfix'},
   options = {
-    disabled_filetypes = {'dashboard', 'NvimTree', 'undotree'},
+    disabled_filetypes = {'dashboard', 'undotree'},
   },
   sections = {
     lualine_a = {{'mode', fmt = function(str) return str:sub(1,1) end}},
     lualine_b = {'branch', 'diff', 'diagnostics'},
     lualine_c = {'filename'},
-    lualine_x = {'g:coc_status'},
+    lualine_x = {{'g:coc_status', cond = function() return vim.fn.winwidth(0) > 90 end}},
     lualine_y = {'progress'},
     lualine_z = {'location'}
   },
@@ -274,7 +275,10 @@ EOF
 lua << EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained",
-  highlight = { enable = true },
+  highlight = {
+    disable = { "vim" },
+    enable = true
+  },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -371,10 +375,10 @@ let g:coc_global_extensions = [
   \ 'coc-go',
   \ 'coc-html',
   \ 'coc-json',
-  \ 'coc-lua',
   \ 'coc-marketplace',
   \ 'coc-prettier',
   \ 'coc-pyright',
+  \ 'coc-sumneko-lua',
   \ 'coc-tsserver',
   \ 'coc-vimlsp',
   \]
@@ -383,11 +387,9 @@ let g:coc_global_extensions = [
 command! -nargs=0 Format :call CocAction('format')
 
 " basic completion mappings
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 fun! s:check_back_space() abort
   let col = col('.') - 1
