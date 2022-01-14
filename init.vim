@@ -59,13 +59,12 @@ set ignorecase
 set inccommand=nosplit
 set lazyredraw
 set mouse=a
-set nobackup
 set noswapfile
 set nowritebackup
 set noerrorbells
 set noshowmode
 set nowrap
-set number
+set number relativenumber
 set pumblend=15
 set scrolloff=10
 set sidescrolloff=10
@@ -121,14 +120,13 @@ nnoremap <Backspace> <nop>
 nnoremap c* *Ncgn
 nnoremap *  *N
 nnoremap #  #N
-vnoremap *  y/\V<C-R>=escape(@",'/\')<CR><CR>N
-vnoremap #  y?\V<C-R>=escape(@",'/\')<CR><CR>N
+" vnoremap *  y/\V<C-R>=escape(@",'/\')<CR><CR>N
+" vnoremap #  y?\V<C-R>=escape(@",'/\')<CR><CR>N
 nnoremap <leader>s :%s/
 vnoremap <leader>s :s/
 
 " more intuitive yanking
 nmap Y y$
-vmap y y`>
 
 " insert blank lines
 nmap OO O<Esc>j
@@ -396,17 +394,8 @@ fun! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfun
 
-inoremap <silent><expr> <c-space> coc#refresh()
-
 " Show documentation
-nnoremap <silent>H :call <SID>show_documentation()<CR>
-fun! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'vert h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfun
+nnoremap <silent>H :call CocAction('doHover')<CR>
 
 " Lsp code navigation.
 nmap <silent> gd <cmd>Telescope coc definitions<cr>
