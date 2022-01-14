@@ -120,8 +120,8 @@ nnoremap <Backspace> <nop>
 nnoremap c* *Ncgn
 nnoremap *  *N
 nnoremap #  #N
-" vnoremap *  y/\V<C-R>=escape(@",'/\')<CR><CR>N
-" vnoremap #  y?\V<C-R>=escape(@",'/\')<CR><CR>N
+vnoremap *  y/\V<C-R>=escape(@",'/\')<CR><CR>N
+vnoremap #  y?\V<C-R>=escape(@",'/\')<CR><CR>N
 nnoremap <leader>s :%s/
 vnoremap <leader>s :s/
 
@@ -434,7 +434,6 @@ vnoremap <silent> <C-l> <Esc> :TmuxNavigateRight<cr>
 
 " Tmux-Vim Resizer
 let g:tmux_resizer_no_mappings = 1
-" resize windows
 nnoremap <silent> <A-h> :TmuxResizeLeft<cr>
 nnoremap <silent> <A-j> :TmuxResizeDown<cr>
 nnoremap <silent> <A-k> :TmuxResizeUp<cr>
