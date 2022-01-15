@@ -1,10 +1,10 @@
-" --------------------------------------------------------------------------- ==>
-" ------------------------------ Plug-Ins ----------------------------------- ==>
-" --------------------------------------------------------------------------- ==>
+" ---------------------------------------------------------------------------- "
+" ------------------------------- Plug-Ins ----------------------------------- "
+" ---------------------------------------------------------------------------- "
 
 call plug#begin('~/.vim/plugged')
 
-" ==> LSP, Completions, Git, Telescope
+" LSP, Completions, Git, Telescope
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -15,7 +15,7 @@ Plug 'ahmedkhalf/project.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'lewis6991/gitsigns.nvim'
 
-" ==> Theme and Formatting
+" Theme and Formatting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -23,7 +23,7 @@ Plug 'windwp/nvim-autopairs'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
-" ==> UI Elements
+" UI Elements
 Plug 'glepnir/dashboard-nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-lualine/lualine.nvim'
@@ -32,23 +32,23 @@ Plug 'akinsho/toggleterm.nvim'
 Plug 'ggandor/lightspeed.nvim'
 Plug 'ZacharyRizer/vim-yankstack'
 
-" ==> Tpope Plugins
+" Tpope Plugins
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rsi'
 Plug 'ZacharyRizer/vim-surround'
 
-" ==> Tmux-Vim integration
+" Tmux-Vim integration
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'RyanMillerC/better-vim-tmux-resizer'
 
 call plug#end()
 call yankstack#setup()
 
-" --------------------------------------------------------------------------- ==>
-" -------------------------- General Settings ------------------------------- ==>
-" --------------------------------------------------------------------------- ==>
+" ---------------------------------------------------------------------------- "
+" --------------------------- General Settings ------------------------------- "
+" ---------------------------------------------------------------------------- "
 
 set clipboard+=unnamedplus
 set cmdheight=2
@@ -101,9 +101,9 @@ augroup HIGHLIGHT_YANK
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 350})
 augroup END
 
-" --------------------------------------------------------------------------- ==>
-" -------------------------- Basic Key Mappings ----------------------------- ==>
-" --------------------------------------------------------------------------- ==>
+" ---------------------------------------------------------------------------- "
+" --------------------------- Basic Key Mappings ----------------------------- "
+" ---------------------------------------------------------------------------- "
 
 let g:mapleader = " "
 inoremap <C-c> <Esc>
@@ -161,9 +161,9 @@ fun! ToggleQFList()
   endif
 endfun
 
-" --------------------------------------------------------------------------- ==>
-" -------------------------- Theme & Statusline ----------------------------- ==>
-" --------------------------------------------------------------------------- ==>
+" ---------------------------------------------------------------------------- "
+" --------------------------- Theme & Statusline ----------------------------- "
+" ---------------------------------------------------------------------------- "
 
 " Lualine
 lua << EOF
@@ -189,9 +189,9 @@ let g:tokyonight_lualine_bold = 1
 let g:tokyonight_dark_float = 0
 colorscheme tokyonight
 
-" --------------------------------------------------------------------------- ==>
-" ----------------------------  Plugin Settings ----------------------------- ==>
-" --------------------------------------------------------------------------- ==>
+" ---------------------------------------------------------------------------- "
+" ----------------------------  Plugin Settings ------------------------------ "
+" ---------------------------------------------------------------------------- "
 
 " Autopairs
 lua require('nvim-autopairs').setup({ fast_wrap = {} })
@@ -300,15 +300,15 @@ let g:undotree_WindowLayout = 3
 nnoremap <Leader>/ :Commentary<cr>
 vnoremap <Leader>/ :Commentary<cr>
 
-" Vim-RSI ==> disable meta-key bindings
+" Vim-RSI
 let g:rsi_no_meta = 1
 
 " Yankstack
 nnoremap <Leader>p :Yanks<CR>
 
-" --------------------------------------------------------------------------- ==>
-" ------------------------ Telescope Config --------------------------------- ==>
-" --------------------------------------------------------------------------- ==>
+" ---------------------------------------------------------------------------- "
+" -------------------------- Telescope Config -------------------------------- "
+" ---------------------------------------------------------------------------- "
 
 lua << EOF
 local actions = require('telescope.actions')
@@ -364,9 +364,9 @@ nnoremap <Leader>h <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <Leader>H <cmd>lua require('telescope.builtin').oldfiles()<cr>
 nnoremap <Leader>m <cmd>lua require('telescope.builtin').marks()<cr>
 
-" --------------------------------------------------------------------------- ==>
-" ------------------------------ COC Config --------------------------------- ==>
-" --------------------------------------------------------------------------- ==>
+" ---------------------------------------------------------------------------- "
+" ------------------------------ COC Config ---------------------------------- "
+" ---------------------------------------------------------------------------- "
 
 let g:coc_global_extensions = [
   \ 'coc-angular',
@@ -413,9 +413,9 @@ nnoremap <Leader>ls <cmd>Telescope coc document_symbols<cr>
 nnoremap <silent> [d <Plug>(coc-diagnostic-prev)
 nnoremap <silent> ]d <Plug>(coc-diagnostic-next)
 
-" --------------------------------------------------------------------------- ==>
-" -------------------------- Tmux Vim Integration---------------------------- ==>
-" --------------------------------------------------------------------------- ==>
+" ---------------------------------------------------------------------------- "
+" -------------------------- Tmux Vim Integration ---------------------------- "
+" ---------------------------------------------------------------------------- "
 
 " Tmux-Vim navigator
 let g:tmux_navigator_no_mappings = 1
@@ -442,9 +442,9 @@ nnoremap <silent> <A-j> :TmuxResizeDown<cr>
 nnoremap <silent> <A-k> :TmuxResizeUp<cr>
 nnoremap <silent> <A-l> :TmuxResizeRight<cr>
 
-" --------------------------------------------------------------------------- ==>
-" --------------------------- Dashboard Config ------------------------------ ==>
-" --------------------------------------------------------------------------- ==>
+" ---------------------------------------------------------------------------- "
+" --------------------------- Dashboard Config ------------------------------- "
+" ---------------------------------------------------------------------------- "
 
 nnoremap <Leader><CR> :Dashboard<CR>
 let g:dashboard_default_executive = 'telescope'
