@@ -194,7 +194,7 @@ colorscheme tokyonight
 " ---------------------------------------------------------------------------- "
 
 " Autopairs
-lua require('nvim-autopairs').setup({ fast_wrap = {} })
+lua require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
 
 " Colorizer
 lua require'colorizer'.setup()
