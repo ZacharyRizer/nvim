@@ -70,6 +70,7 @@ set scrolloff=10
 set sidescrolloff=10
 set signcolumn=yes
 set shiftwidth=2
+set shortmess+=c
 set smartcase
 set softtabstop=2
 set splitbelow
@@ -107,23 +108,23 @@ augroup END
 let g:mapleader = " "
 inoremap <C-c> <Esc>
 nnoremap <C-c> :nohl<CR>
-nnoremap <leader>` :source $MYVIMRC <bar> :redraw <bar> :echo "Config Reloaded!"<CR>
-nnoremap <leader>~ :source $MYVIMRC <bar> :PlugUpdate --sync <bar> split <bar> :PlugClean<CR>
+nnoremap <Leader>` :source $MYVIMRC <bar> :redraw <bar> :echo "Config Reloaded!"<CR>
+nnoremap <Leader>~ :source $MYVIMRC <bar> :PlugUpdate --sync <bar> split <bar> :PlugClean<CR>
 
 " unmapping a few keys that annoy me
 nnoremap K <nop>
 nnoremap Q <nop>
 nnoremap <Space> <nop>
-nnoremap <Backspace> <nop>
+nnoremap <BS> <nop>
 
 " easy word replace, search/replace, and */# searching stay in place
 nnoremap c* *Ncgn
 nnoremap *  *N
 nnoremap #  #N
-vnoremap *  y/\V<C-R>=escape(@",'/\')<CR><CR>N
-vnoremap #  y?\V<C-R>=escape(@",'/\')<CR><CR>N
-nnoremap <leader>s :%s/
-vnoremap <leader>s :s/
+vnoremap *  y/<C-R>"<CR>N
+vnoremap #  y?<C-R>"<CR>N
+nnoremap <Leader>s :%s/
+vnoremap <Leader>s :s/
 
 " more intuitive yanking
 nmap Y y$
@@ -143,13 +144,13 @@ nnoremap < <<
 nnoremap > >>
 
 " easy buffer delete and close
-nnoremap <leader>d   :bd<cr>
-nnoremap <leader>dd  :bd!<cr>
-nnoremap <leader>wo  :%bd <bar> e# <bar> normal `" <cr>
+nnoremap <Leader>d   :bd<cr>
+nnoremap <Leader>dd  :bd!<cr>
+nnoremap <Leader>wo  :%bd <bar> e# <bar> normal `" <cr>
 
 " quickfix lists
-nnoremap <leader>j :cnext<CR>
-nnoremap <leader>k :cprev<CR>
+nnoremap <Leader>j :cnext<CR>
+nnoremap <Leader>k :cprev<CR>
 nnoremap <C-q> :call ToggleQFList()<CR>
 fun! ToggleQFList()
   let l:nr =  winnr("$")
@@ -230,7 +231,7 @@ require("indent_blankline").setup{
 EOF
 
 " NvimTree setup
-nmap <C-e> :NvimTreeToggle<CR>
+nnoremap <C-e> :NvimTreeToggle<CR>
 let g:nvim_tree_quit_on_open = 1
 let g:nvim_tree_indent_markers = 1
 let g:nvim_tree_respect_buf_cwd = 1
@@ -289,21 +290,21 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 " Undo tree
-nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <Leader>u :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 0
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_SplitWidth = 35
 let g:undotree_WindowLayout = 3
 
 " Vim-Commentary
-nnoremap <space>/ :Commentary<cr>
-vnoremap <space>/ :Commentary<cr>
+nnoremap <Leader>/ :Commentary<cr>
+vnoremap <Leader>/ :Commentary<cr>
 
 " Vim-RSI ==> disable meta-key bindings
 let g:rsi_no_meta = 1
 
 " Yankstack
-nnoremap <leader>p :Yanks<CR>
+nnoremap <Leader>p :Yanks<CR>
 
 " --------------------------------------------------------------------------- ==>
 " ------------------------ Telescope Config --------------------------------- ==>
@@ -352,20 +353,21 @@ EOF
 command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>
 command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>
 
-nnoremap <leader>c <cmd>lua require('telescope.builtin').commands()<cr>
-nnoremap <leader>C <cmd>lua require('telescope.builtin').command_history()<cr>
-nnoremap <leader>e <cmd>lua require('telescope').extensions.file_browser.file_browser()<cr>
-nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>F <cmd>lua require('telescope.builtin').find_files({ cwd = vim.fn.input("Find In Dir: ", "~/")})<cr>
-nnoremap <leader>g <cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ")})<cr>
-nnoremap <leader>G <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>h <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>H <cmd>lua require('telescope.builtin').oldfiles()<cr>
-nnoremap <leader>m <cmd>lua require('telescope.builtin').marks()<cr>
+nnoremap <Leader>c <cmd>lua require('telescope.builtin').commands()<cr>
+nnoremap <Leader>C <cmd>lua require('telescope.builtin').command_history()<cr>
+nnoremap <Leader>e <cmd>lua require('telescope').extensions.file_browser.file_browser()<cr>
+nnoremap <Leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <Leader>F <cmd>lua require('telescope.builtin').find_files({ cwd = vim.fn.input("Find In Dir: ", "~/")})<cr>
+nnoremap <Leader>g <cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ")})<cr>
+nnoremap <Leader>G <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <Leader>h <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <Leader>H <cmd>lua require('telescope.builtin').oldfiles()<cr>
+nnoremap <Leader>m <cmd>lua require('telescope.builtin').marks()<cr>
 
 " --------------------------------------------------------------------------- ==>
 " ------------------------------ COC Config --------------------------------- ==>
 " --------------------------------------------------------------------------- ==>
+
 let g:coc_global_extensions = [
   \ 'coc-angular',
   \ 'coc-css',
@@ -382,12 +384,12 @@ let g:coc_global_extensions = [
   \]
 
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " basic completion mappings
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 fun! s:check_back_space() abort
   let col = col('.') - 1
@@ -395,20 +397,21 @@ fun! s:check_back_space() abort
 endfun
 
 " Show documentation
-nnoremap <silent>H :call CocAction('doHover')<CR>
+nnoremap <silent>H :call CocActionAsync('doHover')<CR>
 
 " Lsp code navigation.
-nmap <silent> gd <cmd>Telescope coc definitions<cr>
-nmap <silent> gi <cmd>Telescope coc implementations<cr>
-nmap <silent> gr <cmd>Telescope coc references<cr>
-nmap <leader>rn  <Plug>(coc-rename)
+nnoremap <silent> gd <cmd>Telescope coc definitions<cr>
+nnoremap <silent> gi <cmd>Telescope coc implementations<cr>
+nnoremap <silent> gr <cmd>Telescope coc references<cr>
+nnoremap <silent> gt <cmd>Telescope coc type_definitions<cr>
+nnoremap <Leader>rn  <Plug>(coc-rename)
 nnoremap <Leader>la <cmd>Telescope coc file_code_actions<cr>
 nnoremap <Leader>ld <cmd>Telescope coc diagnostics<cr>
 nnoremap <Leader>ls <cmd>Telescope coc document_symbols<cr>
 
 " Use `[d` and `]d` to navigate diagnostics
-nmap <silent> [d <Plug>(coc-diagnostic-prev)
-nmap <silent> ]d <Plug>(coc-diagnostic-next)
+nnoremap <silent> [d <Plug>(coc-diagnostic-prev)
+nnoremap <silent> ]d <Plug>(coc-diagnostic-next)
 
 " --------------------------------------------------------------------------- ==>
 " -------------------------- Tmux Vim Integration---------------------------- ==>
