@@ -62,7 +62,7 @@ vim.call('yankstack#setup')
 -- global
 vim.o.clipboard = "unnamedplus"
 vim.o.cmdheight = 2
-vim.o.completeopt = { "menuone", "noinsert", "noselect" }
+vim.o.completeopt = "menuone,noinsert,noselect"
 vim.o.hidden = true
 vim.o.ignorecase = true
 vim.o.inccommand = "nosplit"
@@ -70,7 +70,6 @@ vim.o.lazyredraw = true
 vim.o.mouse = "a"
 vim.o.pumblend = 15
 vim.o.scrolloff = 10
-vim.o.shortmess = vim.o.shortmess + "c"
 vim.o.showmode = false
 vim.o.sidescrolloff = 10
 vim.o.smartcase = true
@@ -80,7 +79,7 @@ vim.o.termguicolors = true
 vim.o.timeoutlen = 250
 vim.o.updatetime = 100
 vim.o.wildignorecase = true
-vim.o.wildmode = {"longest:full", "full"}
+vim.o.wildmode = "longest:full,full"
 vim.o.writebackup = false
 -- buffer
 vim.bo.expandtab = true
@@ -90,9 +89,12 @@ vim.bo.swapfile = false
 vim.bo.tabstop = 2
 vim.bo.undofile = true
 -- window
-vim.wo.number_relativenumber = true
-vim.wo.signcolumn = true
+vim.wo.number = true
+vim.wo.relativenumber = true
+vim.wo.signcolumn = "yes"
 vim.wo.wrap = false
+
+vim.opt.shortmess:append("c")
 
 vim.cmd [[
   augroup FILE_SPECIFICS
@@ -140,11 +142,11 @@ map('n', '<Leader>s', ':%s/', opts)
 map('v', '<Leader>s', ':s/', opts)
 
 -- more intuitive yanking
-map('n', 'Y', 'y$')
+map('n', 'Y', 'y$', {})
 
 -- insert blank lines
-map('n', 'OO', 'O<Esc>j')
-map('n', 'oo', 'o<Esc>k')
+map('n', 'OO', 'O<Esc>j', {})
+map('n', 'oo', 'o<Esc>k', {})
 
 -- better line connection/breaking
 map('n', 'J', 'mzJ`z', opts)
@@ -163,17 +165,19 @@ map('n', '<Leader>wo', ':%bd <bar> e# <bar> normal `--<cr>', opts)
 
 
 -- quickfix lists
-local ToggleQFList = function()
-  local nr = vim.cmd.winnr("$")
-  if (nr == 1) then
-    return 'copen'
-  else
-    return 'cclose'
-  end
-end
 map('n', '<Leader>j', ':cnext<CR>', opts)
 map('n', '<Leader>k', ':cprev<CR>', opts)
-map('n', '<C-q>', ToggleQFList(), opts)
+map('n', '<C-q>', 'call ToggleQFList()', opts)
+vim.cmd[[
+  fun! ToggleQFList()
+    let l:nr =  winnr("$")
+    if l:nr == 1
+      copen
+    else
+      cclose
+    endif
+  endfun
+]]
 
 ----------------------------------------------------------------------------- ==>
 ---------------------------- Theme & Statusline ----------------------------- ==>
@@ -239,7 +243,7 @@ require("indent_blankline").setup{
 }
 
 -- NvimTree setup
-map('n', '<C-e>', ':NvimTreeToggle<CR>')
+map('n', '<C-e>', ':NvimTreeToggle<CR>', {})
 vim.gnvim_tree_quit_on_open = true
 vim.gnvim_tree_indent_markers = true
 vim.gnvim_tree_respect_buf_cwd = true
@@ -369,52 +373,52 @@ map('n', '<Leader>m', '<cmd>lua require("telescope.builtin").marks()<cr>', opts)
 -------------------------------- COC Config --------------------------------- ==>
 ----------------------------------------------------------------------------- ==>
 
-vim.g.coc_global_extensions = {
-  'coc-angular',
-  'coc-css',
-  'coc-emmet',
-  'coc-go',
-  'coc-html',
-  'coc-json',
-  'coc-marketplace',
-  'coc-prettier',
-  'coc-pyright',
-  'coc-sumneko-lua',
-  'coc-tsserver',
-  'coc-vimlsp',
-}
+-- vim.g.coc_global_extensions = {
+--   'coc-angular',
+--   'coc-css',
+--   'coc-emmet',
+--   'coc-go',
+--   'coc-html',
+--   'coc-json',
+--   'coc-marketplace',
+--   'coc-prettier',
+--   'coc-pyright',
+--   'coc-sumneko-lua',
+--   'coc-tsserver',
+--   'coc-vimlsp',
+-- }
 
--- Add `:Format` command to format current buffer.
-vim.cmd[[command! -nargs=0 Format :call CocActionAsync('format')]]
+-- -- Add `:Format` command to format current buffer.
+-- vim.cmd[[command! -nargs=0 Format :call CocActionAsync('format')]]
 
--- basic completion mappings
-map('i', '<expr> <TAB>', vim.cmd[[pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()]], opts_silent)
-map('i', '<expr> <S-TAB>', vim.cmd[[pumvisible() ? "\<C-p>" : "\<C-h>"]], opts_silent)
-map('i', '<expr> <CR>', vim.cmd[[pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts_silent)
+-- -- basic completion mappings
+-- map('i', '<expr> <TAB>', vim.cmd[[pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()]], opts_silent)
+-- map('i', '<expr> <S-TAB>', vim.cmd[[pumvisible() ? "\<C-p>" : "\<C-h>"]], opts_silent)
+-- map('i', '<expr> <CR>', vim.cmd[[pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts_silent)
 
-vim.cmd[[
-  fun! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-  endfun
-]]
+-- vim.cmd[[
+--   fun! s:check_back_space() abort
+--     let col = col('.') - 1
+--     return !col || getline('.')[col - 1]  =~# '\s'
+--   endfun
+-- ]]
 
--- Show documentation
-map('n', 'H', vim.cmd[[:call CocActionAsync('doHover')<CR>]], opts_silent)
+-- -- Show documentation
+-- map('n', 'H', vim.cmd[[:call CocActionAsync('doHover')<CR>]], opts_silent)
 
--- Lsp code navigation.
-map('n', 'gd', '<cmd>Telescope coc definitions<cr>', opts_silent)
-map('n', 'gi', '<cmd>Telescope coc implementations<cr>', opts_silent)
-map('n', 'gr', '<cmd>Telescope coc references<cr>', opts_silent)
-map('n', 'gt', '<cmd>Telescope coc type_definitions<cr>', opts_silent)
-map('n', '<Leader>rn', '<Plug>(coc-rename)', opts)
-map('n', '<Leader>la', '<cmd>Telescope coc file_code_actions<cr>', opts)
-map('n', '<Leader>ld', '<cmd>Telescope coc diagnostics<cr>', opts)
-map('n', '<Leader>ls', '<cmd>Telescope coc document_symbols<cr>', opts)
+-- -- Lsp code navigation.
+-- map('n', 'gd', '<cmd>Telescope coc definitions<cr>', opts_silent)
+-- map('n', 'gi', '<cmd>Telescope coc implementations<cr>', opts_silent)
+-- map('n', 'gr', '<cmd>Telescope coc references<cr>', opts_silent)
+-- map('n', 'gt', '<cmd>Telescope coc type_definitions<cr>', opts_silent)
+-- map('n', '<Leader>rn', '<Plug>(coc-rename)', opts)
+-- map('n', '<Leader>la', '<cmd>Telescope coc file_code_actions<cr>', opts)
+-- map('n', '<Leader>ld', '<cmd>Telescope coc diagnostics<cr>', opts)
+-- map('n', '<Leader>ls', '<cmd>Telescope coc document_symbols<cr>', opts)
 
--- Use `[d` and `]d` to navigate diagnostics
-map('n', '[d', '<Plug>(coc-diagnostic-prev)', opts)
-map('n', ']d', '<Plug>(coc-diagnostic-next)', opts)
+-- -- Use `[d` and `]d` to navigate diagnostics
+-- map('n', '[d', '<Plug>(coc-diagnostic-prev)', opts)
+-- map('n', ']d', '<Plug>(coc-diagnostic-next)', opts)
 
 ----------------------------------------------------------------------------- ==>
 ---------------------------- Tmux Vim Integration---------------------------- ==>
@@ -449,7 +453,7 @@ map('n', '<A-l>', ':TmuxResizeRight<cr>', opts_silent)
 ----------------------------- Dashboard Config ------------------------------ ==>
 ----------------------------------------------------------------------------- ==>
 
-map('n', '<Leader><CR>', ':Dashboard<CR>')
+map('n', '<Leader><CR>', ':Dashboard<CR>', {})
 vim.g.dashboard_default_executive = 'telescope'
 vim.g.dashboard_session_directory = '~/.local/share/nvim/session'
 
