@@ -406,10 +406,10 @@ nnoremap <silent> gi <cmd>Telescope coc implementations<cr>
 nnoremap <silent> gr <cmd>Telescope coc references<cr>
 nnoremap <silent> gt <cmd>Telescope coc type_definitions<cr>
 nmap <Leader>rn  <Plug>(coc-rename)
+
 nnoremap <Leader>la <cmd>Telescope coc file_code_actions<cr>
 nnoremap <Leader>ld <cmd>Telescope coc diagnostics<cr>
 nnoremap <Leader>ls <cmd>Telescope coc document_symbols<cr>
-nmap <Leader>rn  <Plug>(coc-rename)
 
 " Use `[d` and `]d` to navigate diagnostics
 nmap <silent> [d <Plug>(coc-diagnostic-prev)
