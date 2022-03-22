@@ -252,6 +252,7 @@ require'nvim-tree'.setup {
         { key = "h",            cb = tree_cb("close_node") },
         { key = "<BS>",         cb = tree_cb("dir_up") },
         { key = "?",            cb = tree_cb("toggle_help") },
+        { key = "<C-e>",        cb = tree_cb("") },
       }
     },
   },
@@ -404,14 +405,14 @@ nnoremap <silent> gd <cmd>Telescope coc definitions<cr>
 nnoremap <silent> gi <cmd>Telescope coc implementations<cr>
 nnoremap <silent> gr <cmd>Telescope coc references<cr>
 nnoremap <silent> gt <cmd>Telescope coc type_definitions<cr>
-nnoremap <Leader>rn  <Plug>(coc-rename)
+nmap <Leader>rn  <Plug>(coc-rename)
 nnoremap <Leader>la <cmd>Telescope coc file_code_actions<cr>
 nnoremap <Leader>ld <cmd>Telescope coc diagnostics<cr>
 nnoremap <Leader>ls <cmd>Telescope coc document_symbols<cr>
 
 " Use `[d` and `]d` to navigate diagnostics
-nnoremap <silent> [d <Plug>(coc-diagnostic-prev)
-nnoremap <silent> ]d <Plug>(coc-diagnostic-next)
+nmap <silent> [d <Plug>(coc-diagnostic-prev)
+nmap <silent> ]d <Plug>(coc-diagnostic-next)
 
 " ---------------------------------------------------------------------------- "
 " -------------------------- Tmux Vim Integration ---------------------------- "
