@@ -249,11 +249,12 @@ require'nvim-tree'.setup {
     mappings = {
       custom_only = false,
       list = {
-        { key = {"l", "<CR>"},  cb = tree_cb("edit") },
-        { key = "h",            cb = tree_cb("close_node") },
-        { key = "<BS>",         cb = tree_cb("dir_up") },
-        { key = "?",            cb = tree_cb("toggle_help") },
-        { key = "<C-e>",        cb = tree_cb("") },
+        { key = "<CR>",         action = "edit" },
+        { key = "h",            action = "close_node" },
+        { key = "l",            action = "open_node" },
+        { key = "<BS>",         action = "dir_up" },
+        { key = "?",            action = "toggle_help" },
+        { key = "<C-e>",        action = "" },
       }
     },
   },
