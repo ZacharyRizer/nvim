@@ -239,9 +239,10 @@ require'nvim-tree'.setup {
   actions = {
     open_file = { quit_on_open = true },
   },
-  render = { indent_markers = true },
+  renderer = {
+    indent_markers = { enable = true }
+  },
   update_cwd          = true,
-  update_to_buf_dir   = { enable = true, auto_open = true },
   update_focused_file = { enable = true, update_cwd = true },
   view = {
     width = 35,
@@ -276,7 +277,7 @@ EOF
 " Treesitter setup
 lua << EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+  ensure_installed = "all",
   highlight = {
     disable = { "vim" },
     enable = true
