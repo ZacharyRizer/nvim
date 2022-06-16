@@ -17,6 +17,7 @@
     "typescript"
   ],
   "diagnostic.floatConfig": { "border": true },
+  "emmet.includeLanguages": { "javascript": "javascriptreact" },
   "go.goplsOptions": {
     "completeUnimported": true
   },

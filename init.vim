@@ -232,9 +232,7 @@ EOF
 
 " NvimTree setup
 nnoremap <C-e> :NvimTreeToggle<CR>
-let g:nvim_tree_respect_buf_cwd = 1
 lua << EOF
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 require'nvim-tree'.setup {
   actions = {
     open_file = { quit_on_open = true },
@@ -242,6 +240,7 @@ require'nvim-tree'.setup {
   renderer = {
     indent_markers = { enable = true }
   },
+  respect_buf_cwd = true,
   update_cwd          = true,
   update_focused_file = { enable = true, update_cwd = true },
   view = {
