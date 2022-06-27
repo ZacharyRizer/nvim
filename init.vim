@@ -451,35 +451,37 @@ nnoremap <silent> <A-l> :TmuxResizeRight<cr>
 " ---------------------------------------------------------------------------- "
 
 nnoremap <Leader><CR> :Dashboard<CR>
-let g:dashboard_default_executive = 'telescope'
-let g:dashboard_session_directory = '~/.local/share/nvim/session'
+lua << EOF
+local db = require('dashboard')
+local header = {
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[ ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗]],
+  [[ ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║]],
+  [[ ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║]],
+  [[ ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║]],
+  [[ ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║]],
+  [[ ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]]
+}
+db.custom_header = header
+db.custom_center = {
+  {icon = '  ', desc = 'Bookmarks          ', action ='Telescope marks'},
+  {icon = '  ', desc = 'New File           ', action =  'e new'},
+  {icon = '  ', desc = 'Find File          ', action = 'Telescope find_files'},
+  {icon = '  ', desc ='Find Word          ', action =  'Telescope live_grep'},
+  {icon = '  ', desc = 'Recent Files       ', action = 'Telescope oldfiles'},
+  {icon = '  ', desc = 'Recent Projects    ', action = 'Telescope projects'},
+  {icon = '  ', desc = 'Change Colorscheme ', action = 'Telescope colorscheme'},
+  {icon = '  ', desc = 'Config             ', action = 'e ~/.config/nvim/init.vim'},
+}
+db.session_directory = '~/.local/share/nvim/session'
 
-let g:dashboard_custom_section={
-\ 'a': { 'description': ['  Bookmarks          '], 'command': 'Telescope marks'},
-\ 'b': { 'description': ['  New File           '], 'command': 'e new'},
-\ 'c': { 'description': ['  Find File          '], 'command': 'Telescope find_files'},
-\ 'd': { 'description': ['  Find Word          '], 'command': 'Telescope live_grep'},
-\ 'e': { 'description': ['  Recent Files       '], 'command': 'Telescope oldfiles'},
-\ 'f': { 'description': ['  Recent Projects    '], 'command': 'Telescope projects'},
-\ 'h': { 'description': ['  Change Colorscheme '], 'command': 'Telescope colorscheme'},
-\ 'i': { 'description': ['  Config             '], 'command': 'e ~/.config/nvim/init.vim'},
-\ }
 
-let g:dashboard_custom_header = [
-\ '',
-\ '',
-\ '',
-\ '',
-\ '',
-\ '',
-\ ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
-\ ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
-\ ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
-\ ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
-\ ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
-\ ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
-\ '',
-\ '',
-\ '',
-\ '',
-\]
