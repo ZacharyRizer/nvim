@@ -276,7 +276,7 @@ EOF
 " Treesitter setup
 lua << EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
+  ignore_install = { "phpdoc" },
   highlight = {
     disable = { "vim" },
     enable = true
@@ -400,7 +400,7 @@ fun! s:check_back_space() abort
 endfun
 
 " Show documentation
-nnoremap <silent>H :call CocActionAsync('doHover')<CR>
+nnoremap <silent>K :call CocActionAsync('doHover')<CR>
 
 " Lsp code navigation.
 nnoremap <silent> gd <cmd>Telescope coc definitions<cr>
@@ -473,10 +473,10 @@ local header = {
 }
 db.custom_header = header
 db.custom_center = {
-  {icon = '  ', desc = 'Bookmarks          ', action ='Telescope marks'},
-  {icon = '  ', desc = 'New File           ', action =  'e new'},
+  {icon = '  ', desc = 'Bookmarks          ', action = 'Telescope marks'},
+  {icon = '  ', desc = 'New File           ', action = 'DashboardNewFile'},
   {icon = '  ', desc = 'Find File          ', action = 'Telescope find_files'},
-  {icon = '  ', desc ='Find Word          ', action =  'Telescope live_grep'},
+  {icon = '  ', desc = 'Find Word          ', action = 'Telescope live_grep'},
   {icon = '  ', desc = 'Recent Files       ', action = 'Telescope oldfiles'},
   {icon = '  ', desc = 'Recent Projects    ', action = 'Telescope projects'},
   {icon = '  ', desc = 'Change Colorscheme ', action = 'Telescope colorscheme'},
