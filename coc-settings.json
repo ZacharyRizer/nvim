@@ -14,7 +14,9 @@
     "markdown",
     "python",
     "scss",
-    "typescript"
+    "typescript",
+    "typescriptreact",
+    "yml"
   ],
   "diagnostic.floatConfig": { "border": true },
   "emmet.includeLanguages": { "javascript": "javascriptreact" },

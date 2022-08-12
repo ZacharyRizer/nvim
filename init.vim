@@ -307,7 +307,7 @@ vnoremap <Leader>/ :Commentary<cr>
 let g:rsi_no_meta = 1
 
 " Yankstack
-nnoremap <Leader>p :Yanks<CR>
+nnoremap <Leader>y :Yanks<CR>
 
 " ---------------------------------------------------------------------------- "
 " -------------------------- Telescope Config -------------------------------- "
@@ -356,16 +356,17 @@ EOF
 command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>
 command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>
 
-nnoremap <Leader>c <cmd>lua require('telescope.builtin').commands()<cr>
-nnoremap <Leader>C <cmd>lua require('telescope.builtin').command_history()<cr>
+nnoremap <Leader>c :Telescope commands<cr>
+nnoremap <Leader>C :Telescope command_history<cr>
 nnoremap <Leader>e <cmd>lua require('telescope').extensions.file_browser.file_browser()<cr>
-nnoremap <Leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <Leader>f :Telescope find_files<cr>
 nnoremap <Leader>F <cmd>lua require('telescope.builtin').find_files({ cwd = vim.fn.input("Find In Dir: ", "~/")})<cr>
 nnoremap <Leader>g <cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ")})<cr>
-nnoremap <Leader>G <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <Leader>h <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <Leader>H <cmd>lua require('telescope.builtin').oldfiles()<cr>
-nnoremap <Leader>m <cmd>lua require('telescope.builtin').marks()<cr>
+nnoremap <Leader>G :Telescope live_grep<cr>
+nnoremap <Leader>h :Telescope buffers<cr>
+nnoremap <Leader>H :Telescope oldfiles<cr>
+nnoremap <Leader>m :Telescope marks<cr>
+nnoremap <Leader>p :Telescope projects<cr>
 
 " ---------------------------------------------------------------------------- "
 " ------------------------------ COC Config ---------------------------------- "
@@ -390,9 +391,9 @@ let g:coc_global_extensions = [
 command! -nargs=0 Format :call CocActionAsync('format')
 
 " basic completion mappings
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
-inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1): check_back_space() ? "\<Tab>" : coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 fun! s:check_back_space() abort
   let col = col('.') - 1
@@ -460,6 +461,12 @@ local header = {
   [[                                                       ]],
   [[                                                       ]],
   [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
   [[ ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗]],
   [[ ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║]],
   [[ ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║]],
@@ -469,19 +476,23 @@ local header = {
   [[                                                       ]],
   [[                                                       ]],
   [[                                                       ]],
+  [[                                                       ]],
+  [[                                                       ]],
   [[                                                       ]]
 }
 db.custom_header = header
 db.custom_center = {
-  {icon = '  ', desc = 'Bookmarks          ', action = 'Telescope marks'},
   {icon = '  ', desc = 'New File           ', action = 'DashboardNewFile'},
   {icon = '  ', desc = 'Find File          ', action = 'Telescope find_files'},
   {icon = '  ', desc = 'Find Word          ', action = 'Telescope live_grep'},
   {icon = '  ', desc = 'Recent Files       ', action = 'Telescope oldfiles'},
   {icon = '  ', desc = 'Recent Projects    ', action = 'Telescope projects'},
-  {icon = '  ', desc = 'Change Colorscheme ', action = 'Telescope colorscheme'},
   {icon = '  ', desc = 'Config             ', action = 'e ~/.config/nvim/init.vim'},
 }
+db.custom_footer = {}
 db.session_directory = '~/.local/share/nvim/session'
+EOF
+"   {icon = '  ', desc = 'Bookmarks          ', action = 'Telescope marks'},
+"   {icon = '  ', desc = 'Change Colorscheme ', action = 'Telescope colorscheme'},
 
 
