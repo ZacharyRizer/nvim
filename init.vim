@@ -13,14 +13,11 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'ahmedkhalf/project.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'lewis6991/gitsigns.nvim'
 
 " Theme and Formatting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'windwp/nvim-autopairs'
-Plug 'norcalli/nvim-colorizer.lua'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 " UI Elements
@@ -29,8 +26,8 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'mbbill/undotree'
 Plug 'akinsho/toggleterm.nvim'
-Plug 'ggandor/lightspeed.nvim'
-Plug 'ZacharyRizer/vim-yankstack'
+Plug 'ggandor/leap.nvim'
+Plug 'gbprod/yanky.nvim'
 
 " Tpope Plugins
 Plug 'tpope/vim-commentary'
@@ -43,10 +40,7 @@ Plug 'ZacharyRizer/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'RyanMillerC/better-vim-tmux-resizer'
 
-Plug 'dstein64/vim-startuptime'
-
 call plug#end()
-call yankstack#setup()
 
 " ---------------------------------------------------------------------------- "
 " --------------------------- General Settings ------------------------------- "
@@ -195,32 +189,6 @@ colorscheme tokyonight
 " ----------------------------  Plugin Settings ------------------------------ "
 " ---------------------------------------------------------------------------- "
 
-" Autopairs
-lua require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
-
-" Colorizer
-lua require'colorizer'.setup()
-
-" Gitsigns
-lua << EOF
-require('gitsigns').setup {
-  signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '+', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  },
-  keymaps = {
-    noremap = true,
-    ['n ]g'] = { expr = true, "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'"},
-    ['n [g'] = { expr = true, "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'"},
-    ['n gs'] = '<cmd>Gitsigns preview_hunk<CR>',
-    ['n gb'] = '<cmd>Gitsigns blame_line<CR>',
-  },
-}
-EOF
-
 " IndentLine
 lua << EOF
 require("indent_blankline").setup{
@@ -231,6 +199,9 @@ require("indent_blankline").setup{
   buftype_exclude = {'nofile', 'terminal'}
 }
 EOF
+
+" Leap
+lua require("leap").set_default_keymaps()
 
 " NvimTree setup
 nnoremap <C-e> :NvimTreeToggle<CR>
@@ -246,7 +217,7 @@ require'nvim-tree'.setup {
   update_cwd          = true,
   update_focused_file = { enable = true, update_cwd = true },
   view = {
-    width = 35,
+    width = 37,
     side = 'right',
     mappings = {
       custom_only = false,
@@ -299,7 +270,7 @@ EOF
 nnoremap <Leader>u :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 0
 let g:undotree_SetFocusWhenToggle = 1
-let g:undotree_SplitWidth = 35
+let g:undotree_SplitWidth = 37
 let g:undotree_WindowLayout = 3
 
 " Vim-Commentary
@@ -309,8 +280,16 @@ vnoremap <Leader>/ :Commentary<cr>
 " Vim-RSI
 let g:rsi_no_meta = 1
 
-" Yankstack
-nnoremap <Leader>y :Yanks<CR>
+" Yanky
+lua << EOF
+  require("yanky").setup()
+  vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
+  vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
+  vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
+  vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
+  vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
+  vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
+EOF
 
 " ---------------------------------------------------------------------------- "
 " -------------------------- Telescope Config -------------------------------- "
@@ -354,6 +333,7 @@ require('telescope').load_extension('coc')
 require("telescope").load_extension('file_browser')
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('projects')
+require("telescope").load_extension("yank_history")
 EOF
 
 command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>
@@ -370,6 +350,7 @@ nnoremap <Leader>h :Telescope buffers<cr>
 nnoremap <Leader>H :Telescope oldfiles<cr>
 nnoremap <Leader>m :Telescope marks<cr>
 nnoremap <Leader>p :Telescope projects<cr>
+nnoremap <Leader>y :Telescope yank_history<cr>
 
 " ---------------------------------------------------------------------------- "
 " ------------------------------ COC Config ---------------------------------- "
@@ -379,10 +360,13 @@ let g:coc_global_extensions = [
   \ 'coc-angular',
   \ 'coc-css',
   \ 'coc-emmet',
+  \ 'coc-git',
   \ 'coc-go',
+  \ 'coc-highlight',
   \ 'coc-html',
   \ 'coc-json',
   \ 'coc-marketplace',
+  \ 'coc-pairs',
   \ 'coc-prettier',
   \ 'coc-pyright',
   \ 'coc-sumneko-lua',
@@ -390,13 +374,10 @@ let g:coc_global_extensions = [
   \ 'coc-vimlsp',
   \]
 
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
-
 " basic completion mappings
 inoremap <silent><expr> <TAB>  coc#pum#visible() ? coc#pum#next(1) :  CheckBackspace() ? "\<Tab>" :  coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -420,6 +401,11 @@ nnoremap <Leader>ls <cmd>Telescope coc document_symbols<cr>
 " Use `[d` and `]d` to navigate diagnostics
 nmap <silent> [d <Plug>(coc-diagnostic-prev)
 nmap <silent> ]d <Plug>(coc-diagnostic-next)
+
+" coc-git
+nmap [g <Plug>(coc-git-prevchunk)
+nmap ]g <Plug>(coc-git-nextchunk)
+nmap gc <Plug>(coc-git-chunkinfo)
 
 " ---------------------------------------------------------------------------- "
 " -------------------------- Tmux Vim Integration ---------------------------- "

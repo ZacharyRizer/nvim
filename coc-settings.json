@@ -20,6 +20,10 @@
   ],
   "diagnostic.floatConfig": { "border": true },
   "emmet.includeLanguages": { "javascript": "javascriptreact", "typescript": "typescriptreact" },
+  "git.addedSign.hlGroup": "GitSignsAdd",
+  "git.changedSign.hlGroup": "GitSignsChange",
+  "git.removedSign.hlGroup": "GitSignsDelete",
+  "git.topRemovedSign.hlGroup": "GitSignsDelete",
   "go.goplsOptions": {
     "completeUnimported": true
   },
@@ -37,11 +41,11 @@
     "<C-n>": "normal:j",
     "<C-p>": "normal:k"
   },
+  "Lua.telemetry.enable": true,
   "prettier.disableLanguages": ["haskell"],
   "prettier.printWidth": 100,
   "prettier.tabWidth": 2,
   "signature.floatConfig": { "border": true },
   "suggest.floatConfig": { "border": true },
-  "sumneko-lua.enableNvimLuaDev": true,
-  "Lua.telemetry.enable": true
+  "sumneko-lua.enableNvimLuaDev": true
 }
