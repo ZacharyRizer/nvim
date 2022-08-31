@@ -43,6 +43,8 @@ Plug 'ZacharyRizer/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'RyanMillerC/better-vim-tmux-resizer'
 
+Plug 'dstein64/vim-startuptime'
+
 call plug#end()
 call yankstack#setup()
 
@@ -289,6 +291,7 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = "_",
     },
   },
+  indent = { enable = true }
 }
 EOF
 
@@ -391,14 +394,14 @@ let g:coc_global_extensions = [
 command! -nargs=0 Format :call CocActionAsync('format')
 
 " basic completion mappings
-inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1): check_back_space() ? "\<Tab>" : coc#refresh()
+inoremap <silent><expr> <TAB>  coc#pum#visible() ? coc#pum#next(1) :  CheckBackspace() ? "\<Tab>" :  coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-fun! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
-endfun
+endfunction
 
 " Show documentation
 nnoremap <silent>K :call CocActionAsync('doHover')<CR>
@@ -491,8 +494,3 @@ db.custom_center = {
 }
 db.custom_footer = {}
 db.session_directory = '~/.local/share/nvim/session'
-EOF
-"   {icon = '  ', desc = 'Bookmarks          ', action = 'Telescope marks'},
-"   {icon = '  ', desc = 'Change Colorscheme ', action = 'Telescope colorscheme'},
-
-

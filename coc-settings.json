@@ -19,7 +19,7 @@
     "yml"
   ],
   "diagnostic.floatConfig": { "border": true },
-  "emmet.includeLanguages": { "javascript": "javascriptreact" },
+  "emmet.includeLanguages": { "javascript": "javascriptreact", "typescript": "typescriptreact" },
   "go.goplsOptions": {
     "completeUnimported": true
   },
