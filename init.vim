@@ -9,7 +9,6 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim', {'do': 'make'}
-Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'ahmedkhalf/project.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -90,6 +89,7 @@ augroup FORMAT_OPTIONS
   autocmd BufEnter * set fo-=c fo-=r fo-=o          " disable auto comment wrap
   autocmd BufWritePre * %s/\s\+$//e                 " remove whitespace on save
   autocmd VimResized * :wincmd =                    " auto resize windows
+  autocmd CursorHold,CursorHoldI * checktime        " make sure buffer is up to date
 augroup END
 
 augroup HIGHLIGHT_YANK
@@ -323,14 +323,9 @@ require('telescope').setup{
     prompt_prefix = " ",
     selection_caret = " ",
     sorting_strategy = "ascending",
-  },
-  extensions = {
-    file_browser = { path = "%:p:h" }
-  },
-
+  }
 }
 require('telescope').load_extension('coc')
-require("telescope").load_extension('file_browser')
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('projects')
 require("telescope").load_extension("yank_history")
@@ -341,7 +336,6 @@ command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>
 
 nnoremap <Leader>c :Telescope commands<cr>
 nnoremap <Leader>C :Telescope command_history<cr>
-nnoremap <Leader>e <cmd>lua require('telescope').extensions.file_browser.file_browser()<cr>
 nnoremap <Leader>f :Telescope find_files<cr>
 nnoremap <Leader>F <cmd>lua require('telescope.builtin').find_files({ cwd = vim.fn.input("Find In Dir: ", "~/")})<cr>
 nnoremap <Leader>g <cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ")})<cr>
