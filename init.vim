@@ -15,6 +15,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Theme and Formatting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
@@ -248,6 +249,11 @@ EOF
 
 " Treesitter setup
 lua << EOF
+require'treesitter-context'.setup{
+  patterns = {
+    default = { 'class', 'function', 'method', 'for', 'while', 'if', 'switch', 'case' },
+  },
+}
 require'nvim-treesitter.configs'.setup {
   ignore_install = { "phpdoc" },
   highlight = {
