@@ -245,6 +245,14 @@ require("toggleterm").setup{
   direction = 'float',
   float_opts = { border = 'curved' }
 }
+local Terminal  = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+
+vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
 EOF
 
 " Treesitter setup
@@ -340,17 +348,18 @@ EOF
 command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>
 command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>
 
-nnoremap <Leader>c :Telescope commands<cr>
-nnoremap <Leader>C :Telescope command_history<cr>
-nnoremap <Leader>f :Telescope find_files<cr>
-nnoremap <Leader>F <cmd>lua require('telescope.builtin').find_files({ cwd = vim.fn.input("Find In Dir: ", "~/")})<cr>
-nnoremap <Leader>g <cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ")})<cr>
-nnoremap <Leader>G :Telescope live_grep<cr>
-nnoremap <Leader>h :Telescope buffers<cr>
-nnoremap <Leader>H :Telescope oldfiles<cr>
-nnoremap <Leader>m :Telescope marks<cr>
-nnoremap <Leader>p :Telescope projects<cr>
-nnoremap <Leader>y :Telescope yank_history<cr>
+nnoremap <Leader>c  <cmd>Telescope commands<cr>
+nnoremap <Leader>f  <cmd>Telescope find_files<cr>
+nnoremap <Leader>g  <cmd>Telescope live_grep<cr>
+nnoremap <Leader>h  <cmd>Telescope buffers<cr>
+nnoremap <Leader>la <cmd>Telescope coc file_code_actions<cr>
+nnoremap <Leader>lc <cmd>Telescope command_history<cr>
+nnoremap <Leader>ld <cmd>Telescope coc diagnostics<cr>
+nnoremap <Leader>lh <cmd>Telescope oldfiles<cr>
+nnoremap <Leader>ls <cmd>Telescope treesitter<cr>
+nnoremap <Leader>m  <cmd>Telescope marks<cr>
+nnoremap <Leader>p  <cmd>Telescope projects<cr>
+nnoremap <Leader>y  <cmd>Telescope yank_history<cr>
 
 " ---------------------------------------------------------------------------- "
 " ------------------------------ COC Config ---------------------------------- "
@@ -393,10 +402,6 @@ nnoremap <silent> gi <cmd>Telescope coc implementations<cr>
 nnoremap <silent> gr <cmd>Telescope coc references<cr>
 nnoremap <silent> gt <cmd>Telescope coc type_definitions<cr>
 nmap <Leader>rn  <Plug>(coc-rename)
-
-nnoremap <Leader>la <cmd>Telescope coc file_code_actions<cr>
-nnoremap <Leader>ld <cmd>Telescope coc diagnostics<cr>
-nnoremap <Leader>ls <cmd>Telescope coc document_symbols<cr>
 
 " Use `[d` and `]d` to navigate diagnostics
 nmap <silent> [d <Plug>(coc-diagnostic-prev)
