@@ -163,15 +163,23 @@ endfun
 
 " Lualine
 lua << EOF
+function Filenames()
+  if vim.bo.filetype == dashboard then
+    return ''
+  else
+    return vim.fn.expand('%:p:t')
+  end
+end
+
 require'lualine'.setup {
   extensions = { 'nvim-tree', 'quickfix'},
   options = {
-    disabled_filetypes = { 'undotree'},
+    disabled_filetypes = { 'undotree' },
   },
   sections = {
     lualine_a = {{'mode', fmt = function(str) return str:sub(1,1) end}},
     lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
+    lualine_c = {Filenames},
     lualine_x = {{'g:coc_status', cond = function() return vim.fn.winwidth(0) > 90 end}},
     lualine_y = {'progress'},
     lualine_z = {'location'}
@@ -475,12 +483,12 @@ local header = {
 }
 db.custom_header = header
 db.custom_center = {
-  {icon = '  ', desc = 'New File           ', action = 'DashboardNewFile'},
-  {icon = '  ', desc = 'Find File          ', action = 'Telescope find_files'},
-  {icon = '  ', desc = 'Find Word          ', action = 'Telescope live_grep'},
-  {icon = '  ', desc = 'Recent Files       ', action = 'Telescope oldfiles'},
-  {icon = '  ', desc = 'Recent Projects    ', action = 'Telescope projects'},
-  {icon = '  ', desc = 'Config             ', action = 'e ~/.config/nvim/init.vim'},
+  {icon = '    ', desc = 'New File       ', action = 'DashboardNewFile'},
+  {icon = '    ', desc = 'Find File      ', action = 'Telescope find_files'},
+  {icon = '    ', desc = 'Find Word      ', action = 'Telescope live_grep'},
+  {icon = '    ', desc = 'Recent Files   ', action = 'Telescope oldfiles'},
+  {icon = '    ', desc = 'Recent Projects', action = 'Telescope projects'},
+  {icon = '    ', desc = 'Config         ', action = 'e ~/.config/nvim/init.vim'},
 }
 db.custom_footer = {}
 db.hide_statusline = false
