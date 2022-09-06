@@ -57,7 +57,6 @@ set lazyredraw
 set mouse=a
 set noswapfile
 set nowritebackup
-set noerrorbells
 set noshowmode
 set nowrap
 set number relativenumber
@@ -165,9 +164,9 @@ endfun
 " Lualine
 lua << EOF
 require'lualine'.setup {
-  extensions = {'nvim-tree', 'quickfix'},
+  extensions = { 'nvim-tree', 'quickfix'},
   options = {
-    disabled_filetypes = {'dashboard', 'undotree'},
+    disabled_filetypes = { 'undotree'},
   },
   sections = {
     lualine_a = {{'mode', fmt = function(str) return str:sub(1,1) end}},
@@ -296,13 +295,13 @@ let g:rsi_no_meta = 1
 
 " Yanky
 lua << EOF
-  require("yanky").setup()
-  vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
-  vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
-  vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
-  vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
-  vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
-  vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
+require("yanky").setup()
+vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
+vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
+vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
+vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
+vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
+vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
 EOF
 
 " ---------------------------------------------------------------------------- "
@@ -484,4 +483,6 @@ db.custom_center = {
   {icon = '  ', desc = 'Config             ', action = 'e ~/.config/nvim/init.vim'},
 }
 db.custom_footer = {}
+db.hide_statusline = false
 db.session_directory = '~/.local/share/nvim/session'
+EOF
