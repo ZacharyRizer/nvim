@@ -41,6 +41,7 @@
     "<C-n>": "normal:j",
     "<C-p>": "normal:k"
   },
+  "Lua.hint.enable": false,
   "Lua.telemetry.enable": true,
   "prettier.disableLanguages": ["haskell"],
   "prettier.printWidth": 100,
