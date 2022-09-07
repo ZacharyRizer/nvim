@@ -1,4 +1,10 @@
 " ---------------------------------------------------------------------------- "
+" ------------------------------ Lua-Config ---------------------------------- "
+" ---------------------------------------------------------------------------- "
+
+lua require("config")
+
+" ---------------------------------------------------------------------------- "
 " ------------------------------- Plug-Ins ----------------------------------- "
 " ---------------------------------------------------------------------------- "
 
@@ -41,157 +47,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'RyanMillerC/better-vim-tmux-resizer'
 
 call plug#end()
-
-" ---------------------------------------------------------------------------- "
-" --------------------------- General Settings ------------------------------- "
-" ---------------------------------------------------------------------------- "
-
-set clipboard+=unnamedplus
-set cmdheight=2
-set completeopt=menuone,noinsert,noselect
-set expandtab
-set hidden
-set ignorecase
-set inccommand=nosplit
-set lazyredraw
-set mouse=a
-set noswapfile
-set nowritebackup
-set noshowmode
-set nowrap
-set number relativenumber
-set pumblend=15
-set scrolloff=10
-set sidescrolloff=10
-set signcolumn=yes
-set shiftwidth=2
-set shortmess+=c
-set smartcase
-set softtabstop=2
-set splitbelow
-set splitright
-set tabstop=2
-set termguicolors
-set timeoutlen=250
-set undofile
-set updatetime=100
-set wildignorecase
-set wildmode=longest:full,full
-
-augroup FILE_SPECIFICS
-  autocmd!
-  autocmd FileType go setlocal shiftwidth=4 softtabstop=4 tabstop=4
-  autocmd FileType python setlocal shiftwidth=4 softtabstop 4 tabstop=4
-augroup END
-
-augroup FORMAT_OPTIONS
-  autocmd!
-  autocmd BufEnter * set fo-=c fo-=r fo-=o          " disable auto comment wrap
-  autocmd BufWritePre * %s/\s\+$//e                 " remove whitespace on save
-  autocmd VimResized * :wincmd =                    " auto resize windows
-  autocmd CursorHold,CursorHoldI * checktime        " make sure buffer is up to date
-augroup END
-
-augroup HIGHLIGHT_YANK
-  autocmd!
-  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 350})
-augroup END
-
-" ---------------------------------------------------------------------------- "
-" --------------------------- Basic Key Mappings ----------------------------- "
-" ---------------------------------------------------------------------------- "
-
-let g:mapleader = " "
-inoremap <C-c> <Esc>
-nnoremap <C-c> :nohl<CR>
-nnoremap <Leader>` :source $MYVIMRC <bar> :redraw <bar> :echo "Config Reloaded!"<CR>
-nnoremap <Leader>~ :source $MYVIMRC <bar> :PlugUpdate --sync <bar> split <bar> :PlugClean<CR>
-
-" unmapping a few keys that annoy me
-nnoremap K <nop>
-nnoremap Q <nop>
-nnoremap <Space> <nop>
-nnoremap <BS> <nop>
-
-" easy word replace, search/replace, and */# searching stay in place
-nnoremap c* *Ncgn
-nnoremap *  *N
-nnoremap #  #N
-vnoremap *  y/<C-R>"<CR>N
-vnoremap #  y?<C-R>"<CR>N
-nnoremap <Leader>s :%s/
-vnoremap <Leader>s :s/
-
-" more intuitive yanking
-nmap Y y$
-
-" insert blank lines
-nmap OO O<Esc>j
-nmap oo o<Esc>k
-
-" better line connection/breaking
-nnoremap J mzJ`z
-nnoremap K f r<CR>
-
-" tab text easily
-vnoremap < <gv
-vnoremap > >gv
-nnoremap < <<
-nnoremap > >>
-
-" easy buffer delete and close
-nnoremap <Leader>d   :bd<cr>
-nnoremap <Leader>dd  :bd!<cr>
-nnoremap <Leader>wo  :%bd <bar> e# <bar> normal `" <cr>
-
-" quickfix lists
-nnoremap <Leader>j :cnext<CR>
-nnoremap <Leader>k :cprev<CR>
-nnoremap <C-q> :call ToggleQFList()<CR>
-fun! ToggleQFList()
-  let l:nr =  winnr("$")
-  if l:nr == 1
-    copen
-  else
-    cclose
-  endif
-endfun
-
-" ---------------------------------------------------------------------------- "
-" --------------------------- Theme & Statusline ----------------------------- "
-" ---------------------------------------------------------------------------- "
-
-" Lualine
-lua << EOF
-function Filenames()
-  if vim.bo.filetype == dashboard then
-    return ''
-  else
-    return vim.fn.expand('%:p:t')
-  end
-end
-
-require'lualine'.setup {
-  extensions = { 'nvim-tree', 'quickfix'},
-  options = {
-    disabled_filetypes = { 'undotree' },
-  },
-  sections = {
-    lualine_a = {{'mode', fmt = function(str) return str:sub(1,1) end}},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {Filenames},
-    lualine_x = {{'g:coc_status', cond = function() return vim.fn.winwidth(0) > 90 end}},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-}
-EOF
-
-" Tokyonight
-let g:tokyonight_sidebars = ["NvimTree", "undotree"]
-let g:tokyonight_lualine_bold = 1
-let g:tokyonight_dark_float = 0
-colorscheme tokyonight
 
 " ---------------------------------------------------------------------------- "
 " ----------------------------  Plugin Settings ------------------------------ "
