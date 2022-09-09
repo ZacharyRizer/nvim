@@ -206,19 +206,21 @@ vim.cmd("colorscheme tokyonight")
 
 ---- GitSigns
 require('gitsigns').setup {
+    keymaps = {
+        noremap = true,
+        ['n ]g'] = { expr = true, "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'" },
+        ['n [g'] = { expr = true, "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'" },
+        ['n gb'] = '<cmd>Gitsigns blame_line<CR>',
+        ['n gc'] = '<cmd>Gitsigns preview_hunk<CR>',
+        ['n gh'] = '<cmd>Gitsigns toggle_linehl<CR>',
+    },
+    numhl = true,
     signs = {
         add          = { hl = 'GitSignsAdd', text = '+', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
         change       = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
         delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
         topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
         changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-    },
-    keymaps = {
-        noremap = true,
-        ['n ]g'] = { expr = true, "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'" },
-        ['n [g'] = { expr = true, "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'" },
-        ['n gc'] = '<cmd>Gitsigns preview_hunk<CR>',
-        ['n gb'] = '<cmd>Gitsigns blame_line<CR>',
     },
 }
 
@@ -274,7 +276,7 @@ require("toggleterm").setup {
     float_opts = { border = 'curved' }
 }
 local Terminal = require('toggleterm.terminal').Terminal
-local lazygit  = Terminal:new({
+local lazygit = Terminal:new({
     cmd = "lazygit",
     hidden = true,
     direction = "float",
