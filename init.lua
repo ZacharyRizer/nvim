@@ -69,17 +69,17 @@ vim.opt.number = true
 vim.opt.pumblend = 15
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 10
-vim.opt.shiftwidth = 2
+vim.opt.shiftwidth = 4
 vim.opt.shortmess:append("c")
 vim.opt.showmode = false
 vim.opt.sidescrolloff = 10
 vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
-vim.opt.softtabstop = 2
+vim.opt.softtabstop = 4
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.swapfile = false
-vim.opt.tabstop = 2
+vim.opt.tabstop = 4
 vim.opt.termguicolors = true
 vim.opt.timeoutlen = 250
 vim.opt.updatetime = 100
@@ -91,11 +91,6 @@ vim.opt.writebackup = false
 
 local Formating = augroup("Formating", { clear = false })
 
-autocmd("FileType", {
-    pattern = { "go", "haskell", "lua", "python", "yaml" },
-    command = "setlocal shiftwidth=4 softtabstop=4 tabstop=4",
-    group = Formating
-})
 autocmd("BufEnter", {
     pattern = "*",
     command = "set fo-=c fo-=r fo-=o",
