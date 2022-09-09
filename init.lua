@@ -15,6 +15,9 @@ local plug = vim.fn['plug#']
 
 vim.call('plug#begin', '~/.vim/plugged')
 
+---- Cache for lua plugins: Nvim start time
+plug('lewis6991/impatient.nvim')
+
 ---- LSP, Completions, Git, Telescope
 plug('nvim-lua/plenary.nvim')
 plug('nvim-telescope/telescope.nvim')
@@ -29,8 +32,10 @@ plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 plug('nvim-treesitter/nvim-treesitter-context')
 plug('kyazdani42/nvim-web-devicons')
 plug('lukas-reineke/indent-blankline.nvim')
+plug('windwp/nvim-autopairs')
 plug('folke/tokyonight.nvim', { branch = 'main' })
 plug('nvim-lualine/lualine.nvim')
+plug('norcalli/nvim-colorizer.lua')
 
 ---- UI Elements
 plug('glepnir/dashboard-nvim')
@@ -55,6 +60,8 @@ vim.call('plug#end')
 -------------------------------------------------------------------------------
 ------------------------------ General Settings -------------------------------
 -------------------------------------------------------------------------------
+
+require('impatient')
 
 vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 2
@@ -203,6 +210,12 @@ vim.cmd("colorscheme tokyonight")
 -------------------------------------------------------------------------------
 --------------------------------  Plugin Settings -----------------------------
 -------------------------------------------------------------------------------
+
+---- Autopairs
+require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
+
+---- Colorizer
+require 'colorizer'.setup()
 
 ---- GitSigns
 require('gitsigns').setup {
@@ -400,16 +413,13 @@ vim.g.coc_global_extensions = {
     'coc-css',
     'coc-emmet',
     'coc-go',
-    'coc-highlight',
     'coc-html',
     'coc-json',
     'coc-marketplace',
-    'coc-pairs',
     'coc-prettier',
     'coc-pyright',
     'coc-sumneko-lua',
     'coc-tsserver',
-    'coc-vimlsp',
 }
 
 ---- basic completion mappings

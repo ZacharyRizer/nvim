@@ -18,7 +18,6 @@
     "typescriptreact",
     "yml"
   ],
-  "colors.filetypes": ["*"],
   "diagnostic.floatConfig": { "border": true },
   "emmet.includeLanguages": { "javascript": "javascriptreact", "typescript": "typescriptreact" },
   "go.goplsOptions": {
