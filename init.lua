@@ -16,7 +16,6 @@ local plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.vim/plugged')
 
 ---- LSP, Completions, Git, Telescope
-plug('nvim-lua/popup.nvim')
 plug('nvim-lua/plenary.nvim')
 plug('nvim-telescope/telescope.nvim')
 plug('nvim-telescope/telescope-fzy-native.nvim', { ['do'] = 'make' })
@@ -241,7 +240,7 @@ require 'nvim-tree'.setup {
                 { key = "l", cb = tree_cb("open_node") },
                 { key = "<BS>", cb = tree_cb("dir_up") },
                 { key = "?", cb = tree_cb("toggle_help") },
-                { key = "<C-e>", cb = tree_cb("") },
+                { key = "<C-e>", cb = tree_cb("close") },
             }
         },
     },
@@ -319,7 +318,6 @@ local actions = require('telescope.actions')
 require('telescope').setup {
     defaults = {
         entry_prefix = "  ",
-        file_ignore_patterns = { "main.js" },
         layout_config = {
             horizontal = {
                 preview_cutoff = 150,
