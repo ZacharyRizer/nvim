@@ -22,6 +22,7 @@ plug('nvim-telescope/telescope-fzy-native.nvim', { ['do'] = 'make' })
 plug('fannheyward/telescope-coc.nvim')
 plug('ahmedkhalf/project.nvim')
 plug('neoclide/coc.nvim', { branch = 'release' })
+plug('lewis6991/gitsigns.nvim')
 
 ---- Theme and Formatting
 plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
@@ -41,7 +42,6 @@ plug('gbprod/yanky.nvim')
 
 ---- Tpope Plugins
 plug('tpope/vim-commentary')
-plug('tpope/vim-fugitive')
 plug('tpope/vim-repeat')
 plug('tpope/vim-rsi')
 plug('ZacharyRizer/vim-surround')
@@ -69,17 +69,17 @@ vim.opt.number = true
 vim.opt.pumblend = 15
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 10
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 vim.opt.shortmess:append("c")
 vim.opt.showmode = false
 vim.opt.sidescrolloff = 10
 vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
-vim.opt.softtabstop = 4
+vim.opt.softtabstop = 2
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.swapfile = false
-vim.opt.tabstop = 4
+vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.timeoutlen = 250
 vim.opt.updatetime = 100
@@ -91,6 +91,11 @@ vim.opt.writebackup = false
 
 local Formating = augroup("Formating", { clear = false })
 
+autocmd("FileType", {
+    pattern = { "go", "haskell", "lua", "python", "yaml" },
+    command = "setlocal shiftwidth=4 softtabstop=4 tabstop=4",
+    group = Formating
+})
 autocmd("BufEnter", {
     pattern = "*",
     command = "set fo-=c fo-=r fo-=o",
@@ -199,6 +204,24 @@ vim.cmd("colorscheme tokyonight")
 --------------------------------  Plugin Settings -----------------------------
 -------------------------------------------------------------------------------
 
+---- GitSigns
+require('gitsigns').setup {
+    signs = {
+        add          = { hl = 'GitSignsAdd', text = '+', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+        change       = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+        delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+        topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+        changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+    },
+    keymaps = {
+        noremap = true,
+        ['n ]g'] = { expr = true, "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'" },
+        ['n [g'] = { expr = true, "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'" },
+        ['n gc'] = '<cmd>Gitsigns preview_hunk<CR>',
+        ['n gb'] = '<cmd>Gitsigns blame_line<CR>',
+    },
+}
+
 ---- Indentline
 require("indent_blankline").setup {
     char = '▏',
@@ -251,8 +274,16 @@ require("toggleterm").setup {
     float_opts = { border = 'curved' }
 }
 local Terminal = require('toggleterm.terminal').Terminal
-local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true })
-
+local lazygit  = Terminal:new({
+    cmd = "lazygit",
+    hidden = true,
+    direction = "float",
+    float_opts = {
+        border = 'none',
+        height = vim.o.lines,
+        width = vim.o.columns,
+    },
+})
 function Lazygit_Toggle()
     lazygit:toggle()
 end
@@ -366,7 +397,6 @@ vim.g.coc_global_extensions = {
     'coc-angular',
     'coc-css',
     'coc-emmet',
-    'coc-git',
     'coc-go',
     'coc-highlight',
     'coc-html',
@@ -405,11 +435,6 @@ map('n', '<Leader>rn', '<Plug>(coc-rename)', {})
 ---- Use `[d` and `]d` to navigate diagnostics
 map('n', '[d', '<Plug>(coc-diagnostic-prev)', {})
 map('n', ']d', '<Plug>(coc-diagnostic-next)', {})
-
----- coc-git
-map('n', '[g', '<Plug>(coc-git-prevchunk)', {})
-map('n', ']g', '<Plug>(coc-git-nextchunk)', {})
-map('n', 'gc', '<Plug>(coc-git-chunkinfo)', {})
 
 -------------------------------------------------------------------------------
 ------------------------------ Tmux Vim Integration----------------------------

@@ -21,10 +21,6 @@
   "colors.filetypes": ["*"],
   "diagnostic.floatConfig": { "border": true },
   "emmet.includeLanguages": { "javascript": "javascriptreact", "typescript": "typescriptreact" },
-  "git.addedSign.hlGroup": "GitSignsAdd",
-  "git.changedSign.hlGroup": "GitSignsChange",
-  "git.removedSign.hlGroup": "GitSignsDelete",
-  "git.topRemovedSign.hlGroup": "GitSignsDelete",
   "go.goplsOptions": {
     "completeUnimported": true
   },
