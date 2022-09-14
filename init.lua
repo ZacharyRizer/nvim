@@ -38,6 +38,7 @@ plug('nvim-lualine/lualine.nvim')
 plug('norcalli/nvim-colorizer.lua')
 
 ---- UI Elements
+plug('ThePrimeagen/harpoon')
 plug('glepnir/dashboard-nvim')
 plug('kyazdani42/nvim-tree.lua')
 plug('mbbill/undotree')
@@ -47,6 +48,7 @@ plug('gbprod/yanky.nvim')
 
 ---- Tpope Plugins
 plug('tpope/vim-commentary')
+plug('tpope/vim-fugitive')
 plug('tpope/vim-repeat')
 plug('tpope/vim-rsi')
 plug('ZacharyRizer/vim-surround')
@@ -98,11 +100,6 @@ vim.opt.writebackup = false
 
 local Formating = augroup("Formating", { clear = false })
 
-autocmd("FileType", {
-    pattern = { "go", "haskell", "lua", "python", "yaml" },
-    command = "setlocal shiftwidth=4 softtabstop=4 tabstop=4",
-    group = Formating
-})
 autocmd("BufEnter", {
     pattern = "*",
     command = "set fo-=c fo-=r fo-=o",
@@ -111,6 +108,16 @@ autocmd("BufEnter", {
 autocmd("BufWritePre", {
     pattern = "*",
     command = "%s/\\s\\+$//e",
+    group = Formating
+})
+autocmd({ "CursorHold, CursorHoldI" }, {
+    pattern = "*",
+    command = "checktime",
+    group = Formating
+})
+autocmd("FileType", {
+    pattern = { "go", "haskell", "lua", "python", "yaml" },
+    command = "setlocal shiftwidth=4 softtabstop=4 tabstop=4",
     group = Formating
 })
 autocmd("VimResized", {
@@ -148,11 +155,13 @@ map('n', 'Y', 'y$', {})
 ---- better line connection
 map('n', 'J', 'mzJ`z', noremap)
 
----- tab text easily
+---- move/tab text easily
 map('v', '<', '<gv', noremap)
 map('v', '>', '>gv', noremap)
 map('n', '<', '<<', noremap)
 map('n', '>', '>>', noremap)
+map('v', 'J', ":m '>+1<CR>gv=gv", noremap)
+map('v', 'K', ":m '<-2<CR>gv=gv", noremap)
 
 ---- easy buffer delete and close
 map('n', '<Leader>d', ':bd<cr>', noremap)
@@ -225,7 +234,6 @@ require('gitsigns').setup {
         ['n [g'] = { expr = true, "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'" },
         ['n gb'] = '<cmd>Gitsigns blame_line<CR>',
         ['n gc'] = '<cmd>Gitsigns preview_hunk<CR>',
-        ['n gh'] = '<cmd>Gitsigns toggle_linehl<CR>',
     },
     numhl = true,
     signs = {
@@ -236,6 +244,14 @@ require('gitsigns').setup {
         changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
     },
 }
+
+---- Harpoon
+map("n", "<Leader>a", ":lua require('harpoon.mark').add_file() <cr>", noremap_s)
+map("n", "<Leader>m", ":lua require('harpoon.ui').toggle_quick_menu() <cr>", noremap_s)
+map("n", "<Leader>1", ":lua require('harpoon.ui').nav_file(1) <cr>", noremap_s)
+map("n", "<Leader>2", ":lua require('harpoon.ui').nav_file(2) <cr>", noremap_s)
+map("n", "<Leader>3", ":lua require('harpoon.ui').nav_file(3) <cr>", noremap_s)
+map("n", "<Leader>4", ":lua require('harpoon.ui').nav_file(4) <cr>", noremap_s)
 
 ---- Indentline
 require("indent_blankline").setup {
@@ -303,7 +319,7 @@ function Lazygit_Toggle()
     lazygit:toggle()
 end
 
-map("n", "<leader>lg", "<cmd>lua Lazygit_Toggle()<CR>", noremap_s)
+map("n", "<Leader>lg", "<cmd>lua Lazygit_Toggle()<CR>", noremap_s)
 
 ---- Treesitter setup
 require 'treesitter-context'.setup {
@@ -338,6 +354,10 @@ vim.g.undotree_WindowLayout = 3
 ---- Vim-Commentary
 map('n', '<Leader>/', ':Commentary<CR>', noremap)
 map('v', '<Leader>/', ':Commentary<CR>', noremap)
+
+---- Vim-Fugitive
+vim.cmd [[command! -nargs=0 Blame G blame]]
+vim.cmd [[command! -nargs=0 Diff Gdiffsplit]]
 
 ---- Vim-RSI ==> disable meta-key bindings
 vim.g.rsi_no_meta = true
@@ -400,7 +420,6 @@ map('n', '<Leader>lc', ':Telescope command_history<CR>', noremap)
 map('n', '<Leader>ld', ':Telescope coc diagnostics<CR>', noremap)
 map('n', '<Leader>lh', ':Telescope oldfiles<CR>', noremap)
 map('n', '<Leader>ls', ':Telescope treesitter<CR>', noremap)
-map('n', '<Leader>m', ':Telescope marks<CR>', noremap)
 map('n', '<Leader>p', ':Telescope projects<CR>', noremap)
 map('n', '<Leader>y', ':Telescope yank_history<CR>', noremap)
 
