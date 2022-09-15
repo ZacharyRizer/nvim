@@ -40,7 +40,6 @@
   "Lua.hint.enable": false,
   "Lua.telemetry.enable": true,
   "prettier.disableLanguages": ["haskell"],
-  "prettier.printWidth": 100,
   "prettier.tabWidth": 2,
   "signature.floatConfig": { "border": true },
   "suggest.floatConfig": { "border": true },
