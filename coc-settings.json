@@ -18,8 +18,16 @@
     "typescriptreact",
     "yml"
   ],
+  "colors.filetypes": ["*"],
   "diagnostic.floatConfig": { "border": true },
-  "emmet.includeLanguages": { "javascript": "javascriptreact", "typescript": "typescriptreact" },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+  "git.addedSign.hlGroup": "GitSignsAdd",
+  "git.changedSign.hlGroup": "GitSignsChange",
+  "git.removedSign.hlGroup": "GitSignsDelete",
+  "git.topRemovedSign.hlGroup": "GitSignsDelete",
   "go.goplsOptions": {
     "completeUnimported": true
   },
@@ -29,7 +37,13 @@
     "haskell": {
       "command": "haskell-language-server-wrapper",
       "args": ["--lsp"],
-      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+      "rootPatterns": [
+        "*.cabal",
+        "stack.yaml",
+        "cabal.project",
+        "package.yaml",
+        "hie.yaml"
+      ],
       "filetypes": ["haskell", "lhaskell"]
     }
   },

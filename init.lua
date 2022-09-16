@@ -25,17 +25,15 @@ plug('nvim-telescope/telescope-fzy-native.nvim', { ['do'] = 'make' })
 plug('fannheyward/telescope-coc.nvim')
 plug('ahmedkhalf/project.nvim')
 plug('neoclide/coc.nvim', { branch = 'release' })
-plug('lewis6991/gitsigns.nvim')
 
 ---- Theme and Formatting
+plug('folke/tokyonight.nvim', { branch = 'main' })
+plug('nvim-lualine/lualine.nvim')
 plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 plug('nvim-treesitter/nvim-treesitter-context')
 plug('kyazdani42/nvim-web-devicons')
 plug('lukas-reineke/indent-blankline.nvim')
 plug('windwp/nvim-autopairs')
-plug('folke/tokyonight.nvim', { branch = 'main' })
-plug('nvim-lualine/lualine.nvim')
-plug('norcalli/nvim-colorizer.lua')
 
 ---- UI Elements
 plug('ThePrimeagen/harpoon')
@@ -45,17 +43,15 @@ plug('mbbill/undotree')
 plug('akinsho/toggleterm.nvim')
 plug('ggandor/leap.nvim')
 plug('gbprod/yanky.nvim')
+plug('numToStr/Comment.nvim')
+plug('kylechui/nvim-surround')
 
 ---- Tpope Plugins
-plug('tpope/vim-commentary')
 plug('tpope/vim-fugitive')
-plug('tpope/vim-repeat')
 plug('tpope/vim-rsi')
-plug('ZacharyRizer/vim-surround')
 
 ---- Tmux-Vim Integration
-plug('christoomey/vim-tmux-navigator')
-plug('RyanMillerC/better-vim-tmux-resizer')
+plug('aserowy/tmux.nvim')
 
 vim.call('plug#end')
 
@@ -66,7 +62,6 @@ vim.call('plug#end')
 require('impatient')
 
 vim.opt.clipboard = "unnamedplus"
-vim.opt.cmdheight = 2
 vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.expandtab = true
 vim.opt.hidden = true
@@ -133,6 +128,7 @@ autocmd("VimResized", {
 vim.g.mapleader = " "
 map('i', '<C-c>', '<ESC>', noremap)
 map('n', '<C-c>', ':nohl<CR>', noremap)
+map('t', '<C-[>', '<C-\\><C-n>', noremap)
 
 ---- unmapping a few keys that annoy me
 map('n', 'K', '<nop>', noremap)
@@ -211,9 +207,14 @@ require 'lualine'.setup {
 }
 
 ---- Tokyonight
-vim.g.tokyonight_sidebars = { "NvimTree", "undotree" }
-vim.g.tokyonight_lualine_bold = true
-vim.g.tokyonight_dark_float = false
+require("tokyonight").setup({
+    sidebars = { "qf", "help", "undotree" },
+    lualine_bold = true,
+    on_highlights = function(highlights, colors)
+        highlights.MsgArea = { bg = colors.none }
+    end,
+
+})
 vim.cmd("colorscheme tokyonight")
 
 -------------------------------------------------------------------------------
@@ -223,27 +224,12 @@ vim.cmd("colorscheme tokyonight")
 ---- Autopairs
 require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
 
----- Colorizer
-require 'colorizer'.setup()
-
----- GitSigns
-require('gitsigns').setup {
-    keymaps = {
-        noremap = true,
-        ['n ]g'] = { expr = true, "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'" },
-        ['n [g'] = { expr = true, "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'" },
-        ['n gb'] = '<cmd>Gitsigns blame_line<CR>',
-        ['n gc'] = '<cmd>Gitsigns preview_hunk<CR>',
-    },
-    numhl = true,
-    signs = {
-        add          = { hl = 'GitSignsAdd', text = '+', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
-        change       = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-        delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-        topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-        changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-    },
-}
+---- Comment
+require('Comment').setup({
+    toggler = { line = '<leader>/', block = '<leader>?', },
+    opleader = { line = '<leader>/', block = '<leader>?', },
+    mappings = { extra = false, extended = false, },
+})
 
 ---- Harpoon
 map("n", "<Leader>a", ":lua require('harpoon.mark').add_file() <cr>", noremap_s)
@@ -298,6 +284,9 @@ require 'nvim-tree'.setup {
 ---- ProjectNvim
 require('project_nvim').setup()
 
+---- Surround
+require("nvim-surround").setup({ keymaps = { visual = "<C-s>" } })
+
 ---- ToggleTerm
 require("toggleterm").setup {
     open_mapping = [[<c-t>]],
@@ -350,10 +339,6 @@ vim.g.undotree_DiffAutoOpen = false
 vim.g.undotree_SetFocusWhenToggle = true
 vim.g.undotree_SplitWidth = 35
 vim.g.undotree_WindowLayout = 3
-
----- Vim-Commentary
-map('n', '<Leader>/', ':Commentary<CR>', noremap)
-map('v', '<Leader>/', ':Commentary<CR>', noremap)
 
 ---- Vim-Fugitive
 vim.cmd [[command! -nargs=0 Blame G blame]]
@@ -431,7 +416,9 @@ vim.g.coc_global_extensions = {
     'coc-angular',
     'coc-css',
     'coc-emmet',
+    'coc-git',
     'coc-go',
+    'coc-highlight',
     'coc-html',
     'coc-json',
     'coc-marketplace',
@@ -467,33 +454,27 @@ map('n', '<Leader>rn', '<Plug>(coc-rename)', {})
 map('n', '[d', '<Plug>(coc-diagnostic-prev)', {})
 map('n', ']d', '<Plug>(coc-diagnostic-next)', {})
 
+---- coc-git
+map('n', '[g', '<Plug>(coc-git-prevchunk)', {})
+map('n', ']g', '<Plug>(coc-git-nextchunk)', {})
+map('n', 'gc', '<Plug>(coc-git-chunkinfo)', {})
+
 -------------------------------------------------------------------------------
 ------------------------------ Tmux Vim Integration----------------------------
 -------------------------------------------------------------------------------
 
----- Tmux-Vim navigator
-vim.g.tmux_navigator_no_mappings = true
-vim.g.tmux_navigator_save_on_switch = true
-vim.g.tmux_navigator_disable_when_zoomed = true
-map('n', '<C-h>', ':TmuxNavigateLeft<cr>', noremap_s)
-map('n', '<C-j>', ':TmuxNavigateDown<cr>', noremap_s)
-map('n', '<C-k>', ':TmuxNavigateUp<cr>', noremap_s)
-map('n', '<C-l>', ':TmuxNavigateRight<cr>', noremap_s)
-map('i', '<C-h>', '<Esc> :TmuxNavigateLeft<cr>', noremap_s)
-map('i', '<C-j>', '<Esc> :TmuxNavigateDown<cr>', noremap_s)
-map('i', '<C-k>', '<Esc> :TmuxNavigateUp<cr>', noremap_s)
-map('i', '<C-l>', '<Esc> :TmuxNavigateRight<cr>', noremap_s)
-map('v', '<C-h>', '<Esc> :TmuxNavigateLeft<cr>', noremap_s)
-map('v', '<C-j>', '<Esc> :TmuxNavigateDown<cr>', noremap_s)
-map('v', '<C-k>', '<Esc> :TmuxNavigateUp<cr>', noremap_s)
-map('v', '<C-l>', '<Esc> :TmuxNavigateRight<cr>', noremap_s)
-
----- Tmux-Vim Resizer
-vim.g.tmux_resizer_no_mappings = true
-map('n', '<A-h>', ':TmuxResizeLeft<cr>', noremap_s)
-map('n', '<A-j>', ':TmuxResizeDown<cr>', noremap_s)
-map('n', '<A-k>', ':TmuxResizeUp<cr>', noremap_s)
-map('n', '<A-l>', ':TmuxResizeRight<cr>', noremap_s)
+require("tmux").setup({
+    navigation = {
+        cycle_navigation = false,
+        enable_default_keybindings = true,
+        persist_zoom = true,
+    },
+    resize = {
+        enable_default_keybindings = true,
+        resize_step_x = 5,
+        resize_step_y = 2,
+    }
+})
 
 -------------------------------------------------------------------------------
 ------------------------------- Dashboard Config ------------------------------
@@ -502,8 +483,6 @@ map('n', '<A-l>', ':TmuxResizeRight<cr>', noremap_s)
 map('n', '<Leader><CR>', ':Dashboard<CR>', noremap)
 local db = require('dashboard')
 local header = {
-    [[                                                       ]],
-    [[                                                       ]],
     [[                                                       ]],
     [[                                                       ]],
     [[                                                       ]],
