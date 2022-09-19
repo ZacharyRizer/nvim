@@ -4,7 +4,7 @@
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 local noremap = { noremap = true }
 local noremap_s = { noremap = true, silent = true }
 local plug = vim.fn['plug#']
@@ -25,6 +25,7 @@ plug('nvim-telescope/telescope-fzy-native.nvim', { ['do'] = 'make' })
 plug('fannheyward/telescope-coc.nvim')
 plug('ahmedkhalf/project.nvim')
 plug('neoclide/coc.nvim', { branch = 'release' })
+plug('tpope/vim-fugitive')
 
 ---- Theme and Formatting
 plug('folke/tokyonight.nvim', { branch = 'main' })
@@ -34,6 +35,7 @@ plug('nvim-treesitter/nvim-treesitter-context')
 plug('kyazdani42/nvim-web-devicons')
 plug('lukas-reineke/indent-blankline.nvim')
 plug('windwp/nvim-autopairs')
+plug('windwp/nvim-ts-autotag')
 
 ---- UI Elements
 plug('ThePrimeagen/harpoon')
@@ -45,10 +47,6 @@ plug('ggandor/leap.nvim')
 plug('gbprod/yanky.nvim')
 plug('numToStr/Comment.nvim')
 plug('kylechui/nvim-surround')
-
----- Tpope Plugins
-plug('tpope/vim-fugitive')
-plug('tpope/vim-rsi')
 
 ---- Tmux-Vim Integration
 plug('aserowy/tmux.nvim')
@@ -62,7 +60,7 @@ vim.call('plug#end')
 require('impatient')
 
 vim.opt.clipboard = "unnamedplus"
-vim.opt.completeopt = "menuone,noinsert,noselect"
+vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
 vim.opt.expandtab = true
 vim.opt.hidden = true
 vim.opt.ignorecase = true
@@ -136,6 +134,13 @@ map('n', 'Q', '<nop>', noremap)
 map('n', '<Space>', '<nop>', noremap)
 map('n', '<BS>', '<nop>', noremap)
 
+---- readline/emacs keys for i and c modes
+map({ 'c', 'i' }, '<C-a>', '<Home>', noremap)
+map({ 'c', 'i' }, '<C-b>', '<Left>', noremap)
+map({ 'c', 'i' }, '<C-d>', '<Del>', noremap)
+map({ 'c', 'i' }, '<C-e>', '<End>', noremap)
+map({ 'c', 'i' }, '<C-f>', '<Right>', noremap)
+
 ---- easy word replace, search/replace, and */# searching stay in place
 map('n', 'c*', '*Ncgn', noremap)
 map('n', '*', '*N', noremap)
@@ -146,7 +151,7 @@ map('n', '<Leader>s', ':%s/', noremap)
 map('v', '<Leader>s', ':s/', noremap)
 
 ---- more intuitive yanking
-map('n', 'Y', 'y$', {})
+map('n', 'Y', 'y$')
 
 ---- better line connection
 map('n', 'J', 'mzJ`z', noremap)
@@ -176,30 +181,22 @@ end
 
 map('n', '<Leader>j', ':cnext<CR>', noremap)
 map('n', '<Leader>k', ':cprev<CR>', noremap)
-map('n', '<C-q>', '<cmd>lua ToggleQFList()<CR>', noremap)
+map('n', '<C-q>', ToggleQFList, noremap)
 
 -------------------------------------------------------------------------------
 ------------------------------ Theme & Statusline -----------------------------
 -------------------------------------------------------------------------------
 
 ---- Lualine
-function Lualine_Filenames()
-    if vim.bo.filetype == "dashboard" then
-        return ''
-    else
-        return vim.fn.expand('%:p:t')
-    end
-end
-
 require 'lualine'.setup {
     extensions = { 'nvim-tree', 'quickfix' },
     options = {
-        disabled_filetypes = { 'undotree' },
+        disabled_filetypes = { 'dashboard', 'undotree' },
     },
     sections = {
         lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 1) end } },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = { Lualine_Filenames },
+        lualine_c = { 'filename' },
         lualine_x = { { 'g:coc_status', cond = function() return vim.fn.winwidth(0) > 90 end } },
         lualine_y = { 'progress' },
         lualine_z = { 'location' }
@@ -210,10 +207,6 @@ require 'lualine'.setup {
 require("tokyonight").setup({
     sidebars = { "qf", "help", "undotree" },
     lualine_bold = true,
-    on_highlights = function(highlights, colors)
-        highlights.MsgArea = { bg = colors.none }
-    end,
-
 })
 vim.cmd("colorscheme tokyonight")
 
@@ -221,8 +214,9 @@ vim.cmd("colorscheme tokyonight")
 --------------------------------  Plugin Settings -----------------------------
 -------------------------------------------------------------------------------
 
----- Autopairs
+---- Autopairs and Autotag
 require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
+require('nvim-ts-autotag').setup()
 
 ---- Comment
 require('Comment').setup({
@@ -308,7 +302,7 @@ function Lazygit_Toggle()
     lazygit:toggle()
 end
 
-map("n", "<Leader>lg", "<cmd>lua Lazygit_Toggle()<CR>", noremap_s)
+map("n", "<Leader>lg", Lazygit_Toggle, noremap_s)
 
 ---- Treesitter setup
 require 'treesitter-context'.setup {
@@ -343,9 +337,6 @@ vim.g.undotree_WindowLayout = 3
 ---- Vim-Fugitive
 vim.cmd [[command! -nargs=0 Blame G blame]]
 vim.cmd [[command! -nargs=0 Diff Gdiffsplit]]
-
----- Vim-RSI ==> disable meta-key bindings
-vim.g.rsi_no_meta = true
 
 ---- Yankstack
 require("yanky").setup()
@@ -448,16 +439,16 @@ map('n', 'gd', '<cmd>Telescope coc definitions<cr>', noremap_s)
 map('n', 'gi', '<cmd>Telescope coc implementations<cr>', noremap_s)
 map('n', 'gr', '<cmd>Telescope coc references<cr>', noremap_s)
 map('n', 'gt', '<cmd>Telescope coc type_definitions<cr>', noremap_s)
-map('n', '<Leader>rn', '<Plug>(coc-rename)', {})
+map('n', '<Leader>rn', '<Plug>(coc-rename)')
 
 ---- Use `[d` and `]d` to navigate diagnostics
-map('n', '[d', '<Plug>(coc-diagnostic-prev)', {})
-map('n', ']d', '<Plug>(coc-diagnostic-next)', {})
+map('n', '[d', '<Plug>(coc-diagnostic-prev)')
+map('n', ']d', '<Plug>(coc-diagnostic-next)')
 
 ---- coc-git
-map('n', '[g', '<Plug>(coc-git-prevchunk)', {})
-map('n', ']g', '<Plug>(coc-git-nextchunk)', {})
-map('n', 'gc', '<Plug>(coc-git-chunkinfo)', {})
+map('n', '[g', '<Plug>(coc-git-prevchunk)')
+map('n', ']g', '<Plug>(coc-git-nextchunk)')
+map('n', 'gc', '<Plug>(coc-git-chunkinfo)')
 
 -------------------------------------------------------------------------------
 ------------------------------ Tmux Vim Integration----------------------------
