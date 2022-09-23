@@ -69,11 +69,11 @@ vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.pumblend = 15
 vim.opt.relativenumber = true
-vim.opt.scrolloff = 999
+vim.opt.scrolloff = 10
 vim.opt.shiftwidth = 2
 vim.opt.shortmess:append("c")
 vim.opt.showmode = false
-vim.opt.sidescrolloff = 15
+vim.opt.sidescrolloff = 10
 vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
 vim.opt.softtabstop = 2
@@ -91,10 +91,9 @@ vim.opt.wrap = false
 vim.opt.writebackup = false
 
 local Formating = augroup("Formating", { clear = false })
-
 autocmd("BufEnter", {
     pattern = "*",
-    command = "set fo-=c fo-=r fo-=o",
+    command = "setlocal fo-=c fo-=r fo-=o",
     group = Formating
 })
 autocmd("BufWritePre", {
@@ -147,7 +146,7 @@ map('n', '#', '#N', noremap)
 map('v', '*', 'y/<C-R>"<CR>N', noremap)
 map('v', '#', 'y?<C-R>"<CR>N', noremap)
 map('n', '<Leader>s', ':%s/', noremap)
-map('v', '<Leader>s', ':s/', noremap)
+map('v', '<Leader>s', '<Esc> :s/\\%V', noremap)
 
 ---- more intuitive yanking
 map('n', 'Y', 'y$')
@@ -187,7 +186,7 @@ map('n', '<C-q>', ToggleQFList, noremap)
 -------------------------------------------------------------------------------
 
 ---- Lualine
-require 'lualine'.setup {
+require 'lualine'.setup({
     extensions = { 'nvim-tree', 'quickfix' },
     options = {
         disabled_filetypes = { 'dashboard', 'undotree' },
@@ -200,7 +199,7 @@ require 'lualine'.setup {
         lualine_y = { 'progress' },
         lualine_z = { 'location' }
     },
-}
+})
 
 ---- Tokyonight
 require("tokyonight").setup({
@@ -233,18 +232,18 @@ map("n", "<Leader>3", ":lua require('harpoon.ui').nav_file(3) <cr>", noremap_s)
 map("n", "<Leader>4", ":lua require('harpoon.ui').nav_file(4) <cr>", noremap_s)
 
 ---- Indentline
-require("indent_blankline").setup {
+require("indent_blankline").setup({
     char = '▏',
     use_treesitter = true,
     show_first_indent_level = false,
     filetype_exclude = { 'dashboard', 'help', 'undotree' },
     buftype_exclude = { 'nofile', 'terminal' }
-}
+})
 
----- NvimTree setup
+---- NvimTree
 map('n', '<C-e>', ':NvimTreeToggle<CR>', noremap)
 local tree_cb = require 'nvim-tree.config'.nvim_tree_callback
-require 'nvim-tree'.setup {
+require 'nvim-tree'.setup({
     actions             = {
         open_file = { quit_on_open = true },
     },
@@ -269,7 +268,7 @@ require 'nvim-tree'.setup {
             }
         },
     },
-}
+})
 
 ---- ProjectNvim
 require('project_nvim').setup()
@@ -278,35 +277,19 @@ require('project_nvim').setup()
 require("nvim-surround").setup()
 
 ---- ToggleTerm
-require("toggleterm").setup {
+require("toggleterm").setup({
     open_mapping = [[<c-t>]],
     direction = 'float',
     float_opts = { border = 'curved' }
-}
-local Terminal = require('toggleterm.terminal').Terminal
-local lazygit = Terminal:new({
-    cmd = "lazygit",
-    hidden = true,
-    direction = "float",
-    float_opts = {
-        border = 'none',
-        height = vim.o.lines,
-        width = vim.o.columns,
-    },
 })
-function Lazygit_Toggle()
-    lazygit:toggle()
-end
 
-map("n", "<Leader>lg", Lazygit_Toggle, noremap_s)
-
----- Treesitter setup
-require 'treesitter-context'.setup {
+---- Treesitter
+require 'treesitter-context'.setup({
     patterns = {
         default = { 'class', 'function', 'method', 'for', 'while', 'if', 'switch', 'case' },
     },
-}
-require 'nvim-treesitter.configs'.setup {
+})
+require 'nvim-treesitter.configs'.setup({
     ignore_install = { "phpdoc" },
     highlight = {
         disable = { "vim" },
@@ -321,7 +304,7 @@ require 'nvim-treesitter.configs'.setup {
         },
     },
     indent = { enable = true }
-}
+})
 
 ---- Undo tree
 map('n', '<Leader>u', ':UndotreeToggle<CR>', noremap)
@@ -349,7 +332,7 @@ map("n", "<C-p>", "<Plug>(YankyCycleBackward)")
 -------------------------------------------------------------------------------
 
 local actions = require('telescope.actions')
-require('telescope').setup {
+require('telescope').setup({
     defaults = {
         entry_prefix = "  ",
         layout_config = {
@@ -375,7 +358,7 @@ require('telescope').setup {
         selection_caret = " ",
         sorting_strategy = "ascending",
     }
-}
+})
 require('telescope').load_extension('coc')
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('projects')
