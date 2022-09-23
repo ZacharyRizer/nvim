@@ -43,7 +43,6 @@ plug('glepnir/dashboard-nvim')
 plug('kyazdani42/nvim-tree.lua')
 plug('mbbill/undotree')
 plug('akinsho/toggleterm.nvim')
-plug('ggandor/leap.nvim')
 plug('gbprod/yanky.nvim')
 plug('numToStr/Comment.nvim')
 plug('kylechui/nvim-surround')
@@ -70,11 +69,11 @@ vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.pumblend = 15
 vim.opt.relativenumber = true
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 999
 vim.opt.shiftwidth = 2
 vim.opt.shortmess:append("c")
 vim.opt.showmode = false
-vim.opt.sidescrolloff = 10
+vim.opt.sidescrolloff = 15
 vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
 vim.opt.softtabstop = 2
@@ -242,9 +241,6 @@ require("indent_blankline").setup {
     buftype_exclude = { 'nofile', 'terminal' }
 }
 
----- Leap
-require("leap").set_default_keymaps()
-
 ---- NvimTree setup
 map('n', '<C-e>', ':NvimTreeToggle<CR>', noremap)
 local tree_cb = require 'nvim-tree.config'.nvim_tree_callback
@@ -279,7 +275,7 @@ require 'nvim-tree'.setup {
 require('project_nvim').setup()
 
 ---- Surround
-require("nvim-surround").setup({ keymaps = { visual = "<C-s>" } })
+require("nvim-surround").setup()
 
 ---- ToggleTerm
 require("toggleterm").setup {
@@ -336,16 +332,17 @@ vim.g.undotree_WindowLayout = 3
 
 ---- Vim-Fugitive
 vim.cmd [[command! -nargs=0 Blame G blame]]
-vim.cmd [[command! -nargs=0 Diff Gdiffsplit]]
+vim.cmd [[command! -nargs=0 Diff Gdiffsplit!]]
 
 ---- Yankstack
-require("yanky").setup()
-vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
-vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
+require("yanky").setup({ highlight = { timer = 250 } })
+map({ "n", "x" }, "y", "<Plug>(YankyYank)")
+map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+map({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+map({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+map("n", "<C-n>", "<Plug>(YankyCycleForward)")
+map("n", "<C-p>", "<Plug>(YankyCycleBackward)")
 
 -------------------------------------------------------------------------------
 ---------------------------- Telescope Config ---------------------------------
@@ -446,9 +443,10 @@ map('n', '[d', '<Plug>(coc-diagnostic-prev)')
 map('n', ']d', '<Plug>(coc-diagnostic-next)')
 
 ---- coc-git
-map('n', '[g', '<Plug>(coc-git-prevchunk)')
-map('n', ']g', '<Plug>(coc-git-nextchunk)')
-map('n', 'gc', '<Plug>(coc-git-chunkinfo)')
+map('n', '[c', '<Plug>(coc-git-prevchunk)')
+map('n', ']c', '<Plug>(coc-git-nextchunk)')
+map('n', 'gc', ':CocCommand git.chunkInfo<cr>')
+map('n', 'gb', ':CocCommand git.showBlameDoc<cr>')
 
 -------------------------------------------------------------------------------
 ------------------------------ Tmux Vim Integration----------------------------

@@ -1,37 +1,24 @@
 {
+  "coc.preferences.enableMessageDialog": true,
   "coc.preferences.extensionUpdateCheck": "daily",
-  "coc.preferences.formatOnSaveFiletypes": [
-    "cpp",
-    "css",
-    "cs",
-    "go",
-    "javascript",
-    "javascriptreact",
-    "haskell",
-    "html",
-    "json",
-    "lua",
-    "markdown",
-    "python",
-    "scss",
-    "typescript",
-    "typescriptreact",
-    "yml"
-  ],
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
   "colors.filetypes": ["*"],
-  "diagnostic.floatConfig": { "border": true },
+  "diagnostic.floatConfig": { "border": true, "rounded": true },
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
     "typescript": "typescriptreact"
   },
+  "floatFactory.floatConfig": { "border": true, "rounded": true },
   "git.addedSign.hlGroup": "GitSignsAdd",
+  "git.changeRemovedSign.hlGroup": "GitSignsChange",
   "git.changedSign.hlGroup": "GitSignsChange",
+  "git.floatConfig": { "border": true, "rounded": true },
   "git.removedSign.hlGroup": "GitSignsDelete",
   "git.topRemovedSign.hlGroup": "GitSignsDelete",
   "go.goplsOptions": {
     "completeUnimported": true
   },
-  "hover.floatConfig": { "border": true },
+  "hover.floatConfig": { "border": true, "rounded": true },
   "html.autoClosingTags": false,
   "languageserver": {
     "haskell": {
@@ -53,9 +40,11 @@
   },
   "Lua.hint.enable": false,
   "Lua.telemetry.enable": true,
+  "notification.timeout": 5000,
   "prettier.disableLanguages": ["haskell"],
   "prettier.tabWidth": 2,
-  "signature.floatConfig": { "border": true },
-  "suggest.floatConfig": { "border": true },
+  "signature.floatConfig": { "border": true, "rounded": true },
+  "suggest.floatConfig": { "border": true, "rounded": true },
+  "suggest.removeDuplicateItems": true,
   "sumneko-lua.enableNvimLuaDev": true
 }
