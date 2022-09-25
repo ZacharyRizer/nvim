@@ -122,6 +122,7 @@ autocmd("VimResized", {
 -------------------------------------------------------------------------------
 
 vim.g.mapleader = " "
+map('n', '<Leader>`', ':source $MYVIMRC | :echo "Config Reloaded!"<CR>', noremap_s)
 map('i', '<C-c>', '<ESC>', noremap)
 map('n', '<C-c>', ':nohl<CR>', noremap)
 map('t', '<C-[>', '<C-\\><C-n>', noremap)
@@ -138,6 +139,7 @@ map({ 'c', 'i' }, '<C-b>', '<Left>', noremap)
 map({ 'c', 'i' }, '<C-d>', '<Del>', noremap)
 map({ 'c', 'i' }, '<C-e>', '<End>', noremap)
 map({ 'c', 'i' }, '<C-f>', '<Right>', noremap)
+map({ 'c', 'i', 't' }, '<M-BS>', '<C-w>', noremap)
 
 ---- easy word replace, search/replace, and */# searching stay in place
 map('n', 'c*', '*Ncgn', noremap)
@@ -146,7 +148,7 @@ map('n', '#', '#N', noremap)
 map('v', '*', 'y/<C-R>"<CR>N', noremap)
 map('v', '#', 'y?<C-R>"<CR>N', noremap)
 map('n', '<Leader>s', ':%s/', noremap)
-map('v', '<Leader>s', '<Esc> :s/\\%V', noremap)
+map('v', '<Leader>s', ':s/\\%V', noremap)
 
 ---- more intuitive yanking
 map('n', 'Y', 'y$')
@@ -165,7 +167,7 @@ map('v', 'K', ":m '<-2<CR>gv=gv", noremap)
 ---- easy buffer delete and close
 map('n', '<Leader>d', ':bd<cr>', noremap)
 map('n', '<Leader>dd', ':bd!<cr>', noremap)
-map('n', '<Leader>wo', ':%bd <bar> e# <bar> normal `--<cr>', noremap)
+map('n', '<Leader>wo', ':%bd | e# | normal `--<cr>', noremap)
 
 ---- quickfix lists
 function ToggleQFList()
@@ -436,6 +438,9 @@ map('n', 'gb', ':CocCommand git.showBlameDoc<cr>')
 -------------------------------------------------------------------------------
 
 require("tmux").setup({
+    copy_sync = {
+        redirect_to_clipboard = true,
+    },
     navigation = {
         cycle_navigation = false,
         enable_default_keybindings = true,

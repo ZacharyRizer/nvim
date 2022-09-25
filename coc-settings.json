@@ -45,6 +45,7 @@
   "prettier.tabWidth": 2,
   "signature.floatConfig": { "border": true, "rounded": true },
   "suggest.floatConfig": { "border": true, "rounded": true },
+  "suggest.noselect": true,
   "suggest.removeDuplicateItems": true,
   "sumneko-lua.enableNvimLuaDev": true
 }
