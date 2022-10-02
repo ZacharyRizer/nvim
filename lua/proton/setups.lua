@@ -52,6 +52,7 @@ require('nvim-tree').setup({
                 { key = "<BS>", cb = tree_cb("dir_up") },
                 { key = "?", cb = tree_cb("toggle_help") },
                 { key = "<C-e>", cb = tree_cb("close") },
+                { key = "<C-s>", cb = tree_cb("split") },
             }
         },
         width = 35,
@@ -88,19 +89,6 @@ require("toggleterm").setup({
     direction = 'float',
     float_opts = { border = 'curved' }
 })
-local Terminal = require('toggleterm.terminal').Terminal
-local lazygit = Terminal:new({
-    cmd = "lazygit",
-    hidden = true,
-    direction = "float",
-    float_opts = {
-        border = 'none',
-        height = vim.o.lines,
-        width = vim.o.columns,
-    },
-})
-local lg_toggle = function() lazygit:toggle() end
-Map("n", "<leader>lg", lg_toggle, Opts.s)
 
 ---- Treesitter
 require 'nvim-treesitter.configs'.setup({
@@ -159,12 +147,13 @@ require('telescope').setup({
         },
         mappings = {
             i = {
-                ["<ESC>"] = actions.close,
-                ["<C-t>"] = actions.toggle_selection,
-                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
+                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
                 ["<C-r>"] = actions.delete_buffer,
+                ["<C-s>"] = actions.select_horizontal,
+                ["<C-t>"] = actions.toggle_selection,
+                ["<ESC>"] = actions.close,
             },
         },
         path_display = { shorten = 5 },
@@ -202,11 +191,13 @@ vim.g.coc_global_extensions = {
     'coc-git',
     'coc-go',
     'coc-highlight',
+    'coc-hls',
     'coc-html',
     'coc-json',
     'coc-marketplace',
     'coc-prettier',
     'coc-pyright',
+    'coc-rust-analyzer',
     'coc-sumneko-lua',
     'coc-tsserver',
 }
