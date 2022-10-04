@@ -28,6 +28,23 @@ require("indent_blankline").setup({
     buftype_exclude = { 'nofile', 'terminal' }
 })
 
+---- Lualine
+local big_screen = function() return vim.fn.winwidth(0) > 90 end
+require 'lualine'.setup({
+    extensions = { 'quickfix' },
+    options = {
+        disabled_filetypes = { 'dashboard', 'NvimTree', 'undotree' },
+    },
+    sections = {
+        lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 1) end } },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { { 'g:coc_status', cond = big_screen } },
+        lualine_y = { { 'progress', cond = big_screen } },
+        lualine_z = { { 'location', cond = big_screen } }
+    },
+})
+
 ---- Nvim-Tree
 Map('n', '<C-e>', ':NvimTreeToggle<CR>', Opts.s)
 local tree_cb = require 'nvim-tree.config'.nvim_tree_callback
@@ -90,6 +107,13 @@ require("toggleterm").setup({
     float_opts = { border = 'curved' }
 })
 
+---- TokyoNight
+require("tokyonight").setup({
+    sidebars = { "qf", "help", "undotree" },
+    lualine_bold = true,
+})
+vim.cmd("colorscheme tokyonight")
+
 ---- Treesitter
 require 'nvim-treesitter.configs'.setup({
     ignore_install = { "phpdoc" },
@@ -122,7 +146,7 @@ vim.cmd [[command! -nargs=0 Diff Gdiffsplit!]]
 vim.cmd [[command! -nargs=0 Merge G mergetool]]
 
 ---- Yankstack
-require("yanky").setup({ highlight = { timer = 250 } })
+require("yanky").setup({ highlight = { timer = 100 } })
 Map({ "n", "x" }, "y", "<Plug>(YankyYank)", Opts.s)
 Map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", Opts.s)
 Map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", Opts.s)
@@ -163,7 +187,6 @@ require('telescope').setup({
     }
 })
 require('telescope').load_extension('coc')
-require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('projects')
 require("telescope").load_extension("yank_history")
 

@@ -36,7 +36,6 @@ return require('packer').startup(function(use)
     ---- LSP, Completions, Git, Telescope
     use { 'nvim-lua/plenary.nvim' }
     use { 'nvim-telescope/telescope.nvim' }
-    use { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make' }
     use { 'fannheyward/telescope-coc.nvim' }
     use { 'ahmedkhalf/project.nvim' }
     use { 'neoclide/coc.nvim', branch = 'release' }
@@ -54,7 +53,6 @@ return require('packer').startup(function(use)
 
     ---- UI Elements
     use { 'ThePrimeagen/harpoon' }
-    use { 'glepnir/dashboard-nvim' }
     use { 'kyazdani42/nvim-tree.lua' }
     use { 'mbbill/undotree' }
     use { 'akinsho/toggleterm.nvim' }

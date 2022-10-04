@@ -1,6 +1,7 @@
 ------------------------------ Basic Key Mappings -----------------------------
 
 vim.g.mapleader = " "
+Map('n', '<Leader>`', ':e $MYVIMRC <CR>', Opts.s)
 Map('i', '<C-c>', '<ESC>', Opts.s)
 Map('n', '<C-c>', ':nohl<CR>', Opts.s)
 Map('t', '<C-[>', '<C-\\><C-n>', Opts.s)
