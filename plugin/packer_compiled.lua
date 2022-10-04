@@ -114,11 +114,6 @@ _G.packer_plugins = {
     path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/nvim-surround",
     url = "https://github.com/kylechui/nvim-surround"
   },
-  ["nvim-tree.lua"] = {
-    loaded = true,
-    path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
-    url = "https://github.com/kyazdani42/nvim-tree.lua"
-  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
@@ -158,6 +153,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/telescope-coc.nvim",
     url = "https://github.com/fannheyward/telescope-coc.nvim"
+  },
+  ["telescope-file-browser.nvim"] = {
+    loaded = true,
+    path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/telescope-file-browser.nvim",
+    url = "https://github.com/nvim-telescope/telescope-file-browser.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,

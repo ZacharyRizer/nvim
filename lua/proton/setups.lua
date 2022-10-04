@@ -6,8 +6,8 @@ require('nvim-ts-autotag').setup()
 
 ---- Comment
 require('Comment').setup({
-    toggler = { line = '<leader>/', block = '<leader>?', },
-    opleader = { line = '<leader>/', block = '<leader>?', },
+    toggler = { line = '<Leader>/', block = '<Leader>?', },
+    opleader = { line = '<Leader>/', block = '<Leader>?', },
     mappings = { extra = false, extended = false, },
 })
 
@@ -42,38 +42,6 @@ require 'lualine'.setup({
         lualine_x = { { 'g:coc_status', cond = big_screen } },
         lualine_y = { { 'progress', cond = big_screen } },
         lualine_z = { { 'location', cond = big_screen } }
-    },
-})
-
----- Nvim-Tree
-Map('n', '<C-e>', ':NvimTreeToggle<CR>', Opts.s)
-local tree_cb = require 'nvim-tree.config'.nvim_tree_callback
-require('nvim-tree').setup({
-    actions             = {
-        open_file = { quit_on_open = true },
-    },
-    renderer            = {
-        indent_markers = { enable = true }
-    },
-    respect_buf_cwd     = true,
-    update_cwd          = true,
-    update_focused_file = { enable = true, update_cwd = true },
-    view                = {
-        adaptive_size = true,
-        mappings = {
-            custom_only = false,
-            list = {
-                { key = "<CR>", cb = tree_cb("edit") },
-                { key = "h", cb = tree_cb("close_node") },
-                { key = "l", cb = tree_cb("open_node") },
-                { key = "<BS>", cb = tree_cb("dir_up") },
-                { key = "?", cb = tree_cb("toggle_help") },
-                { key = "<C-e>", cb = tree_cb("close") },
-                { key = "<C-s>", cb = tree_cb("split") },
-            }
-        },
-        width = 35,
-        side = 'right',
     },
 })
 
@@ -116,11 +84,29 @@ vim.cmd("colorscheme tokyonight")
 
 ---- Treesitter
 require 'nvim-treesitter.configs'.setup({
-    ignore_install = { "phpdoc" },
-    highlight = {
-        disable = { "vim" },
-        enable = true
+    ensure_installed = {
+        "bash",
+        "comment",
+        "css",
+        "dockerfile",
+        "gitignore",
+        "go",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "python",
+        "regex",
+        "rust",
+        "scss",
+        "sql",
+        "toml",
+        "tsx",
+        "typescript",
+        "yaml",
     },
+    highlight = { enable = true },
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -177,29 +163,38 @@ require('telescope').setup({
                 ["<C-r>"] = actions.delete_buffer,
                 ["<C-s>"] = actions.select_horizontal,
                 ["<C-t>"] = actions.toggle_selection,
-                ["<ESC>"] = actions.close,
+                ["<M-BS>"] = { "<c-s-w>", type = "command" },
+            },
+            n = {
+                ["<C-t>"] = actions.toggle_selection,
             },
         },
         path_display = { shorten = 5 },
         prompt_prefix = " ",
         selection_caret = " ",
         sorting_strategy = "ascending",
+    },
+    extensions = {
+        file_browser = {
+            hijack_netrw = true,
+            path = "%:p:h",
+        }
     }
 })
 require('telescope').load_extension('coc')
+require('telescope').load_extension('file_browser')
 require('telescope').load_extension('projects')
-require("telescope").load_extension("yank_history")
+require('telescope').load_extension('yank_history')
 
 vim.cmd [[command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>]]
 vim.cmd [[command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>]]
 
 Map('n', '<Leader>c', ':Telescope commands<CR>', Opts.s)
+Map('n', '<Leader>e', ':Telescope file_browser<CR>', Opts.s)
 Map('n', '<Leader>f', ':Telescope find_files<CR>', Opts.s)
 Map('n', '<Leader>g', ':Telescope live_grep<CR>', Opts.s)
 Map('n', '<Leader>h', ':Telescope buffers<CR>', Opts.s)
-Map('n', '<Leader>la', ':Telescope coc file_code_actions<CR>', Opts.s)
 Map('n', '<Leader>lc', ':Telescope command_history<CR>', Opts.s)
-Map('n', '<Leader>ld', ':Telescope coc diagnostics<CR>', Opts.s)
 Map('n', '<Leader>lh', ':Telescope oldfiles<CR>', Opts.s)
 Map('n', '<Leader>ls', ':Telescope treesitter<CR>', Opts.s)
 Map('n', '<Leader>p', ':Telescope projects<CR>', Opts.s)
@@ -241,10 +236,12 @@ vim.cmd [[
 Map('n', 'K', ":call CocActionAsync('doHover')<CR>", Opts.s)
 
 ---- Lsp code navigation.
-Map('n', 'gd', '<cmd>Telescope coc definitions<cr>', Opts.s)
-Map('n', 'gi', '<cmd>Telescope coc implementations<cr>', Opts.s)
-Map('n', 'gr', '<cmd>Telescope coc references<cr>', Opts.s)
-Map('n', 'gt', '<cmd>Telescope coc type_definitions<cr>', Opts.s)
+Map('n', 'gd', ':Telescope coc definitions<CR>', Opts.s)
+Map('n', 'gi', ':Telescope coc implementations<CR>', Opts.s)
+Map('n', 'gr', ':Telescope coc references<CR>', Opts.s)
+Map('n', 'gt', ':Telescope coc type_definitions<CR>', Opts.s)
+Map('n', '<Leader>la', ':Telescope coc file_code_actions<CR>', Opts.s)
+Map('n', '<Leader>ld', ':Telescope coc diagnostics<CR>', Opts.s)
 Map('n', '<Leader>rn', '<Plug>(coc-rename)')
 
 ---- Use `[d` and `]d` to navigate diagnostics
