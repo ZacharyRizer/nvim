@@ -36,7 +36,6 @@ return require('packer').startup(function(use)
     ---- LSP, Completions, Git, Telescope
     use { 'nvim-lua/plenary.nvim' }
     use { 'nvim-telescope/telescope.nvim' }
-    use { 'nvim-telescope/telescope-file-browser.nvim' }
     use { 'fannheyward/telescope-coc.nvim' }
     use { 'ahmedkhalf/project.nvim' }
     use { 'neoclide/coc.nvim', branch = 'release' }
@@ -47,6 +46,7 @@ return require('packer').startup(function(use)
     use { 'nvim-lualine/lualine.nvim' }
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use { 'nvim-treesitter/nvim-treesitter-context' }
+    use { 'kyazdani42/nvim-tree.lua' }
     use { 'kyazdani42/nvim-web-devicons' }
     use { 'lukas-reineke/indent-blankline.nvim' }
     use { 'windwp/nvim-autopairs' }

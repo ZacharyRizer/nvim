@@ -45,6 +45,38 @@ require 'lualine'.setup({
     },
 })
 
+---- Nvim-Tree
+Map('n', '<C-e>', ':NvimTreeToggle<CR>', Opts.s)
+local tree_cb = require 'nvim-tree.config'.nvim_tree_callback
+require('nvim-tree').setup({
+    actions             = {
+        open_file = { quit_on_open = true },
+    },
+    renderer            = {
+        indent_markers = { enable = true }
+    },
+    respect_buf_cwd     = true,
+    update_cwd          = true,
+    update_focused_file = { enable = true, update_cwd = true },
+    view                = {
+        adaptive_size = true,
+        mappings = {
+            custom_only = false,
+            list = {
+                { key = "<CR>", cb = tree_cb("edit") },
+                { key = "h", cb = tree_cb("close_node") },
+                { key = "l", cb = tree_cb("open_node") },
+                { key = "<BS>", cb = tree_cb("dir_up") },
+                { key = "?", cb = tree_cb("toggle_help") },
+                { key = "<C-e>", cb = tree_cb("close") },
+                { key = "<C-s>", cb = tree_cb("split") },
+            }
+        },
+        width = 35,
+        side = 'right',
+    },
+})
+
 ---- ProjectNvim
 require('project_nvim').setup()
 
@@ -174,15 +206,8 @@ require('telescope').setup({
         selection_caret = " ",
         sorting_strategy = "ascending",
     },
-    extensions = {
-        file_browser = {
-            hijack_netrw = true,
-            path = "%:p:h",
-        }
-    }
 })
 require('telescope').load_extension('coc')
-require('telescope').load_extension('file_browser')
 require('telescope').load_extension('projects')
 require('telescope').load_extension('yank_history')
 
@@ -190,7 +215,6 @@ vim.cmd [[command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>]]
 vim.cmd [[command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>]]
 
 Map('n', '<Leader>c', ':Telescope commands<CR>', Opts.s)
-Map('n', '<Leader>e', ':Telescope file_browser<CR>', Opts.s)
 Map('n', '<Leader>f', ':Telescope find_files<CR>', Opts.s)
 Map('n', '<Leader>g', ':Telescope live_grep<CR>', Opts.s)
 Map('n', '<Leader>h', ':Telescope buffers<CR>', Opts.s)
