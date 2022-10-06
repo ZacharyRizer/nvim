@@ -1,5 +1,6 @@
----------------------------------- Plug-Ins ------------------------------------
+local A = require('utils.aliases')
 
+---------------------------------- Plug-Ins ------------------------------------
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 local ensure_packer = function()
@@ -14,8 +15,8 @@ end
 local packer_bootstrap = ensure_packer()
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
-local packer_refresh = Augroup("PackerRefresh", { clear = true })
-Autocmd("BufWritePost", {
+local packer_refresh = A.augroup("PackerRefresh", { clear = true })
+A.autocmd("BufWritePost", {
     pattern = "plugins.lua",
     command = "source <afile> | PackerSync",
     group = packer_refresh

@@ -1,4 +1,4 @@
------------------------------- General Settings -------------------------------
+local A = require('utils.aliases')
 
 vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
@@ -33,28 +33,28 @@ vim.opt.wildmode = "longest:full,full"
 vim.opt.wrap = false
 vim.opt.writebackup = false
 
-local formating = Augroup("Formating", { clear = true })
-Autocmd("BufEnter", {
+local formating = A.augroup("Formating", { clear = true })
+A.autocmd("BufEnter", {
     pattern = "*",
     command = "setlocal fo-=c fo-=r fo-=o",
     group = formating
 })
-Autocmd("BufWritePre", {
+A.autocmd("BufWritePre", {
     pattern = "*",
     command = "%s/\\s\\+$//e",
     group = formating
 })
-Autocmd({ "CursorHold, CursorHoldI" }, {
+A.autocmd({ "CursorHold, CursorHoldI" }, {
     pattern = "*",
     command = "checktime",
     group = formating
 })
-Autocmd("FileType", {
+A.autocmd("FileType", {
     pattern = { "go", "haskell", "lua", "python", "yaml" },
     command = "setlocal shiftwidth=4 softtabstop=4 tabstop=4",
     group = formating
 })
-Autocmd("VimResized", {
+A.autocmd("VimResized", {
     pattern = "*",
     command = ":wincmd =",
     group = formating

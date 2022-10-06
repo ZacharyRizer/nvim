@@ -1,52 +1,52 @@
------------------------------- Basic Key Mappings -----------------------------
+local A = require('utils.aliases')
 
 vim.g.mapleader = " "
-Map('n', '<Leader>`', ':e $MYVIMRC <CR>', Opts.s)
-Map('i', '<C-c>', '<ESC>', Opts.s)
-Map('n', '<C-c>', ':nohl<CR>', Opts.s)
-Map('t', '<C-[>', '<C-\\><C-n>', Opts.s)
+A.map('n', '<Leader>`', ':e $MYVIMRC <CR>', A.opts.s)
+A.map('i', '<C-c>', '<ESC>', A.opts.s)
+A.map('n', '<C-c>', ':nohl<CR>', A.opts.s)
+A.map('t', '<C-[>', '<C-\\><C-n>', A.opts.s)
 
 ---- unmapping a few keys that annoy me
-Map('n', 'K', '<nop>', Opts.s)
-Map('n', 'Q', '<nop>', Opts.s)
-Map('n', '<Space>', '<nop>', Opts.s)
-Map('n', '<BS>', '<nop>', Opts.s)
+A.map('n', 'K', '<nop>', A.opts.s)
+A.map('n', 'Q', '<nop>', A.opts.s)
+A.map('n', '<Space>', '<nop>', A.opts.s)
+A.map('n', '<BS>', '<nop>', A.opts.s)
 
 ---- readline/emacs keys for i and c modes
-Map({ 'c', 'i' }, '<C-a>', '<Home>', Opts.n)
-Map({ 'c', 'i' }, '<C-b>', '<Left>', Opts.n)
-Map({ 'c', 'i' }, '<C-d>', '<Del>', Opts.n)
-Map({ 'c', 'i' }, '<C-e>', '<End>', Opts.n)
-Map({ 'c', 'i' }, '<C-f>', '<Right>', Opts.n)
-Map({ 'c', 'i' }, '<M-BS>', '<C-w>', Opts.n)
+A.map({ 'c', 'i' }, '<C-a>', '<Home>', A.opts.n)
+A.map({ 'c', 'i' }, '<C-b>', '<Left>', A.opts.n)
+A.map({ 'c', 'i' }, '<C-d>', '<Del>', A.opts.n)
+A.map({ 'c', 'i' }, '<C-e>', '<End>', A.opts.n)
+A.map({ 'c', 'i' }, '<C-f>', '<Right>', A.opts.n)
+A.map({ 'c', 'i' }, '<M-BS>', '<C-w>', A.opts.n)
 
 ---- easy word replace, search/replace, and */# searching stay in place
-Map('n', 'c*', '*Ncgn', Opts.n)
-Map('n', '*', '*N', Opts.n)
-Map('n', '#', '#N', Opts.n)
-Map('v', '*', 'y/<C-R>"<CR>N', Opts.n)
-Map('v', '#', 'y?<C-R>"<CR>N', Opts.n)
-Map('n', '<Leader>s', ':%s/', Opts.n)
-Map('v', '<Leader>s', ':s/\\%V', Opts.n)
+A.map('n', 'c*', '*Ncgn', A.opts.n)
+A.map('n', '*', '*N', A.opts.n)
+A.map('n', '#', '#N', A.opts.n)
+A.map('v', '*', 'y/<C-R>"<CR>N', A.opts.n)
+A.map('v', '#', 'y?<C-R>"<CR>N', A.opts.n)
+A.map('n', '<Leader>s', ':%s/', A.opts.n)
+A.map('v', '<Leader>s', ':s/\\%V', A.opts.n)
 
 ---- more intuitive yanking
-Map('n', 'Y', 'y$', Opts.s)
+A.map('n', 'Y', 'y$', A.opts.s)
 
 ---- better line connection
-Map('n', 'J', 'mzJ`z', Opts.s)
+A.map('n', 'J', 'mzJ`z', A.opts.s)
 
 ---- move/tab text easily
-Map('v', '<', '<gv', Opts.s)
-Map('v', '>', '>gv', Opts.s)
-Map('n', '<', '<<', Opts.s)
-Map('n', '>', '>>', Opts.s)
-Map('v', 'J', ":m '>+1<CR>gv=gv", Opts.s)
-Map('v', 'K', ":m '<-2<CR>gv=gv", Opts.s)
+A.map('v', '<', '<gv', A.opts.s)
+A.map('v', '>', '>gv', A.opts.s)
+A.map('n', '<', '<<', A.opts.s)
+A.map('n', '>', '>>', A.opts.s)
+A.map('v', 'J', ":m '>+1<CR>gv=gv", A.opts.s)
+A.map('v', 'K', ":m '<-2<CR>gv=gv", A.opts.s)
 
 ---- easy buffer delete and close
-Map('n', '<Leader>d', ':bd<cr>', Opts.s)
-Map('n', '<Leader>D', ':bd!<cr>', Opts.s)
-Map('n', '<Leader>wo', ':%bd | e# | normal `--<cr>', Opts.s)
+A.map('n', '<Leader>d', ':bd<cr>', A.opts.s)
+A.map('n', '<Leader>D', ':bd!<cr>', A.opts.s)
+A.map('n', '<Leader>wo', ':%bd | e# | normal `--<cr>', A.opts.s)
 
 ---- quickfix lists
 vim.cmd [[
@@ -59,6 +59,6 @@ vim.cmd [[
   endfunction
 ]]
 
-Map('n', ']q', ':cnext<CR>', Opts.s)
-Map('n', '[q', ':cprev<CR>', Opts.s)
-Map('n', '<C-q>', ':call QuickFixToggle()<CR>', Opts.s)
+A.map('n', ']q', ':cnext<CR>', A.opts.s)
+A.map('n', '[q', ':cprev<CR>', A.opts.s)
+A.map('n', '<C-q>', ':call QuickFixToggle()<CR>', A.opts.s)
