@@ -20,7 +20,6 @@ vim.g.coc_global_extensions = {
     'coc-tsserver',
 }
 
----- basic completion mappings
 vim.cmd [[
     inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : CheckBackspace() ? "\<Tab>" : coc#refresh()
     inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
@@ -30,12 +29,15 @@ vim.cmd [[
       let col = col('.') - 1
       return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
+
+    nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>"
+    nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-u>"
+    inoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Del>"
+    inoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : ""
 ]]
 
----- Show documentation
 A.map('n', 'K', ":call CocActionAsync('doHover')<CR>", A.opts.s)
 
----- Lsp code navigation.
 A.map('n', 'gd', ':Telescope coc definitions<CR>', A.opts.s)
 A.map('n', 'gi', ':Telescope coc implementations<CR>', A.opts.s)
 A.map('n', 'gr', ':Telescope coc references<CR>', A.opts.s)
@@ -44,7 +46,6 @@ A.map('n', '<Leader>la', ':Telescope coc file_code_actions<CR>', A.opts.s)
 A.map('n', '<Leader>ld', ':Telescope coc diagnostics<CR>', A.opts.s)
 A.map('n', '<Leader>rn', '<Plug>(coc-rename)')
 
----- Use `[d` and `]d` to navigate diagnostics
 A.map('n', '[d', '<Plug>(coc-diagnostic-prev)', A.opts.s)
 A.map('n', ']d', '<Plug>(coc-diagnostic-next)', A.opts.s)
 
@@ -128,7 +129,6 @@ require('nvim-tree').setup({
             }
         },
         width = 35,
-        side = 'right',
     },
 })
 

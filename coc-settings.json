@@ -15,25 +15,8 @@
   "git.floatConfig": { "border": true, "rounded": true },
   "git.removedSign.hlGroup": "GitSignsDelete",
   "git.topRemovedSign.hlGroup": "GitSignsDelete",
-  "go.goplsOptions": {
-    "completeUnimported": true
-  },
   "hover.floatConfig": { "border": true, "rounded": true },
   "html.autoClosingTags": false,
-  "languageserver": {
-    "haskell": {
-      "command": "haskell-language-server-wrapper",
-      "args": ["--lsp"],
-      "rootPatterns": [
-        "*.cabal",
-        "stack.yaml",
-        "cabal.project",
-        "package.yaml",
-        "hie.yaml"
-      ],
-      "filetypes": ["haskell", "lhaskell"]
-    }
-  },
   "list.insertMappings": {
     "<C-n>": "normal:j",
     "<C-p>": "normal:k"
