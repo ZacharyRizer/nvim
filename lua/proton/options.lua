@@ -14,7 +14,7 @@ vim.opt.pumblend = 15
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 10
 vim.opt.shiftwidth = 2
-vim.opt.shortmess:append("cI")
+vim.opt.shortmess:append("c")
 vim.opt.showmode = false
 vim.opt.sidescrolloff = 10
 vim.opt.signcolumn = "yes"

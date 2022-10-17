@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/coc.nvim",
     url = "https://github.com/neoclide/coc.nvim"
   },
+  ["dashboard-nvim"] = {
+    loaded = true,
+    path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/dashboard-nvim",
+    url = "https://github.com/glepnir/dashboard-nvim"
+  },
   harpoon = {
     loaded = true,
     path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/harpoon",
@@ -158,6 +163,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/telescope-coc.nvim",
     url = "https://github.com/fannheyward/telescope-coc.nvim"
+  },
+  ["telescope-fzy-native.nvim"] = {
+    loaded = true,
+    path = "/Users/zrizer/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzy-native.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,

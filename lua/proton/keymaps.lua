@@ -1,7 +1,6 @@
 local A = require('utils.aliases')
 
 vim.g.mapleader = " "
-A.map('n', '<Leader>`', ':e $MYVIMRC <CR>', A.opts.s)
 A.map('i', '<C-c>', '<ESC>', A.opts.s)
 A.map('n', '<C-c>', ':nohl<CR>', A.opts.s)
 A.map('t', '<C-[>', '<C-\\><C-n>', A.opts.s)

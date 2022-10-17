@@ -37,6 +37,7 @@ return require('packer').startup(function(use)
     ---- LSP, Completions, Git, Telescope
     use { 'nvim-lua/plenary.nvim' }
     use { 'nvim-telescope/telescope.nvim' }
+    use { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make' }
     use { 'fannheyward/telescope-coc.nvim' }
     use { 'ahmedkhalf/project.nvim' }
     use { 'neoclide/coc.nvim', branch = 'release' }
@@ -45,6 +46,7 @@ return require('packer').startup(function(use)
     ---- Theme and Formatting
     use { 'folke/tokyonight.nvim' }
     use { 'nvim-lualine/lualine.nvim' }
+    use { 'glepnir/dashboard-nvim' }
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use { 'nvim-treesitter/nvim-treesitter-context' }
     use { 'kyazdani42/nvim-tree.lua' }
