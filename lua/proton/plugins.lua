@@ -57,6 +57,7 @@ return require('packer').startup(function(use)
 
     ---- UI Elements
     use { 'ThePrimeagen/harpoon' }
+    use { 'ggandor/leap.nvim' }
     use { 'mbbill/undotree' }
     use { 'akinsho/toggleterm.nvim' }
     use { 'gbprod/yanky.nvim' }

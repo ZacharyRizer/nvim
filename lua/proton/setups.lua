@@ -125,6 +125,9 @@ require("indent_blankline").setup({
     buftype_exclude = { 'nofile', 'terminal' }
 })
 
+--------------------------------- Leap ----------------------------------------
+require("leap").set_default_keymaps()
+
 ------------------------------- Lualine ---------------------------------------
 local big_screen = function() return vim.fn.winwidth(0) > 90 end
 require 'lualine'.setup({
@@ -178,7 +181,7 @@ require('nvim-tree').setup({
 require('project_nvim').setup()
 
 ------------------------------ Surround ---------------------------------------
-require("nvim-surround").setup()
+require("nvim-surround").setup({ keymaps = { visual = "<C-s>" } })
 
 ------------------------------ Telescope --------------------------------------
 local actions = require('telescope.actions')
