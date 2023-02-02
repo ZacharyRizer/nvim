@@ -30,7 +30,6 @@ end
 
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
-
     ---- Cache for lua plugins: Nvim start time
     use { 'lewis6991/impatient.nvim' }
 
