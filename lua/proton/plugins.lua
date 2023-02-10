@@ -1,74 +1,54 @@
-local A = require('utils.aliases')
-
 ---------------------------------- Plug-Ins ------------------------------------
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-local ensure_packer = function()
-    if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-        vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
-
-local packer_bootstrap = ensure_packer()
-
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-local packer_refresh = A.augroup("PackerRefresh", { clear = true })
-A.autocmd("BufWritePost", {
-    pattern = "plugins.lua",
-    command = "source <afile> | PackerSync",
-    group = packer_refresh
-})
+vim.opt.rtp:prepend(lazypath)
 
 -- Use a protected call so we don't error out on first use
-local status_ok, _ = pcall(require, "packer")
+local status_ok, _ = pcall(require, "lazy")
 if not status_ok then
     return
 end
 
-return require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
-    ---- Cache for lua plugins: Nvim start time
-    use { 'lewis6991/impatient.nvim' }
-
+require("lazy").setup({
     ---- LSP, Completions, Git, Telescope
-    use { 'nvim-lua/plenary.nvim' }
-    use { 'nvim-telescope/telescope.nvim' }
-    use { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make' }
-    use { 'fannheyward/telescope-coc.nvim' }
-    use { 'ahmedkhalf/project.nvim' }
-    use { 'neoclide/coc.nvim', branch = 'release' }
-    use { 'tpope/vim-fugitive' }
+    { 'nvim-lua/plenary.nvim' },
+    { 'nvim-telescope/telescope.nvim' },
+    { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make' },
+    { 'fannheyward/telescope-coc.nvim' },
+    { 'ahmedkhalf/project.nvim' },
+    { 'neoclide/coc.nvim',                        branch = 'release' },
+    { 'tpope/vim-fugitive' },
 
     ---- Theme and Formatting
-    use { 'folke/tokyonight.nvim' }
-    use { 'nvim-lualine/lualine.nvim' }
-    use { 'glepnir/dashboard-nvim' }
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use { 'nvim-treesitter/nvim-treesitter-context' }
-    use { 'kyazdani42/nvim-tree.lua' }
-    use { 'kyazdani42/nvim-web-devicons' }
-    use { 'lukas-reineke/indent-blankline.nvim' }
-    use { 'windwp/nvim-autopairs' }
-    use { 'windwp/nvim-ts-autotag' }
+    { 'folke/tokyonight.nvim' },
+    { 'nvim-lualine/lualine.nvim' },
+    { 'glepnir/dashboard-nvim' },
+    { 'nvim-treesitter/nvim-treesitter',          run = ':TSUpdate' },
+    { 'nvim-treesitter/nvim-treesitter-context' },
+    { 'kyazdani42/nvim-tree.lua' },
+    { 'kyazdani42/nvim-web-devicons' },
+    { 'lukas-reineke/indent-blankline.nvim' },
+    { 'windwp/nvim-autopairs' },
+    { 'windwp/nvim-ts-autotag' },
 
     ---- UI Elements
-    use { 'ThePrimeagen/harpoon' }
-    use { 'ggandor/leap.nvim' }
-    use { 'mbbill/undotree' }
-    use { 'akinsho/toggleterm.nvim' }
-    use { 'gbprod/yanky.nvim' }
-    use { 'numToStr/Comment.nvim' }
-    use { 'kylechui/nvim-surround' }
+    { 'ThePrimeagen/harpoon' },
+    { 'ggandor/leap.nvim' },
+    { 'mbbill/undotree' },
+    { 'akinsho/toggleterm.nvim' },
+    { 'gbprod/yanky.nvim' },
+    { 'numToStr/Comment.nvim' },
+    { 'kylechui/nvim-surround' },
 
     ---- Tmux-Vim Integration
-    use { 'aserowy/tmux.nvim' }
-
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-
-    require('impatient').enable_profile()
-end)
+    { 'aserowy/tmux.nvim' }
+})
