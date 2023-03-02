@@ -156,24 +156,23 @@ require('nvim-tree').setup({
         indent_markers = { enable = true }
     },
     respect_buf_cwd     = true,
-    update_cwd          = true,
-    update_focused_file = { enable = true, update_cwd = true },
+    sync_root_with_cwd  = true,
+    update_focused_file = { enable = true, update_root = true },
     view                = {
-        adaptive_size = true,
         mappings = {
             custom_only = false,
             list = {
-                { key = "<CR>", cb = tree_cb("edit") },
-                { key = "h", cb = tree_cb("close_node") },
-                { key = "l", cb = tree_cb("open_node") },
-                { key = "<BS>", cb = tree_cb("dir_up") },
-                { key = "?", cb = tree_cb("toggle_help") },
+                { key = "<CR>",  cb = tree_cb("edit") },
+                { key = "h",     cb = tree_cb("close_node") },
+                { key = "l",     cb = tree_cb("open_node") },
+                { key = "<BS>",  cb = tree_cb("dir_up") },
+                { key = "?",     cb = tree_cb("toggle_help") },
                 { key = "<C-e>", cb = tree_cb("close") },
                 { key = "<C-s>", cb = tree_cb("split") },
             }
         },
         side = 'right',
-        width = 35,
+        width = { 35 },
     },
 })
 
@@ -198,16 +197,16 @@ require('telescope').setup({
         },
         mappings = {
             i = {
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                ["<C-r>"] = actions.delete_buffer,
-                ["<C-s>"] = actions.select_horizontal,
-                ["<C-t>"] = actions.toggle_selection,
-                ["<M-BS>"] = { "<c-s-w>", type = "command" },
+                    ["<C-j>"] = actions.move_selection_next,
+                    ["<C-k>"] = actions.move_selection_previous,
+                    ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+                    ["<C-r>"] = actions.delete_buffer,
+                    ["<C-s>"] = actions.select_horizontal,
+                    ["<C-t>"] = actions.toggle_selection,
+                    ["<M-BS>"] = { "<c-s-w>", type = "command" },
             },
             n = {
-                ["<C-t>"] = actions.toggle_selection,
+                    ["<C-t>"] = actions.toggle_selection,
             },
         },
         path_display = { shorten = 5 },
