@@ -147,7 +147,26 @@ require 'lualine'.setup({
 
 ------------------------------- NvimTree --------------------------------------
 A.map('n', '<C-e>', ':NvimTreeToggle<CR>', A.opts.s)
-local tree_cb = require 'nvim-tree.config'.nvim_tree_callback
+
+local function nvim_tree_on_attach(bufnr)
+    local api = require('nvim-tree.api')
+
+    local function opts(desc)
+        return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    api.config.mappings.default_on_attach(bufnr)
+
+    vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
+    vim.keymap.set('n', 'l', api.node.open.replace_tree_buffer, opts('Open: In Place'))
+    vim.keymap.set('n', '<BS>', api.tree.change_root_to_parent, opts('Up'))
+    vim.keymap.set('n', '<C-s>', api.node.open.vertical, opts('Open: Vertical Split'))
+    vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+
+    vim.keymap.del('n', '<C-e>', { buffer = bufnr })
+    vim.keymap.del('n', '<C-x>', { buffer = bufnr })
+end
+
 require('nvim-tree').setup({
     actions             = {
         open_file = { quit_on_open = true },
@@ -156,21 +175,10 @@ require('nvim-tree').setup({
         indent_markers = { enable = true }
     },
     respect_buf_cwd     = true,
+    on_attach           = nvim_tree_on_attach,
     sync_root_with_cwd  = true,
     update_focused_file = { enable = true, update_root = true },
     view                = {
-        mappings = {
-            custom_only = false,
-            list = {
-                { key = "<CR>",  cb = tree_cb("edit") },
-                { key = "h",     cb = tree_cb("close_node") },
-                { key = "l",     cb = tree_cb("open_node") },
-                { key = "<BS>",  cb = tree_cb("dir_up") },
-                { key = "?",     cb = tree_cb("toggle_help") },
-                { key = "<C-e>", cb = tree_cb("close") },
-                { key = "<C-s>", cb = tree_cb("split") },
-            }
-        },
         side = 'right',
         width = { 35 },
     },
@@ -197,16 +205,16 @@ require('telescope').setup({
         },
         mappings = {
             i = {
-                    ["<C-j>"] = actions.move_selection_next,
-                    ["<C-k>"] = actions.move_selection_previous,
-                    ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                    ["<C-r>"] = actions.delete_buffer,
-                    ["<C-s>"] = actions.select_horizontal,
-                    ["<C-t>"] = actions.toggle_selection,
-                    ["<M-BS>"] = { "<c-s-w>", type = "command" },
+                ["<C-j>"] = actions.move_selection_next,
+                ["<C-k>"] = actions.move_selection_previous,
+                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+                ["<C-r>"] = actions.delete_buffer,
+                ["<C-s>"] = actions.select_horizontal,
+                ["<C-t>"] = actions.toggle_selection,
+                ["<M-BS>"] = { "<c-s-w>", type = "command" },
             },
             n = {
-                    ["<C-t>"] = actions.toggle_selection,
+                ["<C-t>"] = actions.toggle_selection,
             },
         },
         path_display = { shorten = 5 },
