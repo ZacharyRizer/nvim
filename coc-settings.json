@@ -1,8 +1,8 @@
 {
   "coc.preferences.enableMessageDialog": true,
   "coc.preferences.extensionUpdateCheck": "daily",
-  "coc.preferences.formatOnSaveFiletypes": ["*"],
-  "colors.filetypes": ["*"],
+  "coc.preferences.formatOnSave": true,
+  "colors.enable": true,
   "diagnostic.floatConfig": { "border": true, "rounded": true },
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
@@ -22,7 +22,6 @@
     "<C-p>": "normal:k"
   },
   "Lua.hint.enable": false,
-  "Lua.telemetry.enable": true,
   "notification.timeout": 5000,
   "prettier.disableLanguages": ["haskell"],
   "prettier.tabWidth": 2,

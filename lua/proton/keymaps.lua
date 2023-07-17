@@ -39,8 +39,6 @@ A.map('v', '<', '<gv', A.opts.s)
 A.map('v', '>', '>gv', A.opts.s)
 A.map('n', '<', '<<', A.opts.s)
 A.map('n', '>', '>>', A.opts.s)
-A.map('v', 'J', ":m '>+1<CR>gv=gv", A.opts.s)
-A.map('v', 'K', ":m '<-2<CR>gv=gv", A.opts.s)
 
 ---- easy buffer delete and close
 A.map('n', '<Leader>d', ':bd<cr>', A.opts.s)
