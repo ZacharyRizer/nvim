@@ -70,10 +70,7 @@ require('dashboard').setup({
     config = {
         center = {
             { icon = '    ', desc = 'New File       ', action = 'DashboardNewFile' },
-            { icon = '    ', desc = 'Find File      ', action = 'Telescope find_files' },
-            { icon = '    ', desc = 'Find Word      ', action = 'Telescope live_grep' },
-            { icon = '    ', desc = 'Recent Files   ', action = 'Telescope oldfiles' },
-            { icon = '    ', desc = 'Recent Projects', action = 'Telescope projects' },
+            { icon = '    ', desc = 'Plugin Manager ', action = 'Lazy' },
             { icon = '    ', desc = 'Config         ', action = 'e ~/.config/nvim/init.lua' },
         },
         header = {

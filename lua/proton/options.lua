@@ -1,5 +1,7 @@
 local A = require('utils.aliases')
 
+vim.loader.enable()
+
 vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
 vim.opt.cursorline = true
