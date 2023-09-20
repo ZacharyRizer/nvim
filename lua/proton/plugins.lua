@@ -33,21 +33,18 @@ require("lazy").setup({
     { 'nvim-lualine/lualine.nvim' },
     { 'glepnir/dashboard-nvim' },
     { 'nvim-treesitter/nvim-treesitter',          run = ':TSUpdate' },
-    { 'nvim-treesitter/nvim-treesitter-context' },
     { 'nvim-tree/nvim-tree.lua' },
     { 'nvim-tree/nvim-web-devicons' },
     { 'lukas-reineke/indent-blankline.nvim' },
-    { 'windwp/nvim-autopairs' },
-    { 'windwp/nvim-ts-autotag' },
 
     ---- UI Elements
-    { 'ThePrimeagen/harpoon' },
     { 'ggandor/leap.nvim' },
     { 'mbbill/undotree' },
     { 'akinsho/toggleterm.nvim' },
     { 'gbprod/yanky.nvim' },
     { 'numToStr/Comment.nvim' },
     { 'kylechui/nvim-surround' },
+    { 'windwp/nvim-autopairs' },
 
     ---- Tmux-Vim Integration
     { 'aserowy/tmux.nvim' }

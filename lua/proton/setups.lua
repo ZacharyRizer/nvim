@@ -2,7 +2,6 @@ local A = require('utils.aliases')
 
 ------------------------------ Auto Pairs/Tags --------------------------------
 require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
-require('nvim-ts-autotag').setup()
 
 -------------------------------- COC Config -----------------------------------
 vim.g.coc_global_extensions = {
@@ -105,14 +104,6 @@ require('dashboard').setup({
 vim.cmd [[command! -nargs=0 Blame G blame]]
 vim.cmd [[command! -nargs=0 Diff Gdiffsplit!]]
 vim.cmd [[command! -nargs=0 Merge G mergetool]]
-
-------------------------------- Harpoon ---------------------------------------
-A.map("n", "<Leader>a", ":lua require('harpoon.mark').add_file() <cr>", A.opts.s)
-A.map("n", "<Leader>m", ":lua require('harpoon.ui').toggle_quick_menu() <cr>", A.opts.s)
-A.map("n", "<Leader>1", ":lua require('harpoon.ui').nav_file(1) <cr>", A.opts.s)
-A.map("n", "<Leader>2", ":lua require('harpoon.ui').nav_file(2) <cr>", A.opts.s)
-A.map("n", "<Leader>3", ":lua require('harpoon.ui').nav_file(3) <cr>", A.opts.s)
-A.map("n", "<Leader>4", ":lua require('harpoon.ui').nav_file(4) <cr>", A.opts.s)
 
 ----------------------------- Indentline --------------------------------------
 require("indent_blankline").setup({
@@ -305,7 +296,6 @@ require 'nvim-treesitter.configs'.setup({
     },
     indent = { enable = true }
 })
-require 'treesitter-context'.setup()
 
 ------------------------------ Undotree ---------------------------------------
 A.map('n', '<Leader>u', ':UndotreeToggle<CR>', A.opts.s)
