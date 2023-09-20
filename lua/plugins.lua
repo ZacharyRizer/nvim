@@ -24,8 +24,8 @@ require("lazy").setup({
     { 'nvim-telescope/telescope.nvim' },
     { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make' },
     { 'fannheyward/telescope-coc.nvim' },
-    { 'ahmedkhalf/project.nvim' },
     { 'neoclide/coc.nvim',                        branch = 'release' },
+    { 'ahmedkhalf/project.nvim' },
     { 'tpope/vim-fugitive' },
 
     ---- Theme and Formatting
@@ -34,7 +34,7 @@ require("lazy").setup({
     { 'glepnir/dashboard-nvim' },
     { 'nvim-treesitter/nvim-treesitter',          run = ':TSUpdate' },
     { 'nvim-tree/nvim-tree.lua' },
-    { 'nvim-tree/nvim-web-devicons' },
+    { "nvim-tree/nvim-web-devicons" },
     { 'lukas-reineke/indent-blankline.nvim' },
 
     ---- UI Elements

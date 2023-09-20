@@ -11,11 +11,11 @@ vim.g.coc_global_extensions = {
     'coc-highlight',
     'coc-html',
     'coc-json',
+    'coc-lua',
     'coc-marketplace',
     'coc-prettier',
     'coc-pyright',
     'coc-rust-analyzer',
-    'coc-sumneko-lua',
     'coc-tsserver',
 }
 
@@ -35,24 +35,24 @@ vim.cmd [[
     inoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : ""
 ]]
 
-A.map('n', 'K', ":call CocActionAsync('doHover')<CR>", A.opts.s)
+A.map('n', 'K', ":call CocActionAsync('doHover')<CR>", A.opts.ns)
 
-A.map('n', 'gd', ':Telescope coc definitions<CR>', A.opts.s)
-A.map('n', 'gi', ':Telescope coc implementations<CR>', A.opts.s)
-A.map('n', 'gr', ':Telescope coc references<CR>', A.opts.s)
-A.map('n', 'gt', ':Telescope coc type_definitions<CR>', A.opts.s)
-A.map('n', '<Leader>la', ':Telescope coc file_code_actions<CR>', A.opts.s)
-A.map('n', '<Leader>ld', ':Telescope coc diagnostics<CR>', A.opts.s)
+A.map('n', 'gd', ':Telescope coc definitions<CR>', A.opts.ns)
+A.map('n', 'gi', ':Telescope coc implementations<CR>', A.opts.ns)
+A.map('n', 'gr', ':Telescope coc references<CR>', A.opts.ns)
+A.map('n', 'gt', ':Telescope coc type_definitions<CR>', A.opts.ns)
+A.map('n', '<Leader>la', ':Telescope coc file_code_actions<CR>', A.opts.ns)
+A.map('n', '<Leader>ld', ':Telescope coc diagnostics<CR>', A.opts.ns)
 A.map('n', '<Leader>rn', '<Plug>(coc-rename)')
 
-A.map('n', '[d', '<Plug>(coc-diagnostic-prev)', A.opts.s)
-A.map('n', ']d', '<Plug>(coc-diagnostic-next)', A.opts.s)
+A.map('n', '[d', '<Plug>(coc-diagnostic-prev)', A.opts.ns)
+A.map('n', ']d', '<Plug>(coc-diagnostic-next)', A.opts.ns)
 
 ---- coc-git
-A.map('n', '[c', '<Plug>(coc-git-prevchunk)', A.opts.s)
-A.map('n', ']c', '<Plug>(coc-git-nextchunk)', A.opts.s)
-A.map('n', 'gc', ':CocCommand git.chunkInfo<cr>', A.opts.s)
-A.map('n', 'gb', ':CocCommand git.showBlameDoc<cr>', A.opts.s)
+A.map('n', '[c', '<Plug>(coc-git-prevchunk)', A.opts.ns)
+A.map('n', ']c', '<Plug>(coc-git-nextchunk)', A.opts.ns)
+A.map('n', 'gc', ':CocCommand git.chunkInfo<cr>', A.opts.ns)
+A.map('n', 'gb', ':CocCommand git.showBlameDoc<cr>', A.opts.ns)
 
 ------------------------------- Comment ---------------------------------------
 require('Comment').setup({
@@ -63,7 +63,7 @@ require('Comment').setup({
 
 --------------------------------- Dashboard -----------------------------------
 
-A.map('n', '<Leader><CR>', ':Dashboard<CR>', A.opts.s)
+A.map('n', '<Leader><CR>', ':Dashboard<CR>', A.opts.ns)
 require('dashboard').setup({
     theme = 'doom',
     config = {
@@ -135,7 +135,7 @@ require 'lualine'.setup({
 })
 
 ------------------------------- NvimTree --------------------------------------
-A.map('n', '<C-e>', ':NvimTreeToggle<CR>', A.opts.s)
+A.map('n', '<C-e>', ':NvimTreeToggle<CR>', A.opts.ns)
 
 local function nvim_tree_on_attach(bufnr)
     local api = require('nvim-tree.api')
@@ -220,15 +220,15 @@ require('telescope').load_extension('yank_history')
 vim.cmd [[command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>]]
 vim.cmd [[command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>]]
 
-A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts.s)
-A.map('n', '<Leader>f', ':Telescope find_files<CR>', A.opts.s)
-A.map('n', '<Leader>g', ':Telescope live_grep<CR>', A.opts.s)
-A.map('n', '<Leader>h', ':Telescope buffers<CR>', A.opts.s)
-A.map('n', '<Leader>lc', ':Telescope command_history<CR>', A.opts.s)
-A.map('n', '<Leader>lh', ':Telescope oldfiles<CR>', A.opts.s)
-A.map('n', '<Leader>ls', ':Telescope treesitter<CR>', A.opts.s)
-A.map('n', '<Leader>p', ':Telescope projects<CR>', A.opts.s)
-A.map('n', '<Leader>y', ':Telescope yank_history<CR>', A.opts.s)
+A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts.ns)
+A.map('n', '<Leader>f', ':Telescope find_files<CR>', A.opts.ns)
+A.map('n', '<Leader>g', ':Telescope live_grep<CR>', A.opts.ns)
+A.map('n', '<Leader>h', ':Telescope buffers<CR>', A.opts.ns)
+A.map('n', '<Leader>lc', ':Telescope command_history<CR>', A.opts.ns)
+A.map('n', '<Leader>lh', ':Telescope oldfiles<CR>', A.opts.ns)
+A.map('n', '<Leader>ls', ':Telescope treesitter<CR>', A.opts.ns)
+A.map('n', '<Leader>p', ':Telescope projects<CR>', A.opts.ns)
+A.map('n', '<Leader>y', ':Telescope yank_history<CR>', A.opts.ns)
 
 -------------------------------- Tmux -----------------------------------------
 require("tmux").setup({
@@ -298,7 +298,7 @@ require 'nvim-treesitter.configs'.setup({
 })
 
 ------------------------------ Undotree ---------------------------------------
-A.map('n', '<Leader>u', ':UndotreeToggle<CR>', A.opts.s)
+A.map('n', '<Leader>u', ':UndotreeToggle<CR>', A.opts.ns)
 vim.g.undotree_DiffAutoOpen = false
 vim.g.undotree_SetFocusWhenToggle = true
 vim.g.undotree_SplitWidth = 35
@@ -306,10 +306,10 @@ vim.g.undotree_WindowLayout = 3
 
 -------------------------------- Yanky ----------------------------------------
 require("yanky").setup({ highlight = { timer = 100 } })
-A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts.s)
-A.map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", A.opts.s)
-A.map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", A.opts.s)
-A.map({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", A.opts.s)
-A.map({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", A.opts.s)
-A.map("n", "<C-n>", "<Plug>(YankyCycleForward)", A.opts.s)
-A.map("n", "<C-p>", "<Plug>(YankyCycleBackward)", A.opts.s)
+A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts.ns)
+A.map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", A.opts.ns)
+A.map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", A.opts.ns)
+A.map({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", A.opts.ns)
+A.map({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", A.opts.ns)
+A.map("n", "<C-n>", "<Plug>(YankyCycleForward)", A.opts.ns)
+A.map("n", "<C-p>", "<Plug>(YankyCycleBackward)", A.opts.ns)

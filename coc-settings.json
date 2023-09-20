@@ -21,13 +21,12 @@
     "<C-n>": "normal:j",
     "<C-p>": "normal:k"
   },
-  "Lua.hint.enable": false,
+  "Lua.diagnostics.globals": ["vim"],
   "notification.timeout": 5000,
   "prettier.disableLanguages": ["haskell"],
   "prettier.tabWidth": 2,
   "signature.floatConfig": { "border": true, "rounded": true },
   "suggest.floatConfig": { "border": true, "rounded": true },
   "suggest.noselect": true,
-  "suggest.removeDuplicateItems": true,
-  "sumneko-lua.enableNvimLuaDev": true
+  "suggest.removeDuplicateItems": true
 }
