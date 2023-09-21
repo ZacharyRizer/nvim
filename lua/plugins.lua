@@ -38,7 +38,6 @@ require("lazy").setup({
     { 'lukas-reineke/indent-blankline.nvim' },
 
     ---- UI Elements
-    { 'ggandor/leap.nvim' },
     { 'mbbill/undotree' },
     { 'akinsho/toggleterm.nvim' },
     { 'gbprod/yanky.nvim' },

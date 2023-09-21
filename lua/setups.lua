@@ -1,6 +1,6 @@
 local A = require('utils.aliases')
 
------------------------------- Auto Pairs/Tags --------------------------------
+-------------------------------- Auto Pairs -----------------------------------
 require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
 
 -------------------------------- COC Config -----------------------------------
@@ -41,9 +41,11 @@ A.map('n', 'gd', ':Telescope coc definitions<CR>', A.opts.ns)
 A.map('n', 'gi', ':Telescope coc implementations<CR>', A.opts.ns)
 A.map('n', 'gr', ':Telescope coc references<CR>', A.opts.ns)
 A.map('n', 'gt', ':Telescope coc type_definitions<CR>', A.opts.ns)
+A.map('n', '<Leader>rn', '<Plug>(coc-rename)')
+
 A.map('n', '<Leader>la', ':Telescope coc file_code_actions<CR>', A.opts.ns)
 A.map('n', '<Leader>ld', ':Telescope coc diagnostics<CR>', A.opts.ns)
-A.map('n', '<Leader>rn', '<Plug>(coc-rename)')
+A.map('n', '<Leader>ls', ':Telescope treesitter<CR>', A.opts.ns)
 
 A.map('n', '[d', '<Plug>(coc-diagnostic-prev)', A.opts.ns)
 A.map('n', ']d', '<Plug>(coc-diagnostic-next)', A.opts.ns)
@@ -72,6 +74,9 @@ require('dashboard').setup({
             { icon = '    ', desc = 'Config         ', action = 'e ~/.config/nvim/init.lua' },
         },
         header = {
+            [[                                                       ]],
+            [[                                                       ]],
+            [[                                                       ]],
             [[                                                       ]],
             [[                                                       ]],
             [[                                                       ]],
@@ -113,9 +118,6 @@ require("indent_blankline").setup({
     filetype_exclude = { 'dashboard', 'help', 'undotree' },
     buftype_exclude = { 'nofile', 'terminal' }
 })
-
---------------------------------- Leap ----------------------------------------
-require("leap").set_default_keymaps()
 
 ------------------------------- Lualine ---------------------------------------
 local big_screen = function() return vim.fn.winwidth(0) > 90 end
@@ -220,13 +222,11 @@ require('telescope').load_extension('yank_history')
 vim.cmd [[command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>]]
 vim.cmd [[command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>]]
 
+A.map('n', '<Leader>b', ':Telescope buffers<CR>', A.opts.ns)
 A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts.ns)
 A.map('n', '<Leader>f', ':Telescope find_files<CR>', A.opts.ns)
 A.map('n', '<Leader>g', ':Telescope live_grep<CR>', A.opts.ns)
-A.map('n', '<Leader>h', ':Telescope buffers<CR>', A.opts.ns)
-A.map('n', '<Leader>lc', ':Telescope command_history<CR>', A.opts.ns)
-A.map('n', '<Leader>lh', ':Telescope oldfiles<CR>', A.opts.ns)
-A.map('n', '<Leader>ls', ':Telescope treesitter<CR>', A.opts.ns)
+A.map('n', '<Leader>h', ':Telescope oldfiles<CR>', A.opts.ns)
 A.map('n', '<Leader>p', ':Telescope projects<CR>', A.opts.ns)
 A.map('n', '<Leader>y', ':Telescope yank_history<CR>', A.opts.ns)
 
@@ -309,7 +309,5 @@ require("yanky").setup({ highlight = { timer = 100 } })
 A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts.ns)
 A.map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", A.opts.ns)
 A.map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", A.opts.ns)
-A.map({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", A.opts.ns)
-A.map({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", A.opts.ns)
 A.map("n", "<C-n>", "<Plug>(YankyCycleForward)", A.opts.ns)
 A.map("n", "<C-p>", "<Plug>(YankyCycleBackward)", A.opts.ns)
