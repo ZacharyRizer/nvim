@@ -171,7 +171,7 @@ require('nvim-tree').setup({
     update_focused_file = { enable = true, update_root = true },
     view                = {
         side = 'right',
-        width = { 35 },
+        width = 35,
     },
 })
 
