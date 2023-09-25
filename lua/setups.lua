@@ -219,8 +219,8 @@ require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('projects')
 require('telescope').load_extension('yank_history')
 
-vim.cmd [[command! -nargs=0 H lua require('telescope.builtin').help_tags()<cr>]]
-vim.cmd [[command! -nargs=0 M lua require('telescope.builtin').keymaps()<cr>]]
+vim.cmd [[command! -nargs=0 Help lua require('telescope.builtin').help_tags()<cr>]]
+vim.cmd [[command! -nargs=0 Maps lua require('telescope.builtin').keymaps()<cr>]]
 
 A.map('n', '<Leader>b', ':Telescope buffers<CR>', A.opts.ns)
 A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts.ns)
