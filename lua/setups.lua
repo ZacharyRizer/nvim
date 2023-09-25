@@ -106,16 +106,8 @@ require('dashboard').setup({
 })
 
 ------------------------------ Fugitive ---------------------------------------
-Fugitive_Diff = function(branch)
-    if branch then
-        vim.cmd("Gvdiffsplit! " .. branch)
-    else
-        vim.cmd("Gvdiffsplit!")
-    end
-end
-
 vim.cmd [[command! -nargs=0 Blame G blame]]
-vim.cmd [[command! -nargs=? Diff lua Fugitive_Diff(<q-args>)]]
+vim.cmd [[command! -nargs=0 Diff Gvdiffsplit! main]]
 vim.cmd [[command! -nargs=0 Merge G mergetool]]
 
 ----------------------------- Indentline --------------------------------------
