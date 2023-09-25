@@ -107,7 +107,7 @@ require('dashboard').setup({
 
 ------------------------------ Fugitive ---------------------------------------
 vim.cmd [[command! -nargs=0 Blame G blame]]
-vim.cmd [[command! -nargs=0 Diff Gdiffsplit!]]
+vim.cmd [[command! -nargs=0 Diff Gvdiffsplit!]]
 vim.cmd [[command! -nargs=0 Merge G mergetool]]
 
 ----------------------------- Indentline --------------------------------------
