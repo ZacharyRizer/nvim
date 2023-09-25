@@ -20,14 +20,14 @@ vim.g.coc_global_extensions = {
 }
 
 vim.cmd [[
-    inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : CheckBackspace() ? "\<Tab>" : coc#refresh()
-    inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-    inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
     function! CheckBackspace() abort
       let col = col('.') - 1
       return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
+
+    inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : CheckBackspace() ? "\<Tab>" : coc#refresh()
+    inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+    inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
     nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>"
     nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-u>"
@@ -106,8 +106,16 @@ require('dashboard').setup({
 })
 
 ------------------------------ Fugitive ---------------------------------------
+Fugitive_Diff = function(branch)
+    if branch then
+        vim.cmd("Gvdiffsplit! " .. branch)
+    else
+        vim.cmd("Gvdiffsplit!")
+    end
+end
+
 vim.cmd [[command! -nargs=0 Blame G blame]]
-vim.cmd [[command! -nargs=0 Diff Gvdiffsplit!]]
+vim.cmd [[command! -nargs=? Diff lua Fugitive_Diff(<q-args>)]]
 vim.cmd [[command! -nargs=0 Merge G mergetool]]
 
 ----------------------------- Indentline --------------------------------------
