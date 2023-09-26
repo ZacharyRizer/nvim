@@ -10,6 +10,11 @@ A.opts = {
     ns = { noremap = true, silent = true },
 }
 
+--------------------------------- Core Setup -----------------------------------
+
+require('options')
+require('keymaps')
+
 ---------------------------------- Plug-Ins ------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -31,39 +36,4 @@ if not status_ok then
     return
 end
 
-require("lazy").setup({
-    ---- LSP, Completions, Git, Telescope
-    { 'nvim-lua/plenary.nvim' },
-    { 'nvim-telescope/telescope.nvim' },
-    { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make' },
-    { 'fannheyward/telescope-coc.nvim' },
-    { 'neoclide/coc.nvim',                        branch = 'release' },
-    { 'ahmedkhalf/project.nvim' },
-    { 'tpope/vim-fugitive' },
-
-    ---- Theme and Formatting
-    { 'folke/tokyonight.nvim' },
-    { 'nvim-lualine/lualine.nvim' },
-    { 'glepnir/dashboard-nvim' },
-    { 'nvim-treesitter/nvim-treesitter',          run = ':TSUpdate' },
-    { 'nvim-tree/nvim-tree.lua' },
-    { "nvim-tree/nvim-web-devicons" },
-    { 'lukas-reineke/indent-blankline.nvim' },
-
-    ---- UI Elements
-    { 'mbbill/undotree' },
-    { 'akinsho/toggleterm.nvim' },
-    { 'gbprod/yanky.nvim' },
-    { 'numToStr/Comment.nvim' },
-    { 'kylechui/nvim-surround' },
-    { 'windwp/nvim-autopairs' },
-
-    ---- Tmux-Vim Integration
-    { 'aserowy/tmux.nvim' }
-})
-
----------------------------------- Imports ------------------------------------
-
-require('options')
-require('keymaps')
-require('setups')
+require("lazy").setup("plugins")
