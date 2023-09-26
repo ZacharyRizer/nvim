@@ -1,5 +1,3 @@
-local A = require('utils.aliases')
-
 vim.g.mapleader = " "
 A.map('i', '<C-c>', '<ESC>', A.opts.ns)
 A.map('n', '<C-c>', ':nohl<CR>', A.opts.ns)

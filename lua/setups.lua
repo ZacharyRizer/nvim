@@ -1,5 +1,3 @@
-local A = require('utils.aliases')
-
 -------------------------------- Auto Pairs -----------------------------------
 require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
 

@@ -1,5 +1,3 @@
-local A = require('utils.aliases')
-
 vim.loader.enable()
 
 vim.opt.backup = false
