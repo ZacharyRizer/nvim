@@ -1,60 +1,12 @@
 return {
-    ---- Plenary: useful tools for neovim plugins
-    { 'nvim-lua/plenary.nvim' },
-    ---- Telescope: fuzzy finder and extensions
+    ---- Autopairs
     {
-        'nvim-telescope/telescope.nvim',
+        'windwp/nvim-autopairs',
         config = function()
-            local actions = require('telescope.actions')
-            require('telescope').setup({
-                defaults = {
-                    entry_prefix = "  ",
-                    layout_config = {
-                        horizontal = {
-                            preview_cutoff = 150,
-                            preview_width = 0.45,
-                            prompt_position = "top"
-                        },
-                        width = 0.9
-                    },
-                    mappings = {
-                        i = {
-                            ["<C-j>"] = actions.move_selection_next,
-                            ["<C-k>"] = actions.move_selection_previous,
-                            ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                            ["<C-r>"] = actions.delete_buffer,
-                            ["<C-s>"] = actions.select_horizontal,
-                            ["<C-t>"] = actions.toggle_selection,
-                            ["<M-BS>"] = { "<c-s-w>", type = "command" },
-                        },
-                        n = {
-                            ["<C-t>"] = actions.toggle_selection,
-                        },
-                    },
-                    path_display = { shorten = 5 },
-                    prompt_prefix = " ",
-                    selection_caret = " ",
-                    sorting_strategy = "ascending",
-                },
-            })
-            require('telescope').load_extension('coc')
-            require('telescope').load_extension('fzy_native')
-            require('telescope').load_extension('yank_history')
-
-            vim.cmd [[command! -nargs=0 Help lua require('telescope.builtin').help_tags()<cr>]]
-            vim.cmd [[command! -nargs=0 Maps lua require('telescope.builtin').keymaps()<cr>]]
-
-            A.map('n', '<Leader>b', ':Telescope buffers<CR>', A.opts.ns)
-            A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts.ns)
-            A.map('n', '<Leader>f', ':Telescope find_files<CR>', A.opts.ns)
-            A.map('n', '<Leader>g', ':Telescope live_grep<CR>', A.opts.ns)
-            A.map('n', '<Leader>h', ':Telescope oldfiles<CR>', A.opts.ns)
-            A.map('n', '<Leader>y', ':Telescope yank_history<CR>', A.opts.ns)
+            require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
         end
     },
-    { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make' },
-    { 'fannheyward/telescope-coc.nvim' },
-    ---- CoC: LSP and completions
+    ---- CoC
     {
         'neoclide/coc.nvim',
         branch = 'release',
@@ -105,58 +57,27 @@ return {
             A.map('n', '[d', '<Plug>(coc-diagnostic-prev)', A.opts.ns)
             A.map('n', ']d', '<Plug>(coc-diagnostic-next)', A.opts.ns)
 
-            ---- coc-git
             A.map('n', '[c', '<Plug>(coc-git-prevchunk)', A.opts.ns)
             A.map('n', ']c', '<Plug>(coc-git-nextchunk)', A.opts.ns)
             A.map('n', 'gc', ':CocCommand git.chunkInfo<cr>', A.opts.ns)
             A.map('n', 'gb', ':CocCommand git.showBlameDoc<cr>', A.opts.ns)
         end
     },
-    ---- Fugitive: git integration
+    ---- Comment
     {
-        'tpope/vim-fugitive',
+        'numToStr/Comment.nvim',
         config = function()
-            vim.cmd [[command! -nargs=0 Blame G blame]]
-            vim.cmd [[command! -nargs=0 Diff Gvdiffsplit! main]]
-            vim.cmd [[command! -nargs=0 Merge G mergetool]]
-        end
-    },
-    ---- Tokyonight: colorscheme
-    {
-        'folke/tokyonight.nvim',
-        priority = 1000,
-        config = function()
-            require("tokyonight").setup({
-                sidebars = { "qf", "help", "undotree" },
-                lualine_bold = true,
-            })
-            vim.cmd("colorscheme tokyonight")
-        end
-    },
-    ---- Lualine: statusline
-    {
-        'nvim-lualine/lualine.nvim',
-        config = function()
-            local big_screen = function() return vim.fn.winwidth(0) > 90 end
-            require 'lualine'.setup({
-                extensions = { 'quickfix' },
-                options = {
-                    disabled_filetypes = { 'dashboard', 'NvimTree', 'undotree' },
-                },
-                sections = {
-                    lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 1) end } },
-                    lualine_b = { 'branch', 'diff', 'diagnostics' },
-                    lualine_c = { 'filename' },
-                    lualine_x = { { 'g:coc_status', cond = big_screen } },
-                    lualine_y = { { 'progress', cond = big_screen } },
-                    lualine_z = { { 'location', cond = big_screen } }
-                },
+            require('Comment').setup({
+                toggler = { line = '<Leader>/', block = '<Leader>?', },
+                opleader = { line = '<Leader>/', block = '<Leader>?', },
+                mappings = { extra = false, extended = false, },
             })
         end
     },
-    ---- Dashboard: startup screen
+    ---- Dashboard
     {
         'glepnir/dashboard-nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             A.map('n', '<Leader><CR>', ':Dashboard<CR>', A.opts.ns)
             require('dashboard').setup({
@@ -199,50 +120,54 @@ return {
             })
         end
     },
-    ---- Treesitter: syntax highlighting
+    ---- Fugitive
     {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
+        'tpope/vim-fugitive',
         config = function()
-            require 'nvim-treesitter.configs'.setup({
-                ensure_installed = {
-                    "bash",
-                    "comment",
-                    "css",
-                    "dockerfile",
-                    "gitignore",
-                    "go",
-                    "html",
-                    "javascript",
-                    "json",
-                    "lua",
-                    "markdown",
-                    "python",
-                    "regex",
-                    "rust",
-                    "scss",
-                    "sql",
-                    "toml",
-                    "tsx",
-                    "typescript",
-                    "yaml",
-                },
-                highlight = { enable = true },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = "+",
-                        node_incremental = "+",
-                        node_decremental = "_",
-                    },
-                },
-                indent = { enable = true }
+            vim.cmd [[command! -nargs=0 Blame G blame]]
+            vim.cmd [[command! -nargs=0 Diff Gvdiffsplit! main]]
+            vim.cmd [[command! -nargs=0 Merge G mergetool]]
+        end
+    },
+    ---- Indent Blank Line
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            require("indent_blankline").setup({
+                char = '▏',
+                use_treesitter = true,
+                show_first_indent_level = false,
+                filetype_exclude = { 'dashboard', 'help', 'undotree' },
+                buftype_exclude = { 'nofile', 'terminal' }
             })
         end
     },
-    ---- Nvim Tree: file tree
+    ---- Lualine
+    {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        config = function()
+            local big_screen = function() return vim.fn.winwidth(0) > 90 end
+            require 'lualine'.setup({
+                extensions = { 'quickfix' },
+                options = {
+                    disabled_filetypes = { 'dashboard', 'NvimTree', 'undotree' },
+                },
+                sections = {
+                    lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 1) end } },
+                    lualine_b = { 'branch', 'diff', 'diagnostics' },
+                    lualine_c = { 'filename' },
+                    lualine_x = { { 'g:coc_status', cond = big_screen } },
+                    lualine_y = { { 'progress', cond = big_screen } },
+                    lualine_z = { { 'location', cond = big_screen } }
+                },
+            })
+        end
+    },
+    ---- Nvim Tree
     {
         'nvim-tree/nvim-tree.lua',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             A.map('n', '<C-e>', ':NvimTreeToggle<CR>', A.opts.ns)
 
@@ -283,66 +208,6 @@ return {
             })
         end
     },
-    ---- Icons
-    { "nvim-tree/nvim-web-devicons" },
-    ---- Indent Blank Line
-    {
-        'lukas-reineke/indent-blankline.nvim',
-        config = function()
-            require("indent_blankline").setup({
-                char = '▏',
-                use_treesitter = true,
-                show_first_indent_level = false,
-                filetype_exclude = { 'dashboard', 'help', 'undotree' },
-                buftype_exclude = { 'nofile', 'terminal' }
-            })
-        end
-    },
-    ---- Undo Tree
-    {
-        'mbbill/undotree',
-        config = function()
-            A.map('n', '<Leader>u', ':UndotreeToggle<CR>', A.opts.ns)
-            vim.g.undotree_DiffAutoOpen = false
-            vim.g.undotree_SetFocusWhenToggle = true
-            vim.g.undotree_SplitWidth = 35
-            vim.g.undotree_WindowLayout = 3
-        end
-    },
-    ---- Toggleterm
-    {
-        'akinsho/toggleterm.nvim',
-        config = function()
-            require("toggleterm").setup({
-                open_mapping = [[<c-t>]],
-                direction = 'float',
-                float_opts = { border = 'curved' }
-            })
-        end
-    },
-    ---- Yanky
-    {
-        'gbprod/yanky.nvim',
-        config = function()
-            require("yanky").setup({ highlight = { timer = 100 } })
-            A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts.ns)
-            A.map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", A.opts.ns)
-            A.map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", A.opts.ns)
-            A.map("n", "<C-n>", "<Plug>(YankyCycleForward)", A.opts.ns)
-            A.map("n", "<C-p>", "<Plug>(YankyCycleBackward)", A.opts.ns)
-        end
-    },
-    ---- Comment
-    {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup({
-                toggler = { line = '<Leader>/', block = '<Leader>?', },
-                opleader = { line = '<Leader>/', block = '<Leader>?', },
-                mappings = { extra = false, extended = false, },
-            })
-        end
-    },
     ---- Surround
     {
         'kylechui/nvim-surround',
@@ -350,13 +215,60 @@ return {
             require("nvim-surround").setup({ keymaps = { visual = "<C-s>" } })
         end
     },
-    ---- Autopairs
+    ---- Telescope
     {
-        'windwp/nvim-autopairs',
+        'nvim-telescope/telescope.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
-            require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
+            local actions = require('telescope.actions')
+            require('telescope').setup({
+                defaults = {
+                    entry_prefix = "  ",
+                    layout_config = {
+                        horizontal = {
+                            preview_cutoff = 150,
+                            preview_width = 0.45,
+                            prompt_position = "top"
+                        },
+                        width = 0.9
+                    },
+                    mappings = {
+                        i = {
+                            ["<C-j>"] = actions.move_selection_next,
+                            ["<C-k>"] = actions.move_selection_previous,
+                            ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+                            ["<C-r>"] = actions.delete_buffer,
+                            ["<C-s>"] = actions.select_horizontal,
+                            ["<C-t>"] = actions.toggle_selection,
+                            ["<M-BS>"] = { "<c-s-w>", type = "command" },
+                        },
+                        n = {
+                            ["<C-t>"] = actions.toggle_selection,
+                        },
+                    },
+                    path_display = { shorten = 5 },
+                    prompt_prefix = " ",
+                    selection_caret = " ",
+                    sorting_strategy = "ascending",
+                },
+            })
+            require('telescope').load_extension('coc')
+            require('telescope').load_extension('fzy_native')
+            require('telescope').load_extension('yank_history')
+
+            A.map('n', '<Leader>b', ':Telescope buffers<CR>', A.opts.ns)
+            A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts.ns)
+            A.map('n', '<Leader>d', ':Telescope help_tags<CR>', A.opts.ns)
+            A.map('n', '<Leader>f', ':Telescope find_files<CR>', A.opts.ns)
+            A.map('n', '<Leader>g', ':Telescope live_grep<CR>', A.opts.ns)
+            A.map('n', '<Leader>h', ':Telescope oldfiles<CR>', A.opts.ns)
+            A.map('n', '<Leader>m', ':Telescope keymaps<CR>', A.opts.ns)
+            A.map('n', '<Leader>y', ':Telescope yank_history<CR>', A.opts.ns)
         end
     },
+    ---- Telescope extensions
+    { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make' },
+    { 'fannheyward/telescope-coc.nvim' },
     ---- Tmux Integration
     {
         'aserowy/tmux.nvim',
@@ -376,6 +288,93 @@ return {
                     resize_step_y = 2,
                 }
             })
+        end
+    },
+    ---- Toggleterm
+    {
+        'akinsho/toggleterm.nvim',
+        config = function()
+            require("toggleterm").setup({
+                open_mapping = [[<c-t>]],
+                direction = 'float',
+                float_opts = { border = 'curved' }
+            })
+        end
+    },
+    ---- Tokyonight
+    {
+        'folke/tokyonight.nvim',
+        priority = 1000,
+        config = function()
+            require("tokyonight").setup({
+                sidebars = { "qf", "help", "undotree" },
+                lualine_bold = true,
+            })
+            vim.cmd("colorscheme tokyonight")
+        end
+    },
+    ---- Treesitter
+    {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        config = function()
+            require 'nvim-treesitter.configs'.setup({
+                ensure_installed = {
+                    "bash",
+                    "comment",
+                    "css",
+                    "dockerfile",
+                    "gitignore",
+                    "go",
+                    "html",
+                    "javascript",
+                    "json",
+                    "lua",
+                    "markdown",
+                    "python",
+                    "regex",
+                    "rust",
+                    "scss",
+                    "sql",
+                    "toml",
+                    "tsx",
+                    "typescript",
+                    "yaml",
+                },
+                highlight = { enable = true },
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {
+                        init_selection = "+",
+                        node_incremental = "+",
+                        node_decremental = "_",
+                    },
+                },
+                indent = { enable = true }
+            })
+        end
+    },
+    ---- Undo Tree
+    {
+        'mbbill/undotree',
+        config = function()
+            A.map('n', '<Leader>u', ':UndotreeToggle<CR>', A.opts.ns)
+            vim.g.undotree_DiffAutoOpen = false
+            vim.g.undotree_SetFocusWhenToggle = true
+            vim.g.undotree_SplitWidth = 35
+            vim.g.undotree_WindowLayout = 3
+        end
+    },
+    ---- Yanky
+    {
+        'gbprod/yanky.nvim',
+        config = function()
+            require("yanky").setup({ highlight = { timer = 100 } })
+            A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts.ns)
+            A.map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", A.opts.ns)
+            A.map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", A.opts.ns)
+            A.map("n", "<C-n>", "<Plug>(YankyCycleForward)", A.opts.ns)
+            A.map("n", "<C-p>", "<Plug>(YankyCycleBackward)", A.opts.ns)
         end
     }
 }
