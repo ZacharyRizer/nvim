@@ -1,7 +1,13 @@
 vim.g.mapleader = " "
 A.map('i', '<C-c>', '<ESC>', A.opts.ns)
 A.map('n', '<C-c>', ':nohl<CR>', A.opts.ns)
+
+---- terminal buffer mappings
 A.map('t', '<C-[>', '<C-\\><C-n>', A.opts.ns)
+A.map('t', '<C-h>', '<C-\\><C-N><C-w>h', A.opts.ns)
+A.map('t', '<C-j>', '<C-\\><C-N><C-w>j', A.opts.ns)
+A.map('t', '<C-k>', '<C-\\><C-N><C-w>k', A.opts.ns)
+A.map('t', '<C-l>', '<C-\\><C-N><C-w>l', A.opts.ns)
 
 ---- unmapping a few keys that annoy me
 A.map('n', 'K', '<nop>', A.opts.ns)
@@ -28,6 +34,10 @@ A.map('v', '<Leader>s', ':s/\\%V', A.opts.n)
 
 ---- more intuitive yanking
 A.map('n', 'Y', 'y$', A.opts.ns)
+A.map({ 'n', 'v' }, '<Leader>1', '"a', A.opts.ns)
+A.map({ 'n', 'v' }, '<Leader>2', '"b', A.opts.ns)
+A.map({ 'n', 'v' }, '<Leader>3', '"c', A.opts.ns)
+A.map({ 'n', 'v' }, '<Leader>4', '"d', A.opts.ns)
 
 ---- better line connection
 A.map('n', 'J', 'mzJ`z', A.opts.ns)

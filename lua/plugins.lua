@@ -183,7 +183,7 @@ return {
                 vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
                 vim.keymap.set('n', 'l', api.node.open.replace_tree_buffer, opts('Open: In Place'))
                 vim.keymap.set('n', '<BS>', api.tree.change_root_to_parent, opts('Up'))
-                vim.keymap.set('n', '<C-s>', api.node.open.vertical, opts('Open: Vertical Split'))
+                vim.keymap.set('n', '<C-s>', api.node.open.horizontal, opts('Open: Horizontal Split'))
                 vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
 
                 vim.keymap.del('n', '<C-e>', { buffer = bufnr })
@@ -212,7 +212,7 @@ return {
     {
         'kylechui/nvim-surround',
         config = function()
-            require("nvim-surround").setup({ keymaps = { visual = "<C-s>" } })
+            require("nvim-surround").setup()
         end
     },
     ---- Telescope
@@ -254,16 +254,16 @@ return {
             })
             require('telescope').load_extension('coc')
             require('telescope').load_extension('fzy_native')
-            require('telescope').load_extension('yank_history')
+
+            vim.cmd [[command! -nargs=0 Help lua require('telescope.builtin').help_tags()<cr>]]
 
             A.map('n', '<Leader>b', ':Telescope buffers<CR>', A.opts.ns)
             A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts.ns)
-            A.map('n', '<Leader>d', ':Telescope help_tags<CR>', A.opts.ns)
             A.map('n', '<Leader>f', ':Telescope find_files<CR>', A.opts.ns)
             A.map('n', '<Leader>g', ':Telescope live_grep<CR>', A.opts.ns)
             A.map('n', '<Leader>h', ':Telescope oldfiles<CR>', A.opts.ns)
             A.map('n', '<Leader>m', ':Telescope keymaps<CR>', A.opts.ns)
-            A.map('n', '<Leader>y', ':Telescope yank_history<CR>', A.opts.ns)
+            A.map('n', '<Leader>r', ':Telescope registers<CR>', A.opts.ns)
         end
     },
     ---- Telescope extensions
@@ -287,17 +287,6 @@ return {
                     resize_step_x = 5,
                     resize_step_y = 2,
                 }
-            })
-        end
-    },
-    ---- Toggleterm
-    {
-        'akinsho/toggleterm.nvim',
-        config = function()
-            require("toggleterm").setup({
-                open_mapping = [[<c-t>]],
-                direction = 'float',
-                float_opts = { border = 'curved' }
             })
         end
     },
@@ -363,18 +352,6 @@ return {
             vim.g.undotree_SetFocusWhenToggle = true
             vim.g.undotree_SplitWidth = 35
             vim.g.undotree_WindowLayout = 3
-        end
-    },
-    ---- Yanky
-    {
-        'gbprod/yanky.nvim',
-        config = function()
-            require("yanky").setup({ highlight = { timer = 100 } })
-            A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts.ns)
-            A.map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", A.opts.ns)
-            A.map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", A.opts.ns)
-            A.map("n", "<C-n>", "<Plug>(YankyCycleForward)", A.opts.ns)
-            A.map("n", "<C-p>", "<Plug>(YankyCycleBackward)", A.opts.ns)
         end
     }
 }

@@ -34,38 +34,52 @@ vim.opt.wildmode = "longest:full,full"
 vim.opt.wrap = false
 vim.opt.writebackup = false
 
-local formating = A.augroup("Formating", { clear = true })
+local proton_pack = A.augroup("Proton_Pack", { clear = true })
+-- turn off automatic comment formatting
 A.autocmd("BufEnter", {
     pattern = "*",
     command = "setlocal fo-=c fo-=r fo-=o",
-    group = formating
+    group = proton_pack
 })
+-- remove trailing white space on save
 A.autocmd("BufWritePre", {
     pattern = "*",
     command = "%s/\\s\\+$//e",
-    group = formating
+    group = proton_pack
 })
+-- check for file changes
 A.autocmd({ "CursorHold, CursorHoldI" }, {
     pattern = "*",
     command = "checktime",
-    group = formating
+    group = proton_pack
 })
+-- use 4 space tabs for specific languages
 A.autocmd("FileType", {
     pattern = { "go", "haskell", "lua", "python", "yaml" },
     command = "setlocal shiftwidth=4 softtabstop=4 tabstop=4",
-    group = formating
+    group = proton_pack
 })
+-- highlight yanked text
+A.autocmd('TextYankPost', {
+    pattern = '*',
+    group = proton_pack,
+    callback = function()
+        vim.highlight.on_yank({
+            higroup = 'IncSearch',
+            timeout = 100,
+        })
+    end,
+})
+-- make windows equal sizes when opening/closing
 A.autocmd("VimResized", {
     pattern = "*",
     command = ":wincmd =",
-    group = formating
+    group = proton_pack
 })
-
 -- cursorline is only active in current buffer
-local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursorline = function(event, value, pattern)
-    vim.api.nvim_create_autocmd(event, {
-        group = group,
+    A.autocmd(event, {
+        group = proton_pack,
         pattern = pattern,
         callback = function()
             vim.opt_local.cursorline = value
