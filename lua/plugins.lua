@@ -132,13 +132,20 @@ return {
     ---- Indent Blank Line
     {
         'lukas-reineke/indent-blankline.nvim',
+        main = "ibl",
         config = function()
-            require("indent_blankline").setup({
-                char = '▏',
-                use_treesitter = true,
-                show_first_indent_level = false,
-                filetype_exclude = { 'dashboard', 'help', 'undotree' },
-                buftype_exclude = { 'nofile', 'terminal' }
+            local hooks = require "ibl.hooks"
+            hooks.register(
+                hooks.type.WHITESPACE,
+                hooks.builtin.hide_first_space_indent_level
+            )
+            require("ibl").setup({
+                indent = { char = '▏' },
+                scope = { enabled = false },
+                exclude = {
+                    filetypes = { 'dashboard', 'help', 'undotree' },
+                    buftypes = { 'nofile', 'terminal' }
+                }
             })
         end
     },
