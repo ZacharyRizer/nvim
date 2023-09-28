@@ -1,11 +1,4 @@
 return {
-    ---- Autopairs
-    {
-        'windwp/nvim-autopairs',
-        config = function()
-            require('nvim-autopairs').setup({ check_ts = true, fast_wrap = {} })
-        end
-    },
     ---- CoC
     {
         'neoclide/coc.nvim',
@@ -20,6 +13,7 @@ return {
                 'coc-json',
                 'coc-lua',
                 'coc-marketplace',
+                'coc-pairs',
                 'coc-prettier',
                 'coc-pyright',
                 'coc-rust-analyzer',
@@ -225,7 +219,11 @@ return {
     ---- Telescope
     {
         'nvim-telescope/telescope.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' },
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-fzy-native.nvim',
+            'fannheyward/telescope-coc.nvim',
+        },
         config = function()
             local actions = require('telescope.actions')
             require('telescope').setup({
@@ -273,9 +271,6 @@ return {
             A.map('n', '<Leader>r', ':Telescope registers<CR>', A.opts.ns)
         end
     },
-    ---- Telescope extensions
-    { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make' },
-    { 'fannheyward/telescope-coc.nvim' },
     ---- Tmux Integration
     {
         'aserowy/tmux.nvim',
