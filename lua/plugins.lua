@@ -51,8 +51,8 @@ return {
             A.map('n', '[d', '<Plug>(coc-diagnostic-prev)', A.opts.ns)
             A.map('n', ']d', '<Plug>(coc-diagnostic-next)', A.opts.ns)
 
-            A.map('n', '[c', '<Plug>(coc-git-prevchunk)', A.opts.ns)
-            A.map('n', ']c', '<Plug>(coc-git-nextchunk)', A.opts.ns)
+            A.map('n', '[g', '<Plug>(coc-git-prevchunk)', A.opts.ns)
+            A.map('n', ']g', '<Plug>(coc-git-nextchunk)', A.opts.ns)
             A.map('n', 'gc', ':CocCommand git.chunkInfo<cr>', A.opts.ns)
             A.map('n', 'gb', ':CocCommand git.showBlameDoc<cr>', A.opts.ns)
         end
