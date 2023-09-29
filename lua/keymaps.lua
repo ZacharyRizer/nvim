@@ -29,8 +29,8 @@ A.map('n', '*', '*N', A.opts.n)
 A.map('n', '#', '#N', A.opts.n)
 A.map('v', '*', 'y/<C-R>"<CR>N', A.opts.n)
 A.map('v', '#', 'y?<C-R>"<CR>N', A.opts.n)
-A.map('n', '<Leader>s', ':%s/', A.opts.n)
-A.map('v', '<Leader>s', ':s/\\%V', A.opts.n)
+A.map('n', '<Leader>/', ':%s/', A.opts.n)
+A.map('v', '<Leader>/', ':s/\\%V', A.opts.n)
 
 ---- more intuitive yanking
 A.map('n', 'Y', 'y$', A.opts.ns)

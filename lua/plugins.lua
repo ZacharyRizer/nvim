@@ -62,8 +62,8 @@ return {
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup({
-                toggler = { line = '<Leader>/', block = '<Leader>?', },
-                opleader = { line = '<Leader>/', block = '<Leader>?', },
+                toggler = { line = '<Leader>`', block = '<Leader>~', },
+                opleader = { line = '<Leader>`', block = '<Leader>~', },
                 mappings = { extra = false, extended = false, },
             })
         end
@@ -260,13 +260,12 @@ return {
             require('telescope').load_extension('coc')
             require('telescope').load_extension('fzy_native')
 
-            vim.cmd [[command! -nargs=0 Help lua require('telescope.builtin').help_tags()<cr>]]
-
             A.map('n', '<Leader>b', ':Telescope buffers<CR>', A.opts.ns)
             A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts.ns)
+            A.map('n', '<Leader>d', ':Telescope help_tags prompt_title=Documentation<CR>', A.opts.ns)
             A.map('n', '<Leader>f', ':Telescope find_files<CR>', A.opts.ns)
             A.map('n', '<Leader>g', ':Telescope live_grep<CR>', A.opts.ns)
-            A.map('n', '<Leader>h', ':Telescope oldfiles<CR>', A.opts.ns)
+            A.map('n', '<Leader>h', ':Telescope oldfiles prompt_title=History<CR>', A.opts.ns)
             A.map('n', '<Leader>m', ':Telescope keymaps<CR>', A.opts.ns)
             A.map('n', '<Leader>r', ':Telescope registers<CR>', A.opts.ns)
         end

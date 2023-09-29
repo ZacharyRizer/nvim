@@ -36,4 +36,10 @@ if not status_ok then
     return
 end
 
-require("lazy").setup("plugins")
+local lazy_configuration = {
+    change_detection = { notify = false },
+    install = { colorscheme = { "tokyonight" } },
+    ui = { border = "rounded" }
+}
+
+require("lazy").setup("plugins", lazy_configuration)
