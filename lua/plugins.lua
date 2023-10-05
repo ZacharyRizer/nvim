@@ -3,6 +3,7 @@ return {
     {
         'neoclide/coc.nvim',
         branch = 'release',
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             vim.g.coc_global_extensions = {
                 'coc-css',
@@ -60,6 +61,7 @@ return {
     ---- Comment
     {
         'numToStr/Comment.nvim',
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             require('Comment').setup({
                 toggler = { line = '<Leader>`', block = '<Leader>~', },
@@ -126,6 +128,7 @@ return {
     ---- Indent Blank Line
     {
         'lukas-reineke/indent-blankline.nvim',
+        event = { "BufReadPre", "BufNewFile" },
         main = "ibl",
         config = function()
             local hooks = require "ibl.hooks"
@@ -147,6 +150,7 @@ return {
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             local big_screen = function() return vim.fn.winwidth(0) > 90 end
             require 'lualine'.setup({
@@ -169,6 +173,7 @@ return {
     {
         'nvim-tree/nvim-tree.lua',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
+        keys = { "<C-e>" },
         config = function()
             A.map('n', '<C-e>', ':NvimTreeToggle<CR>', A.opts.ns)
 
@@ -212,6 +217,7 @@ return {
     ---- Surround
     {
         'kylechui/nvim-surround',
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("nvim-surround").setup()
         end
@@ -222,7 +228,17 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzy-native.nvim',
-            'fannheyward/telescope-coc.nvim',
+            'fannheyward/telescope-coc.nvim'
+        },
+        keys = {
+            "<Leader>b",
+            "<Leader>c",
+            "<Leader>d",
+            "<Leader>f",
+            "<Leader>g",
+            "<Leader>h",
+            "<Leader>m",
+            "<Leader>y"
         },
         config = function()
             local actions = require('telescope.actions')
@@ -307,6 +323,7 @@ return {
     ---- Treesitter
     {
         'nvim-treesitter/nvim-treesitter',
+        event = { "BufReadPre", "BufNewFile" },
         run = ':TSUpdate',
         config = function()
             require 'nvim-treesitter.configs'.setup({
@@ -349,6 +366,7 @@ return {
     ---- Undo Tree
     {
         'mbbill/undotree',
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             A.map('n', '<Leader>u', ':UndotreeToggle<CR>', A.opts.ns)
             vim.g.undotree_DiffAutoOpen = false
@@ -360,6 +378,7 @@ return {
     ---- Yanky
     {
         'gbprod/yanky.nvim',
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("yanky").setup({ highlight = { timer = 100 } })
             A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts.ns)
