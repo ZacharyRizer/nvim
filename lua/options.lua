@@ -59,17 +59,6 @@ A.autocmd("FileType", {
     command = "setlocal shiftwidth=4 softtabstop=4 tabstop=4",
     group = proton_pack
 })
--- highlight yanked text
-A.autocmd('TextYankPost', {
-    pattern = '*',
-    group = proton_pack,
-    callback = function()
-        vim.highlight.on_yank({
-            higroup = 'IncSearch',
-            timeout = 100,
-        })
-    end,
-})
 -- make windows equal sizes when opening/closing
 A.autocmd("VimResized", {
     pattern = "*",

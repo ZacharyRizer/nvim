@@ -30,14 +30,10 @@ A.map('n', '#', '#N', A.opts.n)
 A.map('v', '*', 'y/<C-R>"<CR>N', A.opts.n)
 A.map('v', '#', 'y?<C-R>"<CR>N', A.opts.n)
 A.map('n', '<Leader>/', ':%s/', A.opts.n)
-A.map('v', '<Leader>/', ':s/\\%V', A.opts.n)
+A.map('v', '<Leader>/', ':s/', A.opts.n)
 
 ---- more intuitive yanking
 A.map('n', 'Y', 'y$', A.opts.ns)
-A.map({ 'n', 'v' }, '<Leader>1', '"a', A.opts.ns)
-A.map({ 'n', 'v' }, '<Leader>2', '"b', A.opts.ns)
-A.map({ 'n', 'v' }, '<Leader>3', '"c', A.opts.ns)
-A.map({ 'n', 'v' }, '<Leader>4', '"d', A.opts.ns)
 
 ---- better line connection
 A.map('n', 'J', 'mzJ`z', A.opts.ns)
