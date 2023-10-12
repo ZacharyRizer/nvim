@@ -55,7 +55,7 @@ A.autocmd({ "CursorHold, CursorHoldI" }, {
 })
 -- use 4 space tabs for specific languages
 A.autocmd("FileType", {
-    pattern = { "go", "haskell", "lua", "python", "yaml" },
+    pattern = { "go", "lua", "python", "yaml" },
     command = "setlocal shiftwidth=4 softtabstop=4 tabstop=4",
     group = proton_pack
 })

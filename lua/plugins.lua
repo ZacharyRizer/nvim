@@ -323,6 +323,7 @@ return {
     ---- Treesitter
     {
         'nvim-treesitter/nvim-treesitter',
+        dependencies = { 'nvim-treesitter/nvim-treesitter-context' },
         event = { "BufReadPre", "BufNewFile" },
         run = ':TSUpdate',
         config = function()
