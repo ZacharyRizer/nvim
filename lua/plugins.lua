@@ -327,6 +327,7 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         run = ':TSUpdate',
         config = function()
+            -- treesitter base setup
             require 'nvim-treesitter.configs'.setup({
                 ensure_installed = {
                     "bash",
@@ -362,6 +363,8 @@ return {
                 },
                 indent = { enable = true }
             })
+            -- treesitter context setup
+            require 'treesitter-context'.setup { separator = "-" }
         end
     },
     ---- Undo Tree
