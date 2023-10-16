@@ -2,6 +2,7 @@
   "coc.preferences.enableMessageDialog": true,
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.formatOnSave": true,
+  "codeLens.enable": true,
   "colors.enable": true,
   "diagnostic.floatConfig": { "border": true, "rounded": true },
   "emmet.includeLanguages": {
@@ -36,6 +37,7 @@
       }
     }
   },
+  "list.floatPreview": true,
   "list.insertMappings": {
     "<C-n>": "normal:j",
     "<C-p>": "normal:k"
