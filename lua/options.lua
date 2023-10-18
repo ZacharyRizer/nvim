@@ -41,16 +41,22 @@ A.autocmd("BufEnter", {
     command = "setlocal fo-=c fo-=r fo-=o",
     group = proton_pack
 })
+-- check for file changes
+A.autocmd({ "BufEnter", "FocusGained" }, {
+    pattern = "*",
+    command = "checktime",
+    group = proton_pack
+})
+-- use insert mode when navigating to terminal buffer
+A.autocmd({ "BufWinEnter", "WinEnter" }, {
+    pattern = "term://*",
+    command = "startinsert",
+    group = proton_pack
+})
 -- remove trailing white space on save
 A.autocmd("BufWritePre", {
     pattern = "*",
     command = "%s/\\s\\+$//e",
-    group = proton_pack
-})
--- check for file changes
-A.autocmd({ "CursorHold, CursorHoldI" }, {
-    pattern = "*",
-    command = "checktime",
     group = proton_pack
 })
 -- use 4 space tabs for specific languages
