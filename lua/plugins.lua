@@ -323,7 +323,6 @@ return {
     ---- Treesitter
     {
         'nvim-treesitter/nvim-treesitter',
-        dependencies = { 'nvim-treesitter/nvim-treesitter-context' },
         event = { "BufReadPre", "BufNewFile" },
         run = ':TSUpdate',
         config = function()
@@ -363,8 +362,6 @@ return {
                 },
                 indent = { enable = true }
             })
-            -- treesitter context setup
-            require 'treesitter-context'.setup { separator = "-" }
         end
     },
     ---- Undo Tree
