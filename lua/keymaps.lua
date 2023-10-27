@@ -44,10 +44,8 @@ A.map('v', '<', '<gv', A.opts.ns)
 A.map('v', '>', '>gv', A.opts.ns)
 A.map('n', '<', '<<', A.opts.ns)
 A.map('n', '>', '>>', A.opts.ns)
-
----- easy buffer delete and close
-A.map('n', '<Leader>w', ':bd<cr>', A.opts.ns)
-A.map('n', '<Leader>wo', ':%bd | e# | normal `--<cr>', A.opts.ns)
+A.map('v', 'J', ":m '>+1<CR>gv=gv", A.opts.ns)
+A.map('v', 'K', ":m '<-2<CR>gv=gv", A.opts.ns)
 
 ---- quickfix lists
 vim.cmd [[

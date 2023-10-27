@@ -140,7 +140,7 @@ return {
                 indent = { char = '▏' },
                 scope = { enabled = false },
                 exclude = {
-                    filetypes = { 'dashboard', 'help', 'undotree' },
+                    filetypes = { 'dashboard', 'haskell', 'help', 'python', 'undotree' },
                     buftypes = { 'nofile', 'terminal' }
                 }
             })
