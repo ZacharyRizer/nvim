@@ -1,4 +1,10 @@
 return {
+    ---- Autopairs
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        opts = {} -- this is equalent to setup({}) function
+    },
     ---- CoC
     {
         'neoclide/coc.nvim',
@@ -14,7 +20,6 @@ return {
                 'coc-json',
                 'coc-lua',
                 'coc-marketplace',
-                'coc-pairs',
                 'coc-prettier',
                 'coc-pyright',
                 'coc-rust-analyzer',
@@ -169,6 +174,16 @@ return {
             })
         end
     },
+    ---- Markdown Preview
+    {
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        build = "cd app && yarn install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
+        ft = { "markdown" },
+    },
     ---- Nvim Tree
     {
         'nvim-tree/nvim-tree.lua',
@@ -209,7 +224,7 @@ return {
                 update_focused_file = { enable = true, update_root = true },
                 view                = {
                     side = 'right',
-                    width = 35,
+                    width = { min = 35 },
                 },
             })
         end
