@@ -400,8 +400,8 @@ return {
             A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts.ns)
             A.map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", A.opts.ns)
             A.map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", A.opts.ns)
-            A.map("n", "<C-n>", "<Plug>(YankyCycleForward)", A.opts.ns)
-            A.map("n", "<C-p>", "<Plug>(YankyCycleBackward)", A.opts.ns)
+            A.map("n", "<C-n>", "<Plug>(YankyNextEntry)", A.opts.ns)
+            A.map("n", "<C-p>", "<Plug>(YankyPreviousEntry)", A.opts.ns)
         end
     }
 }
