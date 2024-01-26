@@ -245,16 +245,6 @@ return {
             'nvim-telescope/telescope-fzy-native.nvim',
             'fannheyward/telescope-coc.nvim'
         },
-        keys = {
-            "<Leader>b",
-            "<Leader>c",
-            "<Leader>d",
-            "<Leader>f",
-            "<Leader>g",
-            "<Leader>h",
-            "<Leader>m",
-            "<Leader>y"
-        },
         config = function()
             local actions = require('telescope.actions')
             require('telescope').setup({
