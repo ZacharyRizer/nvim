@@ -160,9 +160,7 @@ return {
             local big_screen = function() return vim.fn.winwidth(0) > 90 end
             require 'lualine'.setup({
                 extensions = { 'quickfix' },
-                options = {
-                    disabled_filetypes = { 'dashboard', 'NvimTree', 'undotree' },
-                },
+                options = { disabled_filetypes = { 'dashboard', 'NvimTree', 'undotree' } },
                 sections = {
                     lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 1) end } },
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
