@@ -47,6 +47,7 @@
   "prettier.disableLanguages": ["haskell"],
   "prettier.tabWidth": 2,
   "pyright.inlayHints.functionReturnTypes": false,
+  "pyright.inlayHints.parameterTypes": false,
   "pyright.inlayHints.variableTypes": false,
   "python.formatting.blackPath": "/Users/zrizer/.pyenv/shims/black",
   "python.formatting.provider": "black",
