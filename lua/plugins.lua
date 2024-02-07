@@ -220,10 +220,7 @@ return {
                 on_attach           = nvim_tree_on_attach,
                 sync_root_with_cwd  = true,
                 update_focused_file = { enable = true, update_root = true },
-                view                = {
-                    side = 'right',
-                    width = { min = 35 },
-                },
+                view                = { width = { min = 35 } },
             })
         end
     },
@@ -321,6 +318,26 @@ return {
                 lualine_bold = true,
             })
             vim.cmd("colorscheme tokyonight")
+        end
+    },
+    ---- Toggleterm
+    {
+        'akinsho/toggleterm.nvim',
+        version = "*",
+        keys = { "<C-t>" },
+        config = function()
+            require("toggleterm").setup({
+                size = function(term)
+                    if term.direction == "horizontal" then
+                        return 15
+                    elseif term.direction == "vertical" then
+                        return vim.o.columns * 0.4
+                    end
+                end,
+                open_mapping = [[<C-t>]],
+                direction = 'vertical',
+
+            })
         end
     },
     ---- Treesitter

@@ -47,12 +47,6 @@ A.autocmd({ "BufEnter", "FocusGained" }, {
     command = "checktime",
     group = proton_pack
 })
--- use insert mode when navigating to terminal buffer
-A.autocmd({ "BufWinEnter", "WinEnter" }, {
-    pattern = "term://*",
-    command = "startinsert",
-    group = proton_pack
-})
 -- remove trailing white space on save
 A.autocmd("BufWritePre", {
     pattern = "*",

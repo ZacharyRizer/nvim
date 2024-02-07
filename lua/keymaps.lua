@@ -3,7 +3,6 @@ A.map('i', '<C-c>', '<ESC>', A.opts.ns)
 A.map('n', '<C-c>', ':nohl<CR>', A.opts.ns)
 
 ---- terminal buffer mappings
-A.map('n', '<C-t>', ':terminal<CR>', A.opts.ns)
 A.map('t', '<Leader><ESC>', '<C-\\><C-n>', A.opts.ns)
 A.map('t', '<C-h>', '<C-\\><C-N><C-w>h', A.opts.ns)
 A.map('t', '<C-j>', '<C-\\><C-N><C-w>j', A.opts.ns)
