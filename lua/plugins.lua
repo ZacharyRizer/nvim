@@ -13,8 +13,6 @@ return {
         config = function()
             vim.g.coc_global_extensions = {
                 'coc-css',
-                'coc-emmet',
-                'coc-highlight',
                 'coc-html',
                 'coc-json',
                 'coc-lua',
@@ -55,6 +53,14 @@ return {
 
             A.map('n', '[d', '<Plug>(coc-diagnostic-prev)', A.opts.ns)
             A.map('n', ']d', '<Plug>(coc-diagnostic-next)', A.opts.ns)
+        end
+    },
+    ---- Colorizer
+    {
+        'NvChad/nvim-colorizer.lua',
+        event = { "BufReadPre", "BufNewFile" },
+        config = function()
+            require 'colorizer'.setup()
         end
     },
     ---- Comment
@@ -227,8 +233,8 @@ return {
                 A.map('n', '<C-s>', api.node.open.horizontal, opts('Open: Horizontal Split'))
                 A.map('n', '?', api.tree.toggle_help, opts('Help'))
 
-                A.map('n', '<C-e>', { buffer = bufnr })
-                A.map('n', '<C-x>', { buffer = bufnr })
+                A.del('n', '<C-e>', { buffer = bufnr })
+                A.del('n', '<C-x>', { buffer = bufnr })
             end
 
             require('nvim-tree').setup({
@@ -333,6 +339,7 @@ return {
     ---- Tokyonight
     {
         'folke/tokyonight.nvim',
+        lazy = false,
         priority = 1000,
         config = function()
             require("tokyonight").setup({
