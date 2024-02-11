@@ -16,7 +16,6 @@ return {
                 'coc-html',
                 'coc-json',
                 'coc-lua',
-                'coc-marketplace',
                 'coc-prettier',
                 'coc-pyright',
                 'coc-rust-analyzer',
@@ -53,14 +52,6 @@ return {
 
             A.map('n', '[d', '<Plug>(coc-diagnostic-prev)', A.opts.ns)
             A.map('n', ']d', '<Plug>(coc-diagnostic-next)', A.opts.ns)
-        end
-    },
-    ---- Colorizer
-    {
-        'NvChad/nvim-colorizer.lua',
-        event = { "BufReadPre", "BufNewFile" },
-        config = function()
-            require 'colorizer'.setup()
         end
     },
     ---- Comment
@@ -360,7 +351,7 @@ return {
                     if term.direction == "horizontal" then
                         return 15
                     elseif term.direction == "vertical" then
-                        return vim.o.columns * 0.4
+                        return vim.o.columns * 0.5
                     end
                 end,
                 open_mapping = [[<C-t>]],
@@ -373,9 +364,8 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         event = { "BufReadPre", "BufNewFile" },
-        run = ':TSUpdate',
+        build = ':TSUpdate',
         config = function()
-            -- treesitter base setup
             require 'nvim-treesitter.configs'.setup({
                 ensure_installed = {
                     "bash",
