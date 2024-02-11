@@ -14,7 +14,6 @@ return {
             vim.g.coc_global_extensions = {
                 'coc-css',
                 'coc-emmet',
-                'coc-git',
                 'coc-highlight',
                 'coc-html',
                 'coc-json',
@@ -56,11 +55,6 @@ return {
 
             A.map('n', '[d', '<Plug>(coc-diagnostic-prev)', A.opts.ns)
             A.map('n', ']d', '<Plug>(coc-diagnostic-next)', A.opts.ns)
-
-            A.map('n', '[g', '<Plug>(coc-git-prevchunk)', A.opts.ns)
-            A.map('n', ']g', '<Plug>(coc-git-nextchunk)', A.opts.ns)
-            A.map('n', 'gc', ':CocCommand git.chunkInfo<cr>', A.opts.ns)
-            A.map('n', 'gb', ':CocCommand git.showBlameDoc<cr>', A.opts.ns)
         end
     },
     ---- Comment
@@ -125,10 +119,38 @@ return {
     {
         'tpope/vim-fugitive',
         config = function()
+            vim.api.nvim_create_user_command('Diff', function(input)
+                local branch = input.args ~= "" and input.args or "main"
+                vim.cmd('Gvdiffsplit! ' .. branch)
+            end, { nargs = '?' })
             vim.cmd [[command! -nargs=0 Blame G blame]]
-            vim.cmd [[command! -nargs=0 Diff Gvdiffsplit! main]]
             vim.cmd [[command! -nargs=0 Merge G mergetool]]
         end
+    },
+    ---- Git Signs
+    {
+        'lewis6991/gitsigns.nvim',
+        event = { "BufReadPre", "BufNewFile" },
+        config = function()
+            require('gitsigns').setup({
+                on_attach = function()
+                    local gs = package.loaded.gitsigns
+                    A.map('n', ']c', function()
+                        if vim.wo.diff then return ']c' end
+                        vim.schedule(function() gs.next_hunk() end)
+                        return '<Ignore>'
+                    end, { expr = true })
+                    A.map('n', '[c', function()
+                        if vim.wo.diff then return '[c' end
+                        vim.schedule(function() gs.prev_hunk() end)
+                        return '<Ignore>'
+                    end, { expr = true })
+                    A.map('n', 'gc', gs.preview_hunk)
+                    A.map('n', 'gb', function() gs.blame_line { full = true } end)
+                end
+            })
+        end
+
     },
     ---- Indent Blank Line
     {
@@ -199,14 +221,14 @@ return {
 
                 api.config.mappings.default_on_attach(bufnr)
 
-                vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
-                vim.keymap.set('n', 'l', api.node.open.replace_tree_buffer, opts('Open: In Place'))
-                vim.keymap.set('n', '<BS>', api.tree.change_root_to_parent, opts('Up'))
-                vim.keymap.set('n', '<C-s>', api.node.open.horizontal, opts('Open: Horizontal Split'))
-                vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+                A.map('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
+                A.map('n', 'l', api.node.open.replace_tree_buffer, opts('Open: In Place'))
+                A.map('n', '<BS>', api.tree.change_root_to_parent, opts('Up'))
+                A.map('n', '<C-s>', api.node.open.horizontal, opts('Open: Horizontal Split'))
+                A.map('n', '?', api.tree.toggle_help, opts('Help'))
 
-                vim.keymap.del('n', '<C-e>', { buffer = bufnr })
-                vim.keymap.del('n', '<C-x>', { buffer = bufnr })
+                A.map('n', '<C-e>', { buffer = bufnr })
+                A.map('n', '<C-x>', { buffer = bufnr })
             end
 
             require('nvim-tree').setup({
