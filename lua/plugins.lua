@@ -25,7 +25,7 @@ return {
         'glepnir/dashboard-nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
-            A.map('n', '<Leader><CR>', ':Dashboard<CR>', A.opts.ns)
+            A.map('n', '<Leader><CR>', ':Dashboard<CR>', A.opts)
             require('dashboard').setup({
                 theme = 'doom',
                 config = {
@@ -174,7 +174,7 @@ return {
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         keys = { "<C-e>" },
         config = function()
-            A.map('n', '<C-e>', ':NvimTreeToggle<CR>', A.opts.ns)
+            A.map('n', '<C-e>', ':NvimTreeToggle<CR>', A.opts)
 
             local function nvim_tree_on_attach(bufnr)
                 local api = require('nvim-tree.api')
@@ -221,6 +221,7 @@ return {
     ---- Telescope
     {
         'nvim-telescope/telescope.nvim',
+        keys = {"<leader>f", "<leader>g", "<leader>h"},
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzy-native.nvim',
@@ -263,14 +264,14 @@ return {
             require('telescope').load_extension('ui-select')
             require('telescope').load_extension('yank_history')
 
-            A.map('n', '<Leader>b', ':Telescope buffers<CR>', A.opts.ns)
-            A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts.ns)
-            A.map('n', '<Leader>d', ':Telescope help_tags prompt_title=Documentation<CR>', A.opts.ns)
-            A.map('n', '<Leader>f', ':Telescope find_files<CR>', A.opts.ns)
-            A.map('n', '<Leader>g', ':Telescope live_grep<CR>', A.opts.ns)
-            A.map('n', '<Leader>h', ':Telescope oldfiles prompt_title=History<CR>', A.opts.ns)
-            A.map('n', '<Leader>m', ':Telescope keymaps<CR>', A.opts.ns)
-            A.map('n', '<Leader>y', ':Telescope yank_history<CR>', A.opts.ns)
+            A.map('n', '<Leader>b', ':Telescope buffers<CR>', A.opts)
+            A.map('n', '<Leader>c', ':Telescope commands<CR>', A.opts)
+            A.map('n', '<Leader>d', ':Telescope help_tags prompt_title=Documentation<CR>', A.opts)
+            A.map('n', '<Leader>f', ':Telescope find_files<CR>', A.opts)
+            A.map('n', '<Leader>g', ':Telescope live_grep<CR>', A.opts)
+            A.map('n', '<Leader>h', ':Telescope oldfiles prompt_title=History<CR>', A.opts)
+            A.map('n', '<Leader>m', ':Telescope keymaps<CR>', A.opts)
+            A.map('n', '<Leader>y', ':Telescope yank_history<CR>', A.opts)
         end
     },
     ---- Tmux Integration
@@ -375,7 +376,7 @@ return {
         'mbbill/undotree',
         event = { "BufReadPre", "BufNewFile" },
         config = function()
-            A.map('n', '<Leader>u', ':UndotreeToggle<CR>', A.opts.ns)
+            A.map('n', '<Leader>u', ':UndotreeToggle<CR>', A.opts)
             vim.g.undotree_DiffAutoOpen = false
             vim.g.undotree_SetFocusWhenToggle = true
             vim.g.undotree_SplitWidth = 35
@@ -388,11 +389,11 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("yanky").setup({ highlight = { timer = 100 } })
-            A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts.ns)
-            A.map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", A.opts.ns)
-            A.map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", A.opts.ns)
-            A.map("n", "<C-n>", "<Plug>(YankyNextEntry)", A.opts.ns)
-            A.map("n", "<C-p>", "<Plug>(YankyPreviousEntry)", A.opts.ns)
+            A.map({ "n", "x" }, "y", "<Plug>(YankyYank)", A.opts)
+            A.map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", A.opts)
+            A.map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", A.opts)
+            A.map("n", "<C-n>", "<Plug>(YankyNextEntry)", A.opts)
+            A.map("n", "<C-p>", "<Plug>(YankyPreviousEntry)", A.opts)
         end
     }
 }

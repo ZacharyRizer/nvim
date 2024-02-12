@@ -8,10 +8,7 @@ A.augroup = vim.api.nvim_create_augroup
 A.autocmd = vim.api.nvim_create_autocmd
 A.del = vim.keymap.del
 A.map = vim.keymap.set
-A.opts = {
-    n = { noremap = true },
-    ns = { noremap = true, silent = true },
-}
+A.opts = { noremap = true, silent = true }
 
 --------------------------------- Core Setup -----------------------------------
 
