@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 vim.opt.backup = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
