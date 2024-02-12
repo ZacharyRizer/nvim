@@ -1,38 +1,4 @@
 return {
-    ---- Mason
-    {
-        'williamboman/mason.nvim',
-        dependencies = {
-            'williamboman/mason-lspconfig.nvim'
-        },
-        config = function()
-            require("mason").setup({
-                ui = {
-                    border = "rounded",
-                    icons = {
-                        package_installed = "✓",
-                        package_pending = "➜",
-                        package_uninstalled = "✗",
-                    },
-                },
-            })
-            require("mason-lspconfig").setup({
-                ensure_installed = {
-                    "cssls",
-                    "html",
-                    "hls",
-                    "jsonls",
-                    "lua_ls",
-                    "pyright",
-                    "rust_analyzer",
-                    "tsserver",
-                },
-                automatic_installation = true
-            })
-        end
-    },
-    ---- Lsp Config
-    {
         'neovim/nvim-lspconfig',
         event = { "BufReadPre", "BufNewFile" },
         config = function()
@@ -109,55 +75,4 @@ return {
             lspconfig["rust_analyzer"].setup({ capabilities = capabilities, })
             lspconfig["tsserver"].setup({ capabilities = capabilities })
         end,
-    },
-    ---- Nvim CMP
-    {
-        'hrsh7th/nvim-cmp',
-        event = { "InsertEnter" },
-        dependencies = {
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lsp',
-        },
-        config = function()
-            local cmp = require("cmp")
-            cmp.setup({
-                mapping = cmp.mapping.preset.insert({
-                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                    ['<CR>'] = cmp.mapping({
-                        i = function(fallback)
-                            if cmp.visible() and cmp.get_active_entry() then
-                                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-                            else
-                                fallback()
-                            end
-                        end,
-                        s = cmp.mapping.confirm({ select = true }),
-                    }),
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                }),
-                sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
-                    { name = 'buffer' },
-                }),
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
-                },
-            })
-        end
     }
-}
