@@ -1,5 +1,6 @@
 return {
     require("plugins.autopairs"),
+    require("plugins.colorizer"),
     require("plugins.comment"),
     require("plugins.dashboard"),
     require("plugins.fugitive"),
