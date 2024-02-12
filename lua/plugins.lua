@@ -31,10 +31,10 @@ return {
                 config = {
                     center = {
                         { icon = '    ', desc = 'Plugin Manager ', action = 'Lazy' },
+                        { icon = '    ', desc = 'LSP Manager ', action = 'Mason' },
                         { icon = '    ', desc = 'Config         ', action = 'e ~/.config/nvim/init.lua' },
                     },
                     header = {
-                        [[                                                       ]],
                         [[                                                       ]],
                         [[                                                       ]],
                         [[                                                       ]],
@@ -131,6 +131,19 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             local big_screen = function() return vim.fn.winwidth(0) > 90 end
+
+            local lsp_status = function()
+                local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+                if next(clients) == nil then return "No LSP Connected" end
+
+                local client_names = {}
+                for _, client in ipairs(clients) do
+                    table.insert(client_names, client.name)
+                end
+
+                return "LSP: " .. table.concat(client_names, ", ")
+            end
+
             require 'lualine'.setup({
                 extensions = { 'quickfix' },
                 options = { disabled_filetypes = { 'dashboard', 'NvimTree', 'undotree' } },
@@ -138,7 +151,7 @@ return {
                     lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 1) end } },
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
                     lualine_c = { 'filename' },
-                    lualine_x = { { 'g:coc_status', cond = big_screen } },
+                    lualine_x = { { lsp_status, cond = big_screen } },
                     lualine_y = { { 'progress', cond = big_screen } },
                     lualine_z = { { 'location', cond = big_screen } }
                 },
@@ -211,7 +224,7 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzy-native.nvim',
-            'fannheyward/telescope-coc.nvim'
+            'nvim-telescope/telescope-ui-select.nvim'
         },
         config = function()
             local actions = require('telescope.actions')
@@ -246,8 +259,8 @@ return {
                     sorting_strategy = "ascending",
                 },
             })
-            require('telescope').load_extension('coc')
             require('telescope').load_extension('fzy_native')
+            require('telescope').load_extension('ui-select')
             require('telescope').load_extension('yank_history')
 
             A.map('n', '<Leader>b', ':Telescope buffers<CR>', A.opts.ns)
