@@ -13,18 +13,16 @@ return {
 				json = { "prettier" },
 				lua = { "stylua" },
 				markdown = { "prettier" },
-				python = { "isort", "black" },
+				python = { "autopep8" },
 				rust = { "rustfmt" },
 				scss = { "prettier" },
 				typescript = { "prettier" },
 				typescriptreact = { "prettier" },
 			},
-		})
-		A.map("n", "<Leader><Enter>", function()
-			conform.format({
-				lsp_fallback = true,
+			format_on_save = {
 				async = true,
-			})
-		end)
+				lsp_fallback = true,
+			},
+		})
 	end,
 }

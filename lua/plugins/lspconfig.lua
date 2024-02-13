@@ -16,7 +16,7 @@ return {
 				A.map("n", "gt", ":Telescope lsp_type_definitions<CR>", opts)
 				A.map("n", "<Leader>la", vim.lsp.buf.code_action, opts)
 				A.map("n", "<Leader>ld", ":Telescope diagnostics bufnr=0<CR>", opts)
-				A.map("n", "<Leader>ls", ":Telescope treesitter<CR>", opts)
+				A.map("n", "<Leader>ls", ":Telescope lsp_document_symbols<CR>", opts)
 				A.map("n", "<Leader>rn", vim.lsp.buf.rename, opts)
 				A.map("n", "[d", vim.diagnostic.goto_prev, opts)
 				A.map("n", "]d", vim.diagnostic.goto_next, opts)
