@@ -4,13 +4,12 @@ return {
 	config = function()
 		local lspconfig = require("lspconfig")
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
-		local opts = A.opts
 
 		A.autocmd("LspAttach", {
 
 			group = A.augroup("Lsp_Custom_Attach", { clear = true }),
 			callback = function(_, bufnr)
-				opts.buffer = bufnr
+				local opts = { buffer = bufnr }
 				A.map("n", "gr", ":Telescope lsp_references<CR>", opts)
 				A.map("n", "gd", ":Telescope lsp_definitions<CR>", opts)
 				A.map("n", "gi", ":Telescope lsp_implementations<CR>", opts)

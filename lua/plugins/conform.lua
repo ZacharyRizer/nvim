@@ -6,7 +6,7 @@ return {
 		conform.setup({
 			formatters_by_ft = {
 				css = { "prettier" },
-                haskell = {"fourmolu"},
+				haskell = { "fourmolu" },
 				html = { "prettier" },
 				javascript = { "prettier" },
 				javascriptreact = { "prettier" },
@@ -25,6 +25,6 @@ return {
 				lsp_fallback = true,
 				async = true,
 			})
-		end, A.opts)
+		end)
 	end,
 }
