@@ -2,6 +2,7 @@ return {
     require("plugins.autopairs"),
     require("plugins.colorizer"),
     require("plugins.comment"),
+    require("plugins.conform"),
     require("plugins.dashboard"),
     require("plugins.fugitive"),
     require("plugins.git-signs"),
