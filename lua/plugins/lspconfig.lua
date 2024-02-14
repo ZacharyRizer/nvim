@@ -33,6 +33,8 @@ return {
 
 		vim.diagnostic.config({
 			float = { border = "rounded" },
+			severity_sort = true,
+			update_in_insert = true,
 			virtual_text = false,
 		})
 
@@ -55,6 +57,7 @@ return {
 		})
 		lspconfig["pyright"].setup({ capabilities = capabilities })
 		lspconfig["rust_analyzer"].setup({ capabilities = capabilities })
+		lspconfig["taplo"].setup({ capabilities = capabilities })
 		lspconfig["tsserver"].setup({ capabilities = capabilities })
 	end,
 }

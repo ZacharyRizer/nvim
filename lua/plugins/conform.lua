@@ -16,6 +16,7 @@ return {
 				python = { "autopep8" },
 				rust = { "rustfmt" },
 				scss = { "prettier" },
+				toml = { "taplo" },
 				typescript = { "prettier" },
 				typescriptreact = { "prettier" },
 			},
