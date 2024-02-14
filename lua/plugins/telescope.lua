@@ -5,7 +5,7 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-telescope/telescope-fzy-native.nvim",
-		"nvim-telescope/telescope-ui-select.nvim",
+		"fannheyward/telescope-coc.nvim",
 	},
 	config = function()
 		local actions = require("telescope.actions")
@@ -40,8 +40,8 @@ return {
 				sorting_strategy = "ascending",
 			},
 		})
+		require("telescope").load_extension("coc")
 		require("telescope").load_extension("fzy_native")
-		require("telescope").load_extension("ui-select")
 		require("telescope").load_extension("yank_history")
 
 		A.map("n", "<Leader>b", ":Telescope buffers<CR>")
