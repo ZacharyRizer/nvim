@@ -4,11 +4,11 @@
   "coc.preferences.formatOnSave": true,
   "codeLens.enable": true,
   "colors.enable": true,
+  "diagnostic.errorSign": " ",
+  "diagnostic.hintSign": "󰠠 ",
+  "diagnostic.infoSign": " ",
+  "diagnostic.warningSign": " ",
   "diagnostic.floatConfig": { "border": true, "rounded": true },
-  "emmet.includeLanguages": {
-    "javascript": "javascriptreact",
-    "typescript": "typescriptreact"
-  },
   "floatFactory.floatConfig": { "border": true, "rounded": true },
   "git.addedSign.hlGroup": "GitSignsAdd",
   "git.changeRemovedSign.hlGroup": "GitSignsChange",
