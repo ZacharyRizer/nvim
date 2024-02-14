@@ -18,6 +18,7 @@
   "git.topRemovedSign.hlGroup": "GitSignsDelete",
   "hover.floatConfig": { "border": true, "rounded": true },
   "html.autoClosingTags": false,
+  "inlayHint.display": false,
   "languageserver": {
     "haskell": {
       "command": "haskell-language-server-wrapper",
@@ -51,6 +52,7 @@
   "pyright.inlayHints.variableTypes": false,
   "python.formatting.blackPath": "/Users/zrizer/.pyenv/shims/black",
   "python.formatting.provider": "black",
+  "rust-analyzer.lens.enable": false,
   "signature.floatConfig": { "border": true, "rounded": true },
   "suggest.floatConfig": { "border": true, "rounded": true },
   "suggest.noselect": true,

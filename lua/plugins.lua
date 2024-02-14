@@ -1,5 +1,4 @@
 return {
-    require("plugins.autopairs"),
     require("plugins.coc"),
     require("plugins.comment"),
     require("plugins.dashboard"),
