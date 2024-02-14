@@ -16,7 +16,8 @@ return {
             "coc-pyright",
             "coc-rust-analyzer",
             "coc-tsserver",
-            "coc-toml"
+            "coc-toml",
+            "coc-yaml"
         }
 
         vim.cmd([[
