@@ -31,8 +31,8 @@ return {
 						return str:sub(1, 1)
 					end,
 				} },
-				lualine_b = { "branch", "diff", "diagnostics" },
-				lualine_c = { "filename" },
+				lualine_b = { "branch", "diff" },
+				lualine_c = { "filename", "diagnostics" },
 				lualine_x = { { lsp_status, cond = big_screen } },
 				lualine_y = { { "progress", cond = big_screen } },
 				lualine_z = { { "location", cond = big_screen } },

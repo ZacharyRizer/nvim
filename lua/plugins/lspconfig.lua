@@ -1,6 +1,7 @@
 return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
+	dependencies = { "hrsh7th/cmp-nvim-lsp" },
 	config = function()
 		local lspconfig = require("lspconfig")
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -32,8 +33,9 @@ return {
 
 		vim.diagnostic.config({
 			float = { border = "rounded" },
-			virtual_text = true,
+			virtual_text = false,
 		})
+
 		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 		vim.lsp.handlers["textDocument/signatureHelp"] =
 			vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
