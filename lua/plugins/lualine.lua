@@ -18,7 +18,19 @@ return {
                 lualine_a = { { "mode", fmt = function(str) return str:sub(1, 1) end, } },
                 lualine_b = { "branch", "diff" },
                 lualine_c = { "filename", "diagnostics" },
-                lualine_x = { { 'g:coc_status', cond = big_screen } },
+                lualine_x = {
+                    {
+                        'g:coc_status',
+                        cond = big_screen,
+                        fmt = function(str)
+                            local max_length = 80
+                            if #str > max_length then
+                                return str:sub(1, max_length) .. "…"
+                            end
+                            return str
+                        end
+                    }
+                },
                 lualine_y = { { "progress", cond = big_screen } },
                 lualine_z = { { "location", cond = big_screen } },
             },

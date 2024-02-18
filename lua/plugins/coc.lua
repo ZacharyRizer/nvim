@@ -21,6 +21,8 @@ return {
         }
 
         vim.cmd([[
+                hi CocInlayHint guifg=#565f89
+
                 function! CheckBackspace() abort
                   let col = col('.') - 1
                   return !col || getline('.')[col - 1]  =~# '\s'
